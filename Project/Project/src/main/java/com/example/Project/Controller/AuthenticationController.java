@@ -89,4 +89,15 @@ public class AuthenticationController {
         }
     }
 
+    @RequestMapping(value="/verify", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> verifyAccount(@Param("email")String email, @Param("id")Long id,HttpServletResponse response) throws IOException {
+
+            response.sendRedirect("http://localhost:4200/email");
+            User client=userService.getById(id);
+            client.setEmailChecked(true);
+            userService.save(client);
+            return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
 }
