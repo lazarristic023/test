@@ -2,7 +2,7 @@ package com.example.Project.Controller;
 
 import com.example.Project.Dto.RequestDto;
 import com.example.Project.Model.Request;
-import com.example.Project.Model.RequestStatus;
+import com.example.Project.Enum.RequestStatus;
 import com.example.Project.Model.User;
 import com.example.Project.Model.UserTokenState;
 import com.example.Project.Service.EmailService;
@@ -38,23 +38,29 @@ public class RequestController {
         List<Request> requests= requestService.getAllRequests();
         List<RequestDto> dtos= new ArrayList<>();
         for(Request req: requests){
-          RequestDto dto= new RequestDto(req.getId(),req.getStatus().toString(),req.getClientId());
+          RequestDto dto= new RequestDto(req.getId(),req.getStatus().toString(),req.getUsername());
           dtos.add(dto);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
-
-
+    @CrossOrigin(origins = "*")
+    @GetMapping("/create/{username}")
+    public ResponseEntity<RequestDto> createRequest(@PathVariable String username){
+        Request request= requestService.create(new Request(RequestStatus.WAITING, username));
+        RequestDto dto= new RequestDto(request.getStatus().toString(),request.getUsername());
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+    /*
     @CrossOrigin(origins = "*")
     @PutMapping("/accept")
     public ResponseEntity<RequestDto> accept(@RequestBody Request request){
         request.setStatus(RequestStatus.ACCEPTED);
         Request req=requestService.create(request);
-        User client= userService.getById(request.getClientId());
+        User client= userService.getById(request.getUsername());
         //salji mejl
         emailService.sendEmail(client);
-        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getClientId());
+        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getUsername());
         return new ResponseEntity<>(updatedDto, HttpStatus.OK);
     }
 
@@ -63,11 +69,11 @@ public class RequestController {
     public ResponseEntity<RequestDto> reject(@RequestBody Request request, @PathVariable String reason){
         request.setStatus(RequestStatus.REJECTED);
         Request req=requestService.create(request);
-        User client= userService.getById(request.getClientId());
+        User client= userService.getById(request.getUsername());
         //salji mejl
         emailService.sendRejectedEmail(client,reason);
-        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getClientId());
+        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getUsername());
         return new ResponseEntity<>(updatedDto, HttpStatus.OK);
     }
-
+    */
 }

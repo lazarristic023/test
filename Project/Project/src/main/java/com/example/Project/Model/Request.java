@@ -20,5 +20,13 @@ public class Request {
 
     public RequestStatus status;
 
-    public long clientId;
+    public String username;
+
+    public Request(RequestStatus status, String username) {
+        this.status = status;
+        this.username = username;
+    }
+
+    public Request() {
+    }
 }
