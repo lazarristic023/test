@@ -45,7 +45,7 @@ public class RequestController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/create/{username}")
+    @PostMapping("/create/{username}")
     public ResponseEntity<RequestDto> createRequest(@PathVariable String username){
         Request request= requestService.create(new Request(RequestStatus.WAITING, username));
         RequestDto dto= new RequestDto(request.getStatus().toString(),request.getUsername());
