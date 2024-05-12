@@ -1,6 +1,7 @@
 package com.example.Project.Controller;
 
 
+import com.example.Project.Dto.RefreshTokenRequest;
 import com.example.Project.Dto.UserDto;
 import com.example.Project.Model.Role;
 import com.example.Project.Model.User;
@@ -73,7 +74,10 @@ public class AuthenticationController {
 
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<?> refreshToken(@RequestBody String refreshToken,String username,String password) {
+    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+        String refreshToken = refreshTokenRequest.getRefreshToken();
+        String username = refreshTokenRequest.getUsername();
+        String password = refreshTokenRequest.getPassword();
         try {
             // Dobijanje novog access tokena na osnovu refresh tokena
             String newAccessToken = tokenUtils.generateNewAccessToken(refreshToken,username, password);

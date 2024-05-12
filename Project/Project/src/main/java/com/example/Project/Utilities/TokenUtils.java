@@ -39,7 +39,7 @@ public class TokenUtils {
     private int REFRESH_TOKEN_EXPIRES_IN;
 
     @Getter
-    @Value("300000")
+    @Value("100000")
     private int ACCESS_TOKEN_EXPIRES_IN;
 
 
