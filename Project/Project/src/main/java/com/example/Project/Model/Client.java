@@ -1,10 +1,11 @@
 package com.example.Project.Model;
 
+import com.example.Project.Enum.Face;
+import com.example.Project.Enum.PackageType;
+import com.example.Project.Enum.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,7 +36,10 @@ public class Client extends User {
     @NotEmpty
     private Face Type;
 
-    public Client(String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type) {
+    @NotEmpty
+    private PackageType PackageType;
+
+    public Client(String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType) {
         ClientFirmName = clientFirmName;
         ClientSurnameFirmPIB = clientSurnameFirmPIB;
         ClientFirmResidentialAddress = clientFirmResidentialAddress;
@@ -43,9 +47,10 @@ public class Client extends User {
         Country = country;
         Phone = phone;
         Type = type;
+        PackageType = packageType;
     }
 
-    public Client(String username, String email, String password, Role role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type) {
+    public Client(String username, String email, String password, Role role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType) {
         super(username, email, password, role);
         ClientFirmName = clientFirmName;
         ClientSurnameFirmPIB = clientSurnameFirmPIB;
@@ -54,6 +59,7 @@ public class Client extends User {
         Country = country;
         Phone = phone;
         Type = type;
+        PackageType = packageType;
     }
 
 

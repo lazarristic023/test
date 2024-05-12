@@ -1,5 +1,6 @@
 package com.example.Project.Model;
 
+import com.example.Project.Enum.RequestStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
