@@ -35,7 +35,6 @@ public class User implements UserDetails {
     @NotEmpty
     private String email;
 
-
     @NotNull
     @Size(min=6, max=20)
     private String password;
@@ -44,6 +43,12 @@ public class User implements UserDetails {
 
     public User(){}
 
+    public User(String username, String email, String password, Role role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 
 
     @Override
