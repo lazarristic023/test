@@ -73,6 +73,7 @@ public class WebSecurityConfig {
         http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(restAuthenticationEntryPoint));
         http.authorizeHttpRequests(auth -> auth
                                 .requestMatchers("api/authentication/**").permitAll()
+                                .requestMatchers("api/requests/**").permitAll()
 
 
 
