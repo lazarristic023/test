@@ -59,16 +59,30 @@ public class AuthenticationController {
         Role role = user.getRole();
         List<String> rolesString = new ArrayList<>();
 
-
         rolesString.add(role.toString());
 
 
-        String jwt = tokenUtils.generateToken(user.getUsername(),rolesString, user.getId());
-        int expiresIn = tokenUtils.getExpiredIn();
+        String jwt = tokenUtils.generateTokens(user.getUsername(),rolesString, user.getId())[0];
+        String refreshToken = tokenUtils.generateTokens(user.getUsername(),rolesString, user.getId())[0];
+        int expiresIn = tokenUtils.getACCESS_TOKEN_EXPIRES_IN();
+        int refreshExpiresIn = tokenUtils.getREFRESH_TOKEN_EXPIRES_IN();
 
 
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
-        // return ResponseEntity.ok("great");
+        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn,refreshToken,refreshExpiresIn));
+    }
+
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<?> refreshToken(@RequestBody String refreshToken,String username,String password) {
+        try {
+            // Dobijanje novog access tokena na osnovu refresh tokena
+            String newAccessToken = tokenUtils.generateNewAccessToken(refreshToken,username, password);
+            // Vraćanje novog access tokena kao odgovor na zahtjev
+            return ResponseEntity.ok(newAccessToken);
+        } catch (IllegalArgumentException e) {
+            // Ako je refresh token nevažeći, vratite odgovarajući status greške
+            return ResponseEntity.badRequest().body("Neuspješno osvježavanje tokena. Refresh token nije validan.");
+        }
     }
 
 }
