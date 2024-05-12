@@ -20,6 +20,7 @@ import java.util.Collections;
 
 @Entity
 @Table(name="users")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -42,6 +43,8 @@ public class User implements UserDetails {
     private String password;
 
     private Role role;
+
+    private Boolean emailChecked;
 
     public User(){}
 
