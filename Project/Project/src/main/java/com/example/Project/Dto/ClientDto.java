@@ -18,7 +18,7 @@ public class ClientDto {
 
     private String password;
 
-    private Role role;
+    private String role;
 
     private String ClientFirmName;
 
@@ -32,9 +32,9 @@ public class ClientDto {
 
     private String Phone;
 
-    private Face Type;
+    private String Type;
 
-    public ClientDto(String username, String email, String password, Role role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type) {
+    public ClientDto(String username, String email, String password, String role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, String type) {
         this.username = username;
         this.email = email;
         this.password = password;

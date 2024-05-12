@@ -22,11 +22,13 @@ import java.util.List;
 @Table(name="users")
 @Getter
 @Setter
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
 
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     public long id;
 
     @NotEmpty
