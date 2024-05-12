@@ -17,4 +17,8 @@ public class RequestService {
    public List<Request> getAllRequests(){
        return requestRepo.findAll();
    }
+
+   public Request create(Request newRequest){
+       return requestRepo.save(newRequest);
+   }
 }

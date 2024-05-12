@@ -27,5 +27,5 @@ public class RequestController {
         List<Request> requests= requestService.getAllRequests();
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
-    
+
 }
