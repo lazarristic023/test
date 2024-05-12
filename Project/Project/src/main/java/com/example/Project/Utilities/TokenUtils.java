@@ -78,6 +78,7 @@ public class TokenUtils {
                 .setAudience(generateAudience())
                 .claim("role", roles)
                 .claim("id", id)
+                .claim("username", username)
                 .setIssuedAt(new Date())
                 .setExpiration(generateRefreshTokenExpirationDate())
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
@@ -88,6 +89,7 @@ public class TokenUtils {
                 .setAudience(generateAudience())
                 .claim("role", roles)
                 .claim("id", id)
+                .claim("username", username)
                 .setIssuedAt(new Date())
                 .setExpiration(generateAccessTokenExpirationDate())
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
@@ -131,6 +133,7 @@ public class TokenUtils {
                 .setSubject(username)
                 .claim("role", roles)
                 .claim("id", userId)
+                .claim("username", username)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, SECRET)
