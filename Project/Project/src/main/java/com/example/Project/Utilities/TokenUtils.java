@@ -166,13 +166,13 @@ public class TokenUtils {
 
 
     public Boolean validateToken(String token, UserDetails userr) {
-        UserDto user = (UserDto) userr;
+        //UserDto user = (UserDto) userr;
         final String username = getUsernameFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
 
 
         return (username != null
-                && username.equals(user.getUsername())
+                && username.equals(userr.getUsername())
         );
     }
 
