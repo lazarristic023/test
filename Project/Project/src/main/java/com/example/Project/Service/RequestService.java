@@ -1,7 +1,6 @@
 package com.example.Project.Service;
 
 import com.example.Project.Model.Request;
-import com.example.Project.Model.RequestStatus;
 import com.example.Project.Repository.RequestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
