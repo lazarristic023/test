@@ -7,11 +7,15 @@ import com.example.Project.Model.User;
 import com.example.Project.Service.EmailService;
 import com.example.Project.Service.RequestService;
 import com.example.Project.Service.UserService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +58,14 @@ public class RequestController {
         Request req=requestService.create(request);
         User client= userService.getById(request.getClientId());
         //salji mejl
-        emailService.sendEmail(client);
+        try {
+            emailService.sendEmail(client);
+        } catch (NoSuchAlgorithmException | InvalidKeyException | MessagingException | UnsupportedEncodingException e) {
+
+            e.printStackTrace();
+        }
+
+
         RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getClientId());
         updatedDto.setStartDate(req.getStartDate());
         updatedDto.setEndDate(req.getEndDate());

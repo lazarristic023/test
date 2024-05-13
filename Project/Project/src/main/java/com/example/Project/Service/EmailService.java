@@ -1,6 +1,7 @@
 package com.example.Project.Service;
 
 
+import com.example.Project.Model.EmailToken;
 import com.example.Project.Model.User;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -11,11 +12,23 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Base64;
+
+import static javax.crypto.Cipher.SECRET_KEY;
 
 @Service
 public class EmailService {
+
+    // Tajni ključ za potpisivanje tokena
+    private static final String SECRET_KEY = "secret";
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -23,14 +36,28 @@ public class EmailService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmailTokenService emailTokenService;
 
 
-    public void sendEmail(User user)  {
+
+    public String sendEmail(User user)  throws NoSuchAlgorithmException, InvalidKeyException, MessagingException, UnsupportedEncodingException{
         String subject = "Complete Registration";
+        String token = generateToken(user);
 
-        String titile="Comfirm your email";
-        String text ="To confirm your account, please click here : " + "http://localhost:8081/api/authentication/verify?email=" + user.getEmail()+ "&id=" + user.getId();
+        LocalDateTime expiryDateTime = LocalDateTime.now().plusMinutes(2);
+        long expiryTimestamp = expiryDateTime.toEpochSecond(ZoneOffset.UTC);
 
+        // Dodajte vremensko ograničenje u link
+        String link = "http://localhost:8081/api/authentication/verify?email=" + user.getEmail() + "&id=" + user.getId() + "&expiry=" + expiryTimestamp;
+
+        // Dodajte token u link
+        link += "&token=" + token;
+
+        EmailToken emailToken= new EmailToken(expiryDateTime,user.getId(),token,false);
+        emailTokenService.saveToken(emailToken);
+
+        String text = "To confirm your account, please click here : " + link;
         try {
             sendMess(user, subject,text);
         } catch (MessagingException e) {
@@ -39,7 +66,7 @@ public class EmailService {
             throw new RuntimeException(e);
         }
 
-
+        return link;
     }
 
     public void sendRejectedEmail(User user,String reason)  {
@@ -74,5 +101,19 @@ public class EmailService {
 
         helper.setText(text);
         javaMailSender.send(message);
+    }
+
+    private String generateToken(User user) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
+        // Generišite jedinstveni token koji sadrži korisnički ID i vrijeme generisanja
+        String data = user.getId() + ":" + LocalDateTime.now().toString()+ ":false";
+
+        // Potpišite token HMAC algoritmom koristeći tajni ključ
+        Mac sha256Hmac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKey = new SecretKeySpec(SECRET_KEY.getBytes("UTF-8"), "HmacSHA256");
+        sha256Hmac.init(secretKey);
+        byte[] hmacData = sha256Hmac.doFinal(data.getBytes("UTF-8"));
+
+        // Konvertujte potpisani token u string koristeći Base64 enkodiranje
+        return Base64.getEncoder().encodeToString(hmacData);
     }
 }
