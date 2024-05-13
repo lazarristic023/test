@@ -24,8 +24,8 @@ public class RequestService {
        return requestRepo.save(newRequest);
    }
 
-   public Request getByClientId(Long clientId){
-       return requestRepo.findRequestsByClientId(clientId);
+   public Request getByClientId(String username){
+       return requestRepo.findRequestsByUsername(username);
    }
 
 }

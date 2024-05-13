@@ -41,7 +41,7 @@ public class RequestController {
         List<Request> requests= requestService.getAllRequests();
         List<RequestDto> dtos= new ArrayList<>();
         for(Request req: requests){
-          RequestDto dto= new RequestDto(req.getId(),req.getStatus().toString(),req.getClientId());
+          RequestDto dto= new RequestDto(req.getId(),req.getStatus().toString(),req.getUsername());
           dto.setStartDate(req.getStartDate());
           dto.setEndDate(req.getEndDate());
           dtos.add(dto);
@@ -56,7 +56,7 @@ public class RequestController {
     public ResponseEntity<RequestDto> accept(@RequestBody Request request){
         request.setStatus(RequestStatus.ACCEPTED);
         Request req=requestService.create(request);
-        User client= userService.getById(request.getClientId());
+        User client= userService.findByUsername(request.getUsername());
         //salji mejl
         try {
             emailService.sendEmail(client);
@@ -66,7 +66,7 @@ public class RequestController {
         }
 
 
-        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getClientId());
+        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getUsername());
         updatedDto.setStartDate(req.getStartDate());
         updatedDto.setEndDate(req.getEndDate());
         return new ResponseEntity<>(updatedDto, HttpStatus.OK);
@@ -81,22 +81,22 @@ public class RequestController {
         request.setStartDate(futureDate);
         Request req=requestService.create(request);
 
-        User client= userService.getById(request.getClientId());
+        User client= userService.findByUsername(request.getUsername());
         //salji mejl
         emailService.sendRejectedEmail(client,reason);
-        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getClientId());
+        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getUsername());
         updatedDto.setStartDate(req.getStartDate());
         updatedDto.setEndDate(req.getEndDate());
         return new ResponseEntity<>(updatedDto, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/getByClientId/{clientId}")
-    public ResponseEntity<RequestDto> getByClientId(@PathVariable Long clientId){
-        Request request=requestService.getByClientId(clientId);
+    @GetMapping("/getByUsername/{username}")
+    public ResponseEntity<RequestDto> getByClientId(@PathVariable String username){
+        Request request=requestService.getByClientId(username);
         RequestDto dto = new RequestDto();
         if(request!=null  ) {
-             dto = new RequestDto(request.getId(), request.getStatus().toString(), request.getClientId());
+             dto = new RequestDto(request.getId(), request.getStatus().toString(), request.getUsername());
             dto.setStartDate(request.getStartDate());
             dto.setEndDate(request.getEndDate());
             return new ResponseEntity<>(dto, HttpStatus.OK);

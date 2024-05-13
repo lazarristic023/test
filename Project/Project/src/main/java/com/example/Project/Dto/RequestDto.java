@@ -16,7 +16,7 @@ public class RequestDto {
 
     public String status;
 
-    public long clientId;
+    public String username;
 
     public LocalDate startDate;
 
@@ -24,9 +24,9 @@ public class RequestDto {
 
     public RequestDto(){}
 
-    public RequestDto(long id, String status, long clientId) {
+    public RequestDto(long id, String status, String username) {
         this.id = id;
         this.status = status;
-        this.clientId = clientId;
+        this.username = username;
     }
 }

@@ -21,7 +21,7 @@ public class Request {
 
     public RequestStatus status;
 
-    public long clientId;
+    public String username;
 
     @Column(nullable = true)
     public LocalDate startDate;

@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface RequestRepo extends JpaRepository<Request,Long> {
 
-    @Query("SELECT r FROM Request r WHERE r.clientId = :clientId")
-    Request findRequestsByClientId(@Param("clientId") Long clientId);
+    @Query("SELECT r FROM Request r WHERE r.username = :username")
+    Request findRequestsByUsername(@Param("username") String username);
 
 
 }
