@@ -2,7 +2,7 @@ package com.example.Project.Controller;
 
 import com.example.Project.Dto.RequestDto;
 import com.example.Project.Model.Request;
-import com.example.Project.Enum.RequestStatus;
+import com.example.Project.Model.RequestStatus;
 import com.example.Project.Model.User;
 import com.example.Project.Service.EmailService;
 import com.example.Project.Service.RequestService;
@@ -41,30 +41,23 @@ public class RequestController {
         List<Request> requests= requestService.getAllRequests();
         List<RequestDto> dtos= new ArrayList<>();
         for(Request req: requests){
-
-          RequestDto dto= new RequestDto(req.getId(),req.getStatus().toString(),req.getUsername());
-
+          RequestDto dto= new RequestDto(req.getId(),req.getStatus().toString(),req.getClientId());
+          dto.setStartDate(req.getStartDate());
+          dto.setEndDate(req.getEndDate());
           dtos.add(dto);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
-    @PostMapping("/create/{username}")
-    public ResponseEntity<RequestDto> createRequest(@PathVariable String username){
-        Request request= requestService.create(new Request(RequestStatus.WAITING, username));
-        RequestDto dto= new RequestDto(request.getStatus().toString(),request.getUsername());
-        return new ResponseEntity<>(dto, HttpStatus.OK);
-    }
-    
+
+
     @CrossOrigin(origins = "*")
     @PutMapping("/accept")
     public ResponseEntity<RequestDto> accept(@RequestBody Request request){
         request.setStatus(RequestStatus.ACCEPTED);
         Request req=requestService.create(request);
-        User client= userService.getById(request.getUsername());
+        User client= userService.getById(request.getClientId());
         //salji mejl
-
         try {
             emailService.sendEmail(client);
         } catch (NoSuchAlgorithmException | InvalidKeyException | MessagingException | UnsupportedEncodingException e) {
@@ -73,10 +66,9 @@ public class RequestController {
         }
 
 
-        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getUsername());
+        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getClientId());
         updatedDto.setStartDate(req.getStartDate());
         updatedDto.setEndDate(req.getEndDate());
-
         return new ResponseEntity<>(updatedDto, HttpStatus.OK);
     }
 
@@ -92,7 +84,7 @@ public class RequestController {
         User client= userService.getById(request.getClientId());
         //salji mejl
         emailService.sendRejectedEmail(client,reason);
-        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),,req.getUsername());
+        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getClientId());
         updatedDto.setStartDate(req.getStartDate());
         updatedDto.setEndDate(req.getEndDate());
         return new ResponseEntity<>(updatedDto, HttpStatus.OK);
@@ -111,6 +103,5 @@ public class RequestController {
         }
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
-
 
 }

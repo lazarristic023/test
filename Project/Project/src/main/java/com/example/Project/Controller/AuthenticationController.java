@@ -2,37 +2,34 @@ package com.example.Project.Controller;
 
 
 import com.example.Project.Dto.UserDto;
-
-import com.example.Project.Enum.Role;
-
 import com.example.Project.Model.EmailToken;
 import com.example.Project.Model.Role;
-
 import com.example.Project.Model.User;
 import com.example.Project.Model.UserTokenState;
 import com.example.Project.Service.EmailService;
 import com.example.Project.Service.EmailTokenService;
 import com.example.Project.Service.UserService;
 import com.example.Project.Utilities.TokenUtils;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
-
 import java.util.ArrayList;
 import java.util.List;
 @CrossOrigin(origins = "*")
@@ -106,7 +103,6 @@ public class AuthenticationController {
             }
 
         }
-
 
 
 

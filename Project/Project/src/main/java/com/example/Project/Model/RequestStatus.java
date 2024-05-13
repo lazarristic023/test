@@ -1,4 +1,4 @@
-package com.example.Project.Enum;
+package com.example.Project.Model;
 
 public enum RequestStatus {
     WAITING,

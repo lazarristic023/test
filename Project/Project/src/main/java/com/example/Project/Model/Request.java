@@ -1,6 +1,5 @@
 package com.example.Project.Model;
 
-import com.example.Project.Enum.RequestStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -22,25 +21,11 @@ public class Request {
 
     public RequestStatus status;
 
+    public long clientId;
 
-    public String username;
-  
-   @Column(nullable = true)
+    @Column(nullable = true)
     public LocalDate startDate;
 
     @Column(nullable = true)
     public LocalDate endDate;
-
-    public Request(RequestStatus status, String username) {
-        this.status = status;
-        this.username = username;
-    }
-
-    public Request() {
-    }
-
-    
-
-   
-
 }
