@@ -2,9 +2,16 @@ package com.example.Project.Controller;
 
 
 import com.example.Project.Dto.UserDto;
+
 import com.example.Project.Enum.Role;
+
+import com.example.Project.Model.EmailToken;
+import com.example.Project.Model.Role;
+
 import com.example.Project.Model.User;
 import com.example.Project.Model.UserTokenState;
+import com.example.Project.Service.EmailService;
+import com.example.Project.Service.EmailTokenService;
 import com.example.Project.Service.UserService;
 import com.example.Project.Utilities.TokenUtils;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,6 +29,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 @CrossOrigin(origins = "*")
@@ -37,6 +48,9 @@ public class AuthenticationController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailTokenService emailTokenService;
 
 
     @CrossOrigin(origins = "*")
@@ -68,14 +82,49 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value="/verify", method = RequestMethod.GET)
-    public ResponseEntity<Boolean> verifyAccount(@Param("email")String email, @Param("id")Long id, HttpServletResponse response) throws IOException {
+    public ResponseEntity<Boolean> verifyAccount(@Param("email")String email, @Param("id")Long id,@Param("expiry") Long expiry,@Param("token")String token,HttpServletResponse response) throws IOException {
 
-            response.sendRedirect("http://localhost:4200/email");
-            User client=userService.getById(id);
-            client.setEmailChecked(true);
-            userService.save(client);
+        EmailToken emailToken=emailTokenService.getByClientId(id);
+        //vec bio na linku
+        if(emailToken.getIsUsed() ){
+            response.sendRedirect("http://localhost:4200/email-link-invalid");
+        }else{
+            //nije bio na linku ali je token istekao
+            if(emailToken.getExpirationDate().isBefore(LocalDateTime.now())){
+                response.sendRedirect("http://localhost:4200/email-link-invalid");
+            }else{
+                //nije bio na linku i token nije istekao
+                User client=userService.getById(id);
+                client.setEmailChecked(true);
+                userService.save(client);
+
+                //update token
+                emailToken.setIsUsed(true);
+                emailTokenService.saveToken(emailToken);
+                String redirectUrl = String.format("http://localhost:4200/successfully/%s/%d/%d/%s", email, id, expiry, token);
+                response.sendRedirect(redirectUrl);
+            }
+
+        }
+
+
+
+
+
             return new ResponseEntity<>(HttpStatus.OK);
 
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/isEmailChecked/{id}")
+    public Boolean isEmailChecked(@PathVariable("id") Long id){
+
+        User user= userService.getById(id);
+        if(user.getEmailChecked()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }
