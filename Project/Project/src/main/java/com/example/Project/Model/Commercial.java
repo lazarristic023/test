@@ -17,23 +17,23 @@ public class Commercial {
     private long id;
 
     @NotEmpty
-    private String Description;
+    private String description;
 
     @NotEmpty
-    private Date Start;
+    private Date start;
 
     @NotEmpty
-    private Date End;
+    private Date end;
 
     @NotEmpty
-    private long ClientId;
+    private long clientId;
 
 
     public Commercial(String description, Date start, Date end, long clientId) {
-        Description = description;
-        Start = start;
-        End = end;
-        ClientId = clientId;
+        this.description = description;
+        this.start = start;
+        this.end = end;
+        this.clientId = clientId;
     }
 
     public Commercial() {

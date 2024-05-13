@@ -10,21 +10,21 @@ import java.util.Date;
 @Setter
 public class CommercialDto {
 
-    private String Description;
+    private String description;
 
-    private Date Start;
+    private Date start;
 
-    private Date End;
+    private Date end;
 
-    private long ClientId;
+    private long clientId;
 
     public CommercialDto() {
     }
 
     public CommercialDto(String description, Date start, Date end, long clientId) {
-        Description = description;
-        Start = start;
-        End = end;
-        ClientId = clientId;
+        this.description = description;
+        this.start = start;
+        this.end = end;
+        this.clientId = clientId;
     }
 }

@@ -19,30 +19,30 @@ public class CommercialRequest {
     private long id;
 
     @NotEmpty
-    private String Description;
+    private String description;
 
     @NotEmpty
-    private Date CreateDeadline;
+    private Date createDeadline;
 
     @NotEmpty
-    private Date Start;
+    private Date start;
 
     @NotEmpty
-    private Date End;
+    private Date end;
 
     @NotEmpty
-    private long ClientId;
+    private long clientId;
 
     @NotEmpty
-    private boolean IsAccepted;
+    private boolean isAccepted;
 
     public CommercialRequest(String description, Date createDeadline, Date start, Date end, long clientId, boolean isAccepted) {
-        Description = description;
-        CreateDeadline = createDeadline;
-        Start = start;
-        End = end;
-        ClientId = clientId;
-        IsAccepted = isAccepted;
+        this.description = description;
+        this.createDeadline = createDeadline;
+        this.start = start;
+        this.end = end;
+        this.clientId = clientId;
+        this.isAccepted = isAccepted;
     }
 
     public CommercialRequest() {

@@ -10,27 +10,27 @@ import java.util.Date;
 @Setter
 public class CommercialRequestDto {
 
-    private String Description;
+    private String description;
 
-    private Date CreateDeadline;
+    private Date createDeadline;
 
-    private Date Start;
+    private Date start;
 
-    private Date End;
+    private Date end;
 
-    private long ClientId;
+    private long clientId;
 
-    private boolean IsAccepted;
+    private boolean isAccepted;
 
     public CommercialRequestDto() {
     }
 
     public CommercialRequestDto(String description, Date createDeadline, Date start, Date end, long clientId, boolean isAccepted) {
-        Description = description;
-        CreateDeadline = createDeadline;
-        Start = start;
-        End = end;
-        ClientId = clientId;
-        IsAccepted = isAccepted;
+        this.description = description;
+        this.createDeadline = createDeadline;
+        this.start = start;
+        this.end = end;
+        this.clientId = clientId;
+        this.isAccepted = isAccepted;
     }
 }

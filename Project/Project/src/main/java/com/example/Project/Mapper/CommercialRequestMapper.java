@@ -16,7 +16,7 @@ public class CommercialRequestMapper {
         commercialRequestDto.setStart(commercialRequest.getStart());
         commercialRequestDto.setEnd(commercialRequest.getEnd());
         commercialRequestDto.setClientId(commercialRequest.getClientId());
-        commercialRequestDto.setIsAccepted(commercialRequest.isIsAccepted());
+        commercialRequestDto.setAccepted(commercialRequest.isAccepted());
         return commercialRequestDto;
     }
 
@@ -27,7 +27,7 @@ public class CommercialRequestMapper {
         commercialRequest.setStart(commercialRequestDto.getStart());
         commercialRequest.setEnd(commercialRequestDto.getEnd());
         commercialRequest.setClientId(commercialRequestDto.getClientId());
-        commercialRequest.setIsAccepted(commercialRequestDto.isIsAccepted());
+        commercialRequest.setAccepted(commercialRequestDto.isAccepted());
         return commercialRequest;
     }
 }

@@ -16,50 +16,50 @@ import lombok.Setter;
 public class Client extends User {
 
     @NotEmpty
-    private String ClientFirmName;
+    private String clientFirmName;
 
     @NotEmpty
-    private String ClientSurnameFirmPIB;
+    private String clientSurnameFirmPIB;
 
     @NotEmpty
-    private String ClientFirmResidentialAddress;
+    private String clientFirmResidentialAddress;
 
     @NotEmpty
-    private String City;
+    private String city;
 
     @NotEmpty
-    private String Country;
+    private String country;
 
     @NotEmpty
-    private String Phone;
+    private String phone;
 
     @NotEmpty
-    private Face Type;
+    private Face type;
 
     @NotEmpty
-    private PackageType PackageType;
+    private PackageType packageType;
 
     public Client(String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType) {
-        ClientFirmName = clientFirmName;
-        ClientSurnameFirmPIB = clientSurnameFirmPIB;
-        ClientFirmResidentialAddress = clientFirmResidentialAddress;
-        City = city;
-        Country = country;
-        Phone = phone;
-        Type = type;
-        PackageType = packageType;
+        this.clientFirmName = clientFirmName;
+        this.clientSurnameFirmPIB = clientSurnameFirmPIB;
+        this.clientFirmResidentialAddress = clientFirmResidentialAddress;
+        this.city = city;
+        this.country = country;
+        this.phone = phone;
+        this.type = type;
+        this.packageType = packageType;
     }
 
     public Client(String username, String email, String password, Role role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType) {
         super(username, email, password, role);
-        ClientFirmName = clientFirmName;
-        ClientSurnameFirmPIB = clientSurnameFirmPIB;
-        ClientFirmResidentialAddress = clientFirmResidentialAddress;
-        City = city;
-        Country = country;
-        Phone = phone;
-        Type = type;
-        PackageType = packageType;
+        this.clientFirmName = clientFirmName;
+        this.clientSurnameFirmPIB = clientSurnameFirmPIB;
+        this.clientFirmResidentialAddress = clientFirmResidentialAddress;
+        this.city = city;
+        this.country = country;
+        this.phone = phone;
+        this.type = type;
+        this.packageType = packageType;
     }
 
 
