@@ -17,5 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
         @Modifying
         @Query("UPDATE User u SET u.email = ?2 WHERE u.id = ?1")
         void updateEmailById(Long id, String email);
+
+        @Transactional
+        @Modifying
+        @Query("UPDATE User u SET u.username = ?2 WHERE u.id = ?1")
+        void updateUsernameById(Long id, String username);
     }
 

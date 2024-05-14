@@ -101,4 +101,11 @@ public class ClientController {
         userService.updateEmail(id, e);
         return ResponseEntity.ok().build();
     }
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/username/{id}/{u}")
+    public ResponseEntity<Void> updateUsernameById(@PathVariable Long id, @PathVariable String u) {
+        userService.updateUsername(id, u);
+        return ResponseEntity.ok().build();
+    }
 }

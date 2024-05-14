@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-
+    @Autowired
     private UserRepo userRepo;
     public User findByUsername(String name) {return userRepo.findByUsername(name);}
 
@@ -26,5 +26,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateEmail(Long id, String email) {
         userRepo.updateEmailById(id, email);
+    }
+
+    @Override
+    public void updateUsername(Long id, String username) {
+        userRepo.updateUsernameById(id, username);
     }
 }
