@@ -27,6 +27,7 @@ public class ClientDto {
 
     private String phone;
 
+
     private String type;
 
     private String packageType;

@@ -18,6 +18,7 @@ public class ClientService {
     public ClientService(ClientRepo clientRepository, BCryptPasswordEncoder passwordEncoder) {
         this.clientRepository = clientRepository;
         this.passwordEncoder = passwordEncoder;
+
     }
 
     public Client save(Client client) {
@@ -52,5 +53,6 @@ public class ClientService {
 
     public void updatePhoneById(Long id, String phone) {
         clientRepository.updatePhoneById(id, phone);
+
     }
 }
