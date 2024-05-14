@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,26 +22,24 @@ public class CommercialRequest {
     @NotEmpty
     private String description;
 
-    @NotEmpty
-    private Date createDeadline;
+    @NotNull
+    private Date createDeadlineDate;
 
-    @NotEmpty
-    private Date start;
+    @NotNull
+    private Date startDate;
 
-    @NotEmpty
-    private Date end;
+    @NotNull
+    private Date endDate;
 
-    @NotEmpty
     private long clientId;
 
-    @NotEmpty
     private boolean isAccepted;
 
     public CommercialRequest(String description, Date createDeadline, Date start, Date end, long clientId, boolean isAccepted) {
         this.description = description;
-        this.createDeadline = createDeadline;
-        this.start = start;
-        this.end = end;
+        this.createDeadlineDate = createDeadline;
+        this.startDate = start;
+        this.endDate = end;
         this.clientId = clientId;
         this.isAccepted = isAccepted;
     }

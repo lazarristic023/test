@@ -12,9 +12,9 @@ public class CommercialDto {
 
     private String description;
 
-    private Date start;
+    private Date startDate;
 
-    private Date end;
+    private Date endDate;
 
     private long clientId;
 
@@ -23,8 +23,8 @@ public class CommercialDto {
 
     public CommercialDto(String description, Date start, Date end, long clientId) {
         this.description = description;
-        this.start = start;
-        this.end = end;
+        this.startDate = start;
+        this.endDate = end;
         this.clientId = clientId;
     }
 }

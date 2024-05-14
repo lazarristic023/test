@@ -12,9 +12,9 @@ public class CommercialRequestMapper {
     public CommercialRequestDto mapToDto(CommercialRequest commercialRequest) {
         CommercialRequestDto commercialRequestDto = new CommercialRequestDto();
         commercialRequestDto.setDescription(commercialRequest.getDescription());
-        commercialRequestDto.setCreateDeadline(commercialRequest.getCreateDeadline());
-        commercialRequestDto.setStart(commercialRequest.getStart());
-        commercialRequestDto.setEnd(commercialRequest.getEnd());
+        commercialRequestDto.setCreateDeadlineDate(commercialRequest.getCreateDeadlineDate());
+        commercialRequestDto.setStartDate(commercialRequest.getStartDate());
+        commercialRequestDto.setEndDate(commercialRequest.getEndDate());
         commercialRequestDto.setClientId(commercialRequest.getClientId());
         commercialRequestDto.setAccepted(commercialRequest.isAccepted());
         return commercialRequestDto;
@@ -23,9 +23,9 @@ public class CommercialRequestMapper {
     public CommercialRequest mapToModel(CommercialRequestDto commercialRequestDto) {
         CommercialRequest commercialRequest = new CommercialRequest();
         commercialRequest.setDescription(commercialRequestDto.getDescription());
-        commercialRequest.setCreateDeadline(commercialRequestDto.getCreateDeadline());
-        commercialRequest.setStart(commercialRequestDto.getStart());
-        commercialRequest.setEnd(commercialRequestDto.getEnd());
+        commercialRequest.setCreateDeadlineDate(commercialRequestDto.getCreateDeadlineDate());
+        commercialRequest.setStartDate(commercialRequestDto.getStartDate());
+        commercialRequest.setEndDate(commercialRequestDto.getEndDate());
         commercialRequest.setClientId(commercialRequestDto.getClientId());
         commercialRequest.setAccepted(commercialRequestDto.isAccepted());
         return commercialRequest;

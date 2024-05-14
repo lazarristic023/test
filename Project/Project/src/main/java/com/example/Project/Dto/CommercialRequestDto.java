@@ -12,11 +12,11 @@ public class CommercialRequestDto {
 
     private String description;
 
-    private Date createDeadline;
+    private Date createDeadlineDate;
 
-    private Date start;
+    private Date startDate;
 
-    private Date end;
+    private Date endDate;
 
     private long clientId;
 
@@ -27,9 +27,9 @@ public class CommercialRequestDto {
 
     public CommercialRequestDto(String description, Date createDeadline, Date start, Date end, long clientId, boolean isAccepted) {
         this.description = description;
-        this.createDeadline = createDeadline;
-        this.start = start;
-        this.end = end;
+        this.createDeadlineDate = createDeadline;
+        this.startDate = start;
+        this.endDate = end;
         this.clientId = clientId;
         this.isAccepted = isAccepted;
     }

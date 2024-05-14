@@ -2,6 +2,7 @@ package com.example.Project.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,20 +20,19 @@ public class Commercial {
     @NotEmpty
     private String description;
 
-    @NotEmpty
-    private Date start;
+    @NotNull
+    private Date startDate;
 
-    @NotEmpty
-    private Date end;
+    @NotNull
+    private Date endDate;
 
-    @NotEmpty
     private long clientId;
 
 
     public Commercial(String description, Date start, Date end, long clientId) {
         this.description = description;
-        this.start = start;
-        this.end = end;
+        this.startDate = start;
+        this.endDate = end;
         this.clientId = clientId;
     }
 
