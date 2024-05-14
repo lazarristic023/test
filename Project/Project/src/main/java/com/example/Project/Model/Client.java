@@ -1,11 +1,10 @@
 package com.example.Project.Model;
 
-import com.example.Project.Enum.Face;
-import com.example.Project.Enum.PackageType;
-import com.example.Project.Enum.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,7 +49,7 @@ public class Client extends User {
         this.packageType = packageType;
     }
 
-    public Client(String username, String email, String password, Role role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType) {
+    public Client(String username, String email, String password, Role role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type) {
         super(username, email, password, role);
         this.clientFirmName = clientFirmName;
         this.clientSurnameFirmPIB = clientSurnameFirmPIB;
