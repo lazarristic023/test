@@ -1,10 +1,5 @@
 package com.example.Project.Dto;
 
-import com.example.Project.Model.Face;
-import com.example.Project.Model.Role;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,32 +15,36 @@ public class ClientDto {
 
     private String role;
 
-    private String ClientFirmName;
+    private String clientFirmName;
 
-    private String ClientSurnameFirmPIB;
+    private String clientSurnameFirmPIB;
 
-    private String ClientFirmResidentialAddress;
+    private String clientFirmResidentialAddress;
 
-    private String City;
+    private String city;
 
-    private String Country;
+    private String country;
 
-    private String Phone;
+    private String phone;
 
-    private String Type;
 
-    public ClientDto(String username, String email, String password, String role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, String type) {
+    private String type;
+
+    private String packageType;
+
+    public ClientDto(String username, String email, String password, String role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, String type, String packageType) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
-        ClientFirmName = clientFirmName;
-        ClientSurnameFirmPIB = clientSurnameFirmPIB;
-        ClientFirmResidentialAddress = clientFirmResidentialAddress;
-        City = city;
-        Country = country;
-        Phone = phone;
-        Type = type;
+        this.clientFirmName = clientFirmName;
+        this.clientSurnameFirmPIB = clientSurnameFirmPIB;
+        this.clientFirmResidentialAddress = clientFirmResidentialAddress;
+        this.city = city;
+        this.country = country;
+        this.phone = phone;
+        this.type = type;
+        this.packageType = packageType;
     }
 
     public ClientDto() {

@@ -1,9 +1,11 @@
 package com.example.Project.Mapper;
 
 import com.example.Project.Dto.ClientDto;
+import com.example.Project.Enum.PackageType;
 import com.example.Project.Model.Client;
-import com.example.Project.Model.Face;
-import com.example.Project.Model.Role;
+
+import com.example.Project.Enum.Face;
+import com.example.Project.Enum.Role;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,6 +24,8 @@ public class ClientMapper {
         clientDto.setCountry(client.getCountry());
         clientDto.setPhone(client.getPhone());
         clientDto.setType(client.getType().toString());
+
+        clientDto.setPackageType(client.getPackageType().toString());
         return clientDto;
     }
 
@@ -41,6 +45,10 @@ public class ClientMapper {
         client.setPhone(clientDto.getPhone());
         if(clientDto.getType().equals("PHYSICALLY")) client.setType(Face.PHYSICALLY);
         else client.setType(Face.LEGALLY);
+
+        if(clientDto.getPackageType().equals("BASIC")) client.setPackageType(PackageType.BASIC);
+        else if (clientDto.getPackageType().equals("STANDARD")) client.setPackageType(PackageType.STANDARD);
+        else client.setPackageType(PackageType.GOLD);
         return client;
     }
 

@@ -1,11 +1,10 @@
 package com.example.Project.Model;
 
+import com.example.Project.Enum.RequestStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDate;
 
 @Entity
 @Table(name="requests")
@@ -21,11 +20,13 @@ public class Request {
 
     public RequestStatus status;
 
-    public long clientId;
+    public String username;
 
-    @Column(nullable = true)
-    public LocalDate startDate;
+    public Request(RequestStatus status, String username) {
+        this.status = status;
+        this.username = username;
+    }
 
-    @Column(nullable = true)
-    public LocalDate endDate;
+    public Request() {
+    }
 }
