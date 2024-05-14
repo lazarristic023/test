@@ -2,7 +2,6 @@ package com.example.Project.Utilities;
 
 
 import com.example.Project.Dto.UserDto;
-import com.example.Project.Model.Role;
 import com.example.Project.Service.impl.MyUserDetailsService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Claims;
