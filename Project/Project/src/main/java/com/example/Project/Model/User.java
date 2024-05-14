@@ -23,7 +23,6 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
 
     @Id

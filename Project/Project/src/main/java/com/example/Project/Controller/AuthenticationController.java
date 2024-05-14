@@ -64,7 +64,7 @@ public class AuthenticationController {
 
 
         String jwt = tokenUtils.generateTokens(user.getUsername(),rolesString, user.getId())[0];
-        String refreshToken = tokenUtils.generateTokens(user.getUsername(),rolesString, user.getId())[0];
+        String refreshToken = tokenUtils.generateTokens(user.getUsername(),rolesString, user.getId())[1];
         int expiresIn = tokenUtils.getACCESS_TOKEN_EXPIRES_IN();
         int refreshExpiresIn = tokenUtils.getREFRESH_TOKEN_EXPIRES_IN();
 
@@ -74,18 +74,22 @@ public class AuthenticationController {
 
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+    public ResponseEntity<RefreshTokenRequest> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         String refreshToken = refreshTokenRequest.getRefreshToken();
         String username = refreshTokenRequest.getUsername();
         String password = refreshTokenRequest.getPassword();
         try {
             // Dobijanje novog access tokena na osnovu refresh tokena
             String newAccessToken = tokenUtils.generateNewAccessToken(refreshToken,username, password);
+            RefreshTokenRequest request = new RefreshTokenRequest();
+            request.setRefreshToken(newAccessToken);
+            request.setPassword("lala");
+            request.setUsername(username);
             // Vraćanje novog access tokena kao odgovor na zahtjev
-            return ResponseEntity.ok(newAccessToken);
+            return ResponseEntity.ok(request);
         } catch (IllegalArgumentException e) {
             // Ako je refresh token nevažeći, vratite odgovarajući status greške
-            return ResponseEntity.badRequest().body("Neuspješno osvježavanje tokena. Refresh token nije validan.");
+            return ResponseEntity.badRequest().body(refreshTokenRequest);
         }
     }
 
