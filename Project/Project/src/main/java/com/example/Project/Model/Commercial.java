@@ -15,6 +15,7 @@ import java.util.Date;
 public class Commercial {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotEmpty
