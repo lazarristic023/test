@@ -1,23 +1,17 @@
 package com.example.Project.Utilities;
 
 
-import com.example.Project.Dto.UserDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
-
-
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class TokenUtils {

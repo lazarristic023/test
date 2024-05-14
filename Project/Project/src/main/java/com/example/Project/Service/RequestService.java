@@ -20,4 +20,9 @@ public class RequestService {
    public Request create(Request newRequest){
        return requestRepo.save(newRequest);
    }
+
+    public Request getByClientId(String username){
+        return requestRepo.findRequestsByUsername(username);
+    }
+
 }
