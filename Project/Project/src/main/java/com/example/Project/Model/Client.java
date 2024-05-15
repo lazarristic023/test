@@ -26,14 +26,7 @@ public class Client extends User {
     @NotEmpty
     private String clientFirmResidentialAddress;
 
-    @NotEmpty
-    private String city;
 
-    @NotEmpty
-    private String country;
-
-    @NotEmpty
-    private String phone;
 
     @NotEmpty
     private Face type;
@@ -45,24 +38,20 @@ public class Client extends User {
     @JoinColumn(name = "company_id")
     private Company company;
     public Client(String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType) {
+        super(city,country,phone);
         this.clientFirmName = clientFirmName;
         this.clientSurnameFirmPIB = clientSurnameFirmPIB;
         this.clientFirmResidentialAddress = clientFirmResidentialAddress;
-        this.city = city;
-        this.country = country;
-        this.phone = phone;
         this.type = type;
         this.packageType = packageType;
     }
 
     public Client(String username, String email, String password, Role role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType) {
-        super(username, email, password, role);
+        super(username, email, password, role,city,country,phone);
         this.clientFirmName = clientFirmName;
         this.clientSurnameFirmPIB = clientSurnameFirmPIB;
         this.clientFirmResidentialAddress = clientFirmResidentialAddress;
-        this.city = city;
-        this.country = country;
-        this.phone = phone;
+
         this.type = type;
         this.packageType = packageType;
     }

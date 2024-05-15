@@ -1,5 +1,6 @@
 package com.example.Project.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,8 +21,11 @@ public class Company {
     private String address;
 
     // Jedan-na-mnoge odnos prema User
+    @JsonIgnore // spriječava beskonačnu rekurziju
+
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Employee> employees;
+    @JsonIgnore // spriječava beskonačnu rekurziju
 
     // Jedan-na-mnoge odnos prema Client
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
