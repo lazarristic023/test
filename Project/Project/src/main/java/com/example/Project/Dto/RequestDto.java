@@ -1,6 +1,6 @@
 package com.example.Project.Dto;
 
-import com.example.Project.Enum.RequestStatus;
+import com.example.Project.Model.RequestStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,11 +19,6 @@ public class RequestDto {
 
     public RequestDto(long id, String status, String username) {
         this.id = id;
-        this.status = status;
-        this.username = username;
-    }
-
-    public RequestDto(String status, String username) {
         this.status = status;
         this.username = username;
     }

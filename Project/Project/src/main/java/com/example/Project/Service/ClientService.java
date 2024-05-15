@@ -3,19 +3,15 @@ package com.example.Project.Service;
 import com.example.Project.Model.Client;
 import com.example.Project.Repository.ClientRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class ClientService {
 
     @Autowired
     private ClientRepo clientRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public ClientService(ClientRepo clientRepository, BCryptPasswordEncoder passwordEncoder) {
+    public ClientService(ClientRepo clientRepository) {
         this.clientRepository = clientRepository;
         this.passwordEncoder = passwordEncoder;
 
