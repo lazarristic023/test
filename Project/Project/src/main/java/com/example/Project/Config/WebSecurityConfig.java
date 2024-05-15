@@ -75,6 +75,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("api/requests/**").permitAll()
                                 .requestMatchers("api/commercial/**").permitAll()
                                 .requestMatchers("api/commercial-request/**").permitAll()
+                                .requestMatchers("api/users/**").permitAll()
 
 
 

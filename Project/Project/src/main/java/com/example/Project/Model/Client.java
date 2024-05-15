@@ -1,6 +1,8 @@
 package com.example.Project.Model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -38,6 +40,9 @@ public class Client extends User {
     @NotEmpty
     private PackageType packageType;
 
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
     public Client(String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType) {
         this.clientFirmName = clientFirmName;
         this.clientSurnameFirmPIB = clientSurnameFirmPIB;
