@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Repository
     public interface UserRepo extends JpaRepository<User,Long> {
@@ -17,5 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
         @Modifying
         @Query("UPDATE User u SET u.email = ?2 WHERE u.id = ?1")
         void updateEmailById(Long id, String email);
-    }
+
+    @Override
+    List<User> findAll();
+
+
+
+}
 

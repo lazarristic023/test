@@ -5,6 +5,7 @@ import com.example.Project.Dto.CommercialDto;
 import com.example.Project.Mapper.ClientMapper;
 import com.example.Project.Model.Client;
 import com.example.Project.Model.Commercial;
+import com.example.Project.Model.User;
 import com.example.Project.Service.ClientService;
 import com.example.Project.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,6 @@ public class ClientController {
     private UserService userService;
 
 
-    public ClientController(ClientService clientService, ClientMapper clientMapper, UserService userService) {
-        this.clientService = clientService;
-        this.clientMapper = clientMapper;
-        this.userService = userService;
-    }
 
     @PostMapping("/register")
     public ResponseEntity<ClientDto> registerClient(@RequestBody ClientDto clientDto) {
@@ -100,5 +96,11 @@ public class ClientController {
     public ResponseEntity<Void> updateEmailById(@PathVariable Long id, @PathVariable String e) {
         userService.updateEmail(id, e);
         return ResponseEntity.ok().build();
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getAllClients")
+    public ResponseEntity<List<User>> getAllClients() {
+        return ResponseEntity.ok(userService.getAllClients());
     }
 }
