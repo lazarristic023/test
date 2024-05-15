@@ -1,5 +1,10 @@
 package com.example.Project.Dto;
 
+import com.example.Project.Model.Face;
+import com.example.Project.Model.Role;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +18,7 @@ public class ClientDto {
 
     private String password;
 
-    private String role;
+    private Role role;
 
     private String clientFirmName;
 
