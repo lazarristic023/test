@@ -45,15 +45,33 @@ public class User implements UserDetails {
 
     private Boolean emailChecked;
 
+    @NotEmpty
+    private String city;
+
+    @NotEmpty
+    private String country;
+
+    @NotEmpty
+    private String phone;
+
     public User(){}
 
-    public User(String username, String email, String password, Role role) {
+    public User(String username, String email, String password, Role role,String city,String country,String phone) {
+        this.city = city;
+        this.country = country;
+        this.phone = phone;
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
+
+    public User(String city,String country,String phone){
+        this.country = country;
+        this.city = city;
+        this.phone = phone;
+    }
 
     @Override
     public String getUsername() {

@@ -18,12 +18,13 @@ public class Employee extends User{
     private Company company;
     private String firstName;
     private String lastName;
+    private boolean isFirstLogging=true;
 
     public Employee() {
     }
 
-    public Employee(String username, String email, String password, Role role,Company company,String firstName,String lastName) {
-        super(username, email, password, role);
+    public Employee(String username, String email, String password, Role role,Company company,String firstName,String lastName,String city,String country, String phone) {
+        super(username, email, password, role,city,country,phone);
         this.company = company;
         this.firstName = firstName;
         this.lastName = lastName;
