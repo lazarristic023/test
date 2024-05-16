@@ -73,7 +73,6 @@ public class RequestController {
             e.printStackTrace();
         }
 
-        RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getUsername());
         updatedDto.setStartDate(req.getStartDate());
         updatedDto.setEndDate(req.getEndDate());
         return new ResponseEntity<>(updatedDto, HttpStatus.OK);

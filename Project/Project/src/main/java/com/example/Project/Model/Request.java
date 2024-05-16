@@ -1,5 +1,6 @@
 package com.example.Project.Model;
 
+import com.example.Project.Enum.RequestStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -35,9 +36,5 @@ public class Request {
     public LocalDate endDate;
     public Request() {
     }
-    @Column(nullable = true)
-    public LocalDate startDate;
 
-    @Column(nullable = true)
-    public LocalDate endDate;
 }

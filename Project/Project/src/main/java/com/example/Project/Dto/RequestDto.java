@@ -27,4 +27,9 @@ public class RequestDto {
         this.status = status;
         this.username = username;
     }
+
+    public RequestDto(String status, String username) {
+        this.status = status;
+        this.username = username;
+    }
 }
