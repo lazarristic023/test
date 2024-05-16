@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class RequestController {
         Request req=requestService.create(request);
         User client= userService.findByUsername(request.getUsername());
         //salji mejl
-       // emailService.sendEmail(client);
+        // emailService.sendEmail(client);
         RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getUsername());
         try {
             emailService.sendEmail(client);
@@ -71,7 +72,6 @@ public class RequestController {
 
             e.printStackTrace();
         }
-
 
         RequestDto updatedDto= new RequestDto(req.getId(),req.getStatus().toString(),req.getUsername());
         updatedDto.setStartDate(req.getStartDate());
@@ -83,7 +83,11 @@ public class RequestController {
     @PutMapping("/reject/{reason}")
     public ResponseEntity<RequestDto> reject(@RequestBody Request request, @PathVariable String reason){
         request.setStatus(RequestStatus.REJECTED);
+        LocalDate currentDate= LocalDate.now();
+        LocalDate futureDate = currentDate.plusDays(2);
+        request.setStartDate(futureDate);
         Request req=requestService.create(request);
+
         User client= userService.findByUsername(request.getUsername());
         //salji mejl
         emailService.sendRejectedEmail(client,reason);
@@ -99,7 +103,7 @@ public class RequestController {
         Request request=requestService.getByClientId(username);
         RequestDto dto = new RequestDto();
         if(request!=null  ) {
-             dto = new RequestDto(request.getId(), request.getStatus().toString(), request.getUsername());
+            dto = new RequestDto(request.getId(), request.getStatus().toString(), request.getUsername());
             dto.setStartDate(request.getStartDate());
             dto.setEndDate(request.getEndDate());
             return new ResponseEntity<>(dto, HttpStatus.OK);

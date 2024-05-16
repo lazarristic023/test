@@ -2,11 +2,13 @@ package com.example.Project.Controller;
 
 
 import com.example.Project.Dto.RefreshTokenRequest;
+import com.example.Project.Dto.LoginDto;
 import com.example.Project.Dto.UserDto;
 import com.example.Project.Enum.Role;
 import com.example.Project.Model.EmailToken;
 import com.example.Project.Model.User;
 import com.example.Project.Model.UserTokenState;
+import com.example.Project.Service.EmailTokenService;
 import com.example.Project.Service.UserService;
 import com.example.Project.Utilities.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +47,14 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmailTokenService emailTokenService;
+
 
     @CrossOrigin(origins = "*")
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
-            @RequestBody UserDto authenticationRequest) {
+            @RequestBody LoginDto authenticationRequest) {
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getUsername(), authenticationRequest.getPassword()));
@@ -124,8 +129,50 @@ public class AuthenticationController {
 
 
 
-            return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
 
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/isEmailChecked/{id}")
+    public Boolean isEmailChecked(@PathVariable("id") Long id){
+
+        User user= userService.getById(id);
+        if(user.getEmailChecked()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getUserById/{id}")
+    public ResponseEntity<UserDto> getUserByUserId(@PathVariable("id") Long id){
+        User user= userService.getById(id);
+
+        UserDto userDto= new UserDto(user.getUsername(),user.getEmail(),user.getPassword()
+                ,user.getRole().toString(),user.getEmailChecked());
+
+        userDto.setId(user.getId());
+
+        return new ResponseEntity<>(userDto,HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/updateEmployee")
+    public ResponseEntity<UserDto> updateEmployee(@RequestBody UserDto userr){
+
+        Role role = Role.valueOf(userr.getRole());
+        User user= new User(userr.getUsername(),userr.getEmail(),userr.getPassword(),role);
+        User updated= userService.save(user);
+
+        UserDto userDto= new UserDto(updated.getUsername(),updated.getEmail(),updated.getPassword()
+                ,updated.getRole().toString(),updated.getEmailChecked());
+
+        userDto.setId(updated.getId());
+
+
+        return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 
 }
