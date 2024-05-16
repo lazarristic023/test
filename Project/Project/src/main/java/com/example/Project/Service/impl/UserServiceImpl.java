@@ -89,4 +89,9 @@ public class UserServiceImpl implements UserService {
             return adminRepo.save(updatedAdmin);
         });
     }
+
+    
+    public void updateUsername(Long id, String username) {
+        userRepo.updateUsernameById(id, username);
+    }
 }

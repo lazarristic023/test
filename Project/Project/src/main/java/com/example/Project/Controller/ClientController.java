@@ -108,4 +108,10 @@ public class ClientController {
     public ResponseEntity<List<User>> getAllClients() {
         return ResponseEntity.ok(userService.getAllClients());
     }
+    
+    @PutMapping("/username/{id}/{u}")
+    public ResponseEntity<Void> updateUsernameById(@PathVariable Long id, @PathVariable String u) {
+        userService.updateUsername(id, u);
+        return ResponseEntity.ok().build();
+    }
 }
