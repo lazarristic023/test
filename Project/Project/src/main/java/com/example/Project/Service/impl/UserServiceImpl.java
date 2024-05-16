@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findByUsername(String name) {return userRepo.findByUsername(name);}
+    public User findByEmail(String email) {return userRepo.findByEmail(email);}
 
     public User save(User user){
         return userRepo.save(user);
