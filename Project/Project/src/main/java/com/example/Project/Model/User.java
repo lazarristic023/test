@@ -73,6 +73,13 @@ public class User implements UserDetails {
         this.phone = phone;
     }
 
+    public User(String username, String email, String password, Role role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
     @Override
     public String getUsername() {
         return username;
