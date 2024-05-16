@@ -41,6 +41,10 @@ public class TokenUtils {
     @Value("100000")
     private int ACCESS_TOKEN_EXPIRES_IN;
 
+    @Getter
+    @Value("600000")
+    private int PASSWORDLESS_TOKEN_EXPIRES_IN;
+
 
     @Value("Authorization")
     private String AUTH_HEADER;
@@ -138,6 +142,19 @@ public class TokenUtils {
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
     }
+
+    public String generatePasswordlessToken(String email) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + PASSWORDLESS_TOKEN_EXPIRES_IN);
+
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .compact();
+    }
+
     public long getUserIdFromToken(String token) {
         long userId;
 

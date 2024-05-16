@@ -15,6 +15,9 @@ import java.util.List;
         @Query("SELECT u FROM User u WHERE u.username = ?1")
         User findByUsername(String username);
 
+        @Query("SELECT u FROM User u WHERE u.email = ?1")
+        User findByEmail(String email);
+
         @Transactional
         @Modifying
         @Query("UPDATE User u SET u.email = ?2 WHERE u.id = ?1")

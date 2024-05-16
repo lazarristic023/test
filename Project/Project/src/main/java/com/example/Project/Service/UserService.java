@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface UserService {
 
     public User findByUsername(String name);
+    public User findByEmail(String email);
     public User save(User user);
     public User getById(Long id);
     public void updateEmail(Long id, String email);
