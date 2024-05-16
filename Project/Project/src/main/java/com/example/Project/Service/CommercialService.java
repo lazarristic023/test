@@ -18,4 +18,8 @@ public class CommercialService {
     }
 
     public List<Commercial> findByClientId(long clientId) { return commercialRepository.findByClientId(clientId); }
+
+    public List<Commercial> getAll(){return commercialRepository.findAll();}
+
+    public Commercial create(Commercial commercial){return commercialRepository.save(commercial);}
 }

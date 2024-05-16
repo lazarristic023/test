@@ -41,4 +41,27 @@ public class CommercialController {
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getAll")
+    public ResponseEntity<List<CommercialDto>> getAll(){
+        List<Commercial> commercials = commercialService.getAll();
+        List<CommercialDto> dtoList = new ArrayList<>();
+        for(Commercial c: commercials){
+          CommercialDto dto= new CommercialDto(c.getDescription(),c.getStartDate(),c.getEndDate(),c.getClientId());
+          dtoList.add(dto);
+        }
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
+
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/create")
+    public ResponseEntity<CommercialDto> create(@RequestBody CommercialDto commercialDto){
+        Commercial commercial= new Commercial(commercialDto.getDescription(),commercialDto.getStartDate(),commercialDto.getEndDate(),commercialDto.getClientId());
+        Commercial saved = commercialService.create(commercial);
+
+        return new ResponseEntity<>(commercialDto, HttpStatus.OK);
+    }
+
 }
