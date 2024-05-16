@@ -23,10 +23,13 @@ import java.util.List;
         @Query("UPDATE User u SET u.email = ?2 WHERE u.id = ?1")
         void updateEmailById(Long id, String email);
 
-    @Override
-    List<User> findAll();
+        @Override
+        List<User> findAll();
 
-
+        @Transactional
+        @Modifying
+        @Query("UPDATE User u SET u.username = ?2 WHERE u.id = ?1")
+        void updateUsernameById(Long id, String username);
 
 }
 

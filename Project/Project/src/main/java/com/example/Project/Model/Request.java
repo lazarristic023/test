@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name="requests")
 @Getter
@@ -27,6 +29,12 @@ public class Request {
         this.username = username;
     }
 
+    @Column(nullable = true)
+    public LocalDate startDate;
+
+    @Column(nullable = true)
+    public LocalDate endDate;
     public Request() {
     }
+
 }

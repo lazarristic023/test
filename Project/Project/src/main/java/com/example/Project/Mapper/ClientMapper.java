@@ -34,9 +34,7 @@ public class ClientMapper {
         client.setUsername(clientDto.getUsername());
         client.setEmail(clientDto.getEmail());
         client.setPassword(clientDto.getPassword());
-        if(clientDto.getRole().equals("CLIENT")) client.setRole(Role.CLIENT);
-        else if (clientDto.getRole().equals("EMPLOYEE")) client.setRole(Role.EMPLOYEE);
-        else client.setRole(Role.ADMINISTRATOR);
+        client.setRole(Role.CLIENT);
         client.setClientFirmName(clientDto.getClientFirmName());
         client.setClientSurnameFirmPIB(clientDto.getClientSurnameFirmPIB());
         client.setClientFirmResidentialAddress(clientDto.getClientFirmResidentialAddress());
@@ -52,5 +50,5 @@ public class ClientMapper {
         return client;
     }
 
-
+    
 }

@@ -14,13 +14,14 @@ public class Administrator extends User{
     private boolean isPredefined;
     private String firstName;
     private String lastName;
+    private boolean isFirstLogging=true;
 
-
-    public Administrator(String username, String email, String password, Role role, boolean isPredefined,String firstName,String lastName) {
-        super(username, email, password, role);
+    public Administrator(String username, String email, String password, Role role, boolean isPredefined,String firstName,String lastName,String city,String country, String phone) {
+        super(username, email, password, role,city,country,phone);
         this.isPredefined = isPredefined;
         this.firstName = firstName;
         this.lastName = lastName;
+
     }
     public Administrator(){}
 

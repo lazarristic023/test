@@ -1,21 +1,17 @@
 package com.example.Project.Controller;
 
 import com.example.Project.Dto.ClientDto;
-import com.example.Project.Dto.CommercialDto;
 import com.example.Project.Mapper.ClientMapper;
 import com.example.Project.Model.Client;
-import com.example.Project.Model.Commercial;
+
 import com.example.Project.Model.User;
 import com.example.Project.Service.ClientService;
 import com.example.Project.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -102,5 +98,11 @@ public class ClientController {
     @GetMapping("/getAllClients")
     public ResponseEntity<List<User>> getAllClients() {
         return ResponseEntity.ok(userService.getAllClients());
+    }
+    
+    @PutMapping("/username/{id}/{u}")
+    public ResponseEntity<Void> updateUsernameById(@PathVariable Long id, @PathVariable String u) {
+        userService.updateUsername(id, u);
+        return ResponseEntity.ok().build();
     }
 }
