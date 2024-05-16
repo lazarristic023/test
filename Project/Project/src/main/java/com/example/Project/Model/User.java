@@ -2,6 +2,7 @@ package com.example.Project.Model;
 
 
 
+import com.example.Project.Enum.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;

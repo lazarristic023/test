@@ -1,6 +1,7 @@
 package com.example.Project.Mapper;
 
 import com.example.Project.Dto.ClientDto;
+import com.example.Project.Enum.PackageType;
 import com.example.Project.Model.Client;
 
 import com.example.Project.Enum.Face;
@@ -15,7 +16,7 @@ public class ClientMapper {
         clientDto.setUsername(client.getUsername());
         clientDto.setEmail(client.getEmail());
         clientDto.setPassword(client.getPassword());
-        clientDto.setRole(client.getRole());
+        clientDto.setRole(client.getRole().toString());
         clientDto.setClientFirmName(client.getClientFirmName());
         clientDto.setClientSurnameFirmPIB(client.getClientSurnameFirmPIB());
         clientDto.setClientFirmResidentialAddress(client.getClientFirmResidentialAddress());
@@ -33,7 +34,7 @@ public class ClientMapper {
         client.setUsername(clientDto.getUsername());
         client.setEmail(clientDto.getEmail());
         client.setPassword(clientDto.getPassword());
-        client.setRole(clientDto.getRole());
+        client.setRole(Role.CLIENT);
         client.setClientFirmName(clientDto.getClientFirmName());
         client.setClientSurnameFirmPIB(clientDto.getClientSurnameFirmPIB());
         client.setClientFirmResidentialAddress(clientDto.getClientFirmResidentialAddress());

@@ -1,6 +1,5 @@
 package com.example.Project.Dto;
 
-import com.example.Project.Model.RequestStatus;
 import lombok.Getter;
 import lombok.Setter;
 

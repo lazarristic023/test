@@ -1,5 +1,8 @@
 package com.example.Project.Model;
 
+import com.example.Project.Enum.Face;
+import com.example.Project.Enum.PackageType;
+import com.example.Project.Enum.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
