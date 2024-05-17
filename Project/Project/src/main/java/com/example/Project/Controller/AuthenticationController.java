@@ -5,9 +5,11 @@ import com.example.Project.Dto.LoginDto;
 import com.example.Project.Dto.UserDto;
 import com.example.Project.Enum.Role;
 import com.example.Project.Model.EmailToken;
+import com.example.Project.Model.Request;
 import com.example.Project.Model.User;
 import com.example.Project.Model.UserTokenState;
 import com.example.Project.Service.EmailTokenService;
+import com.example.Project.Service.RequestService;
 import com.example.Project.Service.UserService;
 import com.example.Project.Utilities.TokenUtils;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,6 +47,8 @@ public class AuthenticationController {
     @Autowired
     private EmailTokenService emailTokenService;
 
+    @Autowired
+    private RequestService requestService;
 
     @CrossOrigin(origins = "*")
     @PostMapping("/login")
@@ -80,11 +84,11 @@ public class AuthenticationController {
         EmailToken emailToken=emailTokenService.getByClientId(id);
         //vec bio na linku
         if(emailToken.getIsUsed() ){
-            response.sendRedirect("http://localhost:4200/email-link-invalid");
+            response.sendRedirect("https://localhost:4200/email-link-invalid");
         }else{
             //nije bio na linku ali je token istekao
             if(emailToken.getExpirationDate().isBefore(LocalDateTime.now())){
-                response.sendRedirect("http://localhost:4200/email-link-invalid");
+                response.sendRedirect("https://localhost:4200/email-link-invalid");
             }else{
                 //nije bio na linku i token nije istekao
                 User client=userService.getById(id);
@@ -94,7 +98,7 @@ public class AuthenticationController {
                 //update token
                 emailToken.setIsUsed(true);
                 emailTokenService.saveToken(emailToken);
-                String redirectUrl = String.format("http://localhost:4200/successfully/%s/%d/%d/%s", email, id, expiry, token);
+                String redirectUrl = String.format("https://localhost:4200/successfully/%s/%d/%d/%s", email, id, expiry, token);
                 response.sendRedirect(redirectUrl);
             }
 
@@ -136,17 +140,17 @@ public class AuthenticationController {
     @PutMapping("/updateEmployee")
     public ResponseEntity<UserDto> updateEmployee(@RequestBody UserDto userr){
 
-        Role role = Role.valueOf(userr.getRole());
-        User user= new User(userr.getUsername(),userr.getEmail(),userr.getPassword(),role);
-        User updated= userService.save(user);
 
-        UserDto userDto= new UserDto(updated.getUsername(),updated.getEmail(),updated.getPassword()
-                ,updated.getRole().toString(),updated.getEmailChecked());
+        User existing = userService.getById(userr.getId());
+        Request request = requestService.getByClientId(existing.getUsername());
+        existing.setUsername(userr.getUsername());
+        existing.setEmailChecked(true);
+        request.setUsername(userr.getUsername());
+        userService.save(existing);
+        requestService.create(request);
 
-        userDto.setId(updated.getId());
 
-
-        return new ResponseEntity<>(userDto,HttpStatus.OK);
+        return new ResponseEntity<>(userr,HttpStatus.OK);
     }
 
 }
