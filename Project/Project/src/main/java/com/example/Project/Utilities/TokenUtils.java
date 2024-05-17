@@ -29,12 +29,20 @@ public class TokenUtils {
     public String SECRET;
 
 
-    @Getter
+    /*@Getter
     @Value("900000")
     private int REFRESH_TOKEN_EXPIRES_IN;
 
     @Getter
     @Value("100000")
+    private int ACCESS_TOKEN_EXPIRES_IN;*/
+
+    @Getter
+    @Value("1500000")
+    private int REFRESH_TOKEN_EXPIRES_IN;
+
+    @Getter
+    @Value("900000")
     private int ACCESS_TOKEN_EXPIRES_IN;
 
     @Getter

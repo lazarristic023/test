@@ -15,9 +15,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -34,8 +36,26 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@EnableMethodSecurity
 public class WebSecurityConfig {
+
+    private static final String[] WHITE_LIST_URL = {"api/authentication/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui/**",
+            "/webjars/**",
+            "/swagger-ui.html",
+            "/*.html",
+            "favicon.ico",
+            "/*/*.html",
+            "/*/*.css",
+            "/*/*.js",
+            "/"};
 
 
     @Bean
@@ -102,25 +122,27 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(AbstractHttpConfigurer::disable);
 
 
-        http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(restAuthenticationEntryPoint));
+        //http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(restAuthenticationEntryPoint));
         http.authorizeHttpRequests(auth -> auth
-                                .requestMatchers("api/authentication/**").permitAll()
-                                .requestMatchers("api/requests/**").permitAll()
+                                //.requestMatchers("api/authentication/**").permitAll()
+                                .requestMatchers(WHITE_LIST_URL).permitAll()
+                                /*.requestMatchers("api/requests/**").permitAll()
                                 .requestMatchers("api/commercial/**").permitAll()
                                 .requestMatchers("api/commercial-request/**").permitAll()
-                                .requestMatchers("api/users/**").permitAll()
+                                .requestMatchers("api/users/**").permitAll()*/
 
 
 
-                        // .anyRequest().authenticated())
-                )
+                 .anyRequest().authenticated())
+
 
                 .cors(withDefaults())
-                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils,  userDetailsService()), BasicAuthenticationFilter.class)
-                .csrf(csrf -> csrf.disable());
+                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils,  userDetailsService()), BasicAuthenticationFilter.class);
+
 
 
 
@@ -131,18 +153,7 @@ public class WebSecurityConfig {
 
 
     //u kojim metodama se ignorise autentifikacija
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
 
-        return (web) -> web.ignoring().requestMatchers(HttpMethod.POST, "api/authentication/login")
-
-                .requestMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
-                        "/*/*.html", "/*/*.css", "/*/*.js","/v2/api-docs",
-                        "/configuration/**",
-                        "/swagger*/**");
-
-
-    }
 
 
 }

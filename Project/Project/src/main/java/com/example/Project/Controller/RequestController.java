@@ -11,6 +11,7 @@ import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
@@ -37,6 +38,7 @@ public class RequestController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/getAll")
+    @PreAuthorize("hasAuthority('admin:read')")
     public ResponseEntity<List<RequestDto>> createAuthenticationToken(){
         List<Request> requests= requestService.getAllRequests();
         List<RequestDto> dtos= new ArrayList<>();
@@ -51,6 +53,7 @@ public class RequestController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/create/{username}")
+    @PreAuthorize("hasAuthority('client:create')")
     public ResponseEntity<RequestDto> createRequest(@PathVariable String username){
         Request request= requestService.create(new Request(RequestStatus.WAITING, username));
         RequestDto dto= new RequestDto(request.getStatus().toString(),request.getUsername());
@@ -59,6 +62,7 @@ public class RequestController {
     
     @CrossOrigin(origins = "*")
     @PutMapping("/accept")
+    @PreAuthorize("hasAuthority('admin:update')")
     public ResponseEntity<RequestDto> accept(@RequestBody Request request){
         request.setStatus(RequestStatus.ACCEPTED);
         Request req=requestService.create(request);
@@ -80,6 +84,7 @@ public class RequestController {
 
     @CrossOrigin(origins = "*")
     @PutMapping("/reject/{reason}")
+    @PreAuthorize("hasAuthority('admin:update')")
     public ResponseEntity<RequestDto> reject(@RequestBody Request request, @PathVariable String reason){
         request.setStatus(RequestStatus.REJECTED);
         LocalDate currentDate= LocalDate.now();
@@ -98,6 +103,7 @@ public class RequestController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/getByUsername/{username}")
+    @PreAuthorize("hasAuthority('admin:read')")
     public ResponseEntity<RequestDto> getByClientId(@PathVariable String username){
         Request request=requestService.getByClientId(username);
         RequestDto dto = new RequestDto();
