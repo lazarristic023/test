@@ -31,7 +31,6 @@ public class ClientController {
 
 
     @PostMapping("/register")
-    @PreAuthorize("hasAuthority('client:create')")
     public ResponseEntity<ClientDto> registerClient(@RequestBody ClientDto clientDto) {
         Client client = clientMapper.mapToModel(clientDto);
         Client savedClient = clientService.save(client);

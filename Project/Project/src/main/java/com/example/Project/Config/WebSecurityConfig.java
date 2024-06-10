@@ -40,6 +40,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class WebSecurityConfig {
 
     private static final String[] WHITE_LIST_URL = {"api/authentication/**",
+            "/api/authentication/**",
+            "api/client/register",
+            "api/requests/create/**",
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**",

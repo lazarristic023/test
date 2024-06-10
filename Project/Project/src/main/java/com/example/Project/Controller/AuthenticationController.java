@@ -78,7 +78,7 @@ public class AuthenticationController {
             @RequestBody LoginDto authenticationRequest) {
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+                authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
         //ubacuje se korisnik u trenutni security context
         SecurityContextHolder.getContext().setAuthentication(authentication);
