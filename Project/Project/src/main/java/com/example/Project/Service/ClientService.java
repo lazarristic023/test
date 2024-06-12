@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class ClientService {
 
@@ -18,6 +16,7 @@ public class ClientService {
     public ClientService(ClientRepo clientRepository, BCryptPasswordEncoder passwordEncoder) {
         this.clientRepository = clientRepository;
         this.passwordEncoder = passwordEncoder;
+
     }
 
     public Client save(Client client) {
@@ -28,6 +27,10 @@ public class ClientService {
 
     public Client getById(long clientId) {
         return clientRepository.findById(clientId).orElse(null);
+    }
+
+    public Client getByEmail(String email) {
+        return clientRepository.findByEmail(email);
     }
 
     public void updateClientFirmNameById(Long id, String clientFirmName) {
@@ -52,5 +55,6 @@ public class ClientService {
 
     public void updatePhoneById(Long id, String phone) {
         clientRepository.updatePhoneById(id, phone);
+
     }
 }

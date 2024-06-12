@@ -12,23 +12,24 @@ import lombok.Getter;
 import lombok.Setter;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 
 @Entity
 @Table(name="users")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
 
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     public long id;
 
     @NotEmpty
@@ -45,7 +46,33 @@ public class User implements UserDetails {
 
     private Boolean emailChecked;
 
+    @NotEmpty
+    private String city;
+
+    @NotEmpty
+    private String country;
+
+    @NotEmpty
+    private String phone;
+
     public User(){}
+
+    public User(String username, String email, String password, Role role,String city,String country,String phone) {
+        this.city = city;
+        this.country = country;
+        this.phone = phone;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+
+    public User(String city,String country,String phone){
+        this.country = country;
+        this.city = city;
+        this.phone = phone;
+    }
 
     public User(String username, String email, String password, Role role) {
         this.username = username;
@@ -53,7 +80,6 @@ public class User implements UserDetails {
         this.password = password;
         this.role = role;
     }
-
 
     @Override
     public String getUsername() {
@@ -83,7 +109,8 @@ public class User implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        //return List.of(new SimpleGrantedAuthority(role.name()));
+        return  role.getAuthorities();
     }
 
 }

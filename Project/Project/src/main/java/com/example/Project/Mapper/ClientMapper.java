@@ -3,6 +3,7 @@ package com.example.Project.Mapper;
 import com.example.Project.Dto.ClientDto;
 import com.example.Project.Enum.PackageType;
 import com.example.Project.Model.Client;
+
 import com.example.Project.Enum.Face;
 import com.example.Project.Enum.Role;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ public class ClientMapper {
 
     public ClientDto mapToDto(Client client) {
         ClientDto clientDto = new ClientDto();
+        clientDto.setTfaEnabled(clientDto.isTfaEnabled());
         clientDto.setUsername(client.getUsername());
         clientDto.setEmail(client.getEmail());
         clientDto.setPassword(client.getPassword());
@@ -23,18 +25,18 @@ public class ClientMapper {
         clientDto.setCountry(client.getCountry());
         clientDto.setPhone(client.getPhone());
         clientDto.setType(client.getType().toString());
+
         clientDto.setPackageType(client.getPackageType().toString());
         return clientDto;
     }
 
     public Client mapToModel(ClientDto clientDto) {
         Client client = new Client();
+        client.setTfaEnabled(clientDto.isTfaEnabled());
         client.setUsername(clientDto.getUsername());
         client.setEmail(clientDto.getEmail());
         client.setPassword(clientDto.getPassword());
-        if(clientDto.getRole().equals("CLIENT")) client.setRole(Role.CLIENT);
-        else if (clientDto.getRole().equals("EMPLOYEE")) client.setRole(Role.EMPLOYEE);
-        else client.setRole(Role.ADMINISTRATOR);
+        client.setRole(Role.CLIENT);
         client.setClientFirmName(clientDto.getClientFirmName());
         client.setClientSurnameFirmPIB(clientDto.getClientSurnameFirmPIB());
         client.setClientFirmResidentialAddress(clientDto.getClientFirmResidentialAddress());
@@ -43,11 +45,12 @@ public class ClientMapper {
         client.setPhone(clientDto.getPhone());
         if(clientDto.getType().equals("PHYSICALLY")) client.setType(Face.PHYSICALLY);
         else client.setType(Face.LEGALLY);
+
         if(clientDto.getPackageType().equals("BASIC")) client.setPackageType(PackageType.BASIC);
         else if (clientDto.getPackageType().equals("STANDARD")) client.setPackageType(PackageType.STANDARD);
         else client.setPackageType(PackageType.GOLD);
         return client;
     }
 
-
+    
 }

@@ -1,8 +1,10 @@
 package com.example.Project.Service;
 
 
+import com.example.Project.Model.PasswordlessToken;
 import com.example.Project.Model.EmailToken;
 import com.example.Project.Model.User;
+import com.example.Project.Utilities.TokenUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,12 @@ public class EmailService {
     private UserService userService;
 
     @Autowired
+    private TokenUtils tokenUtils;
+
+    @Autowired
+    private PasswordlessTokenService passwordlessTokenService;
+
+    @Autowired
     private EmailTokenService emailTokenService;
 
 
@@ -49,8 +57,9 @@ public class EmailService {
         long expiryTimestamp = expiryDateTime.toEpochSecond(ZoneOffset.UTC);
 
         // Dodajte vremensko ograničenje u link
-        String link = "http://localhost:8081/api/authentication/verify?email=" + user.getEmail() + "&id=" + user.getId() + "&expiry=" + expiryTimestamp;
+        //String link = "http://localhost:8081/api/authentication/verify?email=" + user.getEmail() + "&id=" + user.getId() + "&expiry=" + expiryTimestamp;
 
+        String link = "http://localhost:4200/confirmAccount?email=" + user.getEmail() + "&id=" + user.getId() + "&expiry=" + expiryTimestamp;
         // Dodajte token u link
         link += "&token=" + token;
 
@@ -101,6 +110,23 @@ public class EmailService {
 
         helper.setText(text);
         javaMailSender.send(message);
+    }
+
+    public void sendPasswordlessLoginLink(User user) {
+        String subject = "Passwordless login";
+
+        try {
+            String token = tokenUtils.generatePasswordlessToken(user.getEmail());
+            PasswordlessToken passwordlessToken = new PasswordlessToken(token, false);
+            passwordlessTokenService.saveToken(passwordlessToken);
+            String text ="Log in by clicking on the link: " + "http://localhost:4200/redirectPasswordlessLogin?token=" + token;
+
+            sendMess(user, subject,text);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String generateToken(User user) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
