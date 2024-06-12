@@ -13,6 +13,7 @@ public class ClientMapper {
 
     public ClientDto mapToDto(Client client) {
         ClientDto clientDto = new ClientDto();
+        clientDto.setTfaEnabled(clientDto.isTfaEnabled());
         clientDto.setUsername(client.getUsername());
         clientDto.setEmail(client.getEmail());
         clientDto.setPassword(client.getPassword());
@@ -31,6 +32,7 @@ public class ClientMapper {
 
     public Client mapToModel(ClientDto clientDto) {
         Client client = new Client();
+        client.setTfaEnabled(clientDto.isTfaEnabled());
         client.setUsername(clientDto.getUsername());
         client.setEmail(clientDto.getEmail());
         client.setPassword(clientDto.getPassword());

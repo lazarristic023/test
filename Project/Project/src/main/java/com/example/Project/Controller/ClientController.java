@@ -6,6 +6,7 @@ import com.example.Project.Model.Client;
 
 import com.example.Project.Model.User;
 import com.example.Project.Service.ClientService;
+import com.example.Project.Service.TwoFactorAuthenticationService;
 import com.example.Project.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +29,17 @@ public class ClientController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TwoFactorAuthenticationService tfaService;
+
 
 
     @PostMapping("/register")
     public ResponseEntity<ClientDto> registerClient(@RequestBody ClientDto clientDto) {
         Client client = clientMapper.mapToModel(clientDto);
+        if (clientDto.isTfaEnabled()) {
+            client.setSecret(tfaService.generateNewSecret());
+        }
         Client savedClient = clientService.save(client);
         ClientDto savedClientDto = clientMapper.mapToDto(savedClient);
         return ResponseEntity.ok(savedClientDto);

@@ -57,8 +57,9 @@ public class EmailService {
         long expiryTimestamp = expiryDateTime.toEpochSecond(ZoneOffset.UTC);
 
         // Dodajte vremensko ograničenje u link
-        String link = "http://localhost:8081/api/authentication/verify?email=" + user.getEmail() + "&id=" + user.getId() + "&expiry=" + expiryTimestamp;
+        //String link = "http://localhost:8081/api/authentication/verify?email=" + user.getEmail() + "&id=" + user.getId() + "&expiry=" + expiryTimestamp;
 
+        String link = "http://localhost:4200/confirmAccount?email=" + user.getEmail() + "&id=" + user.getId() + "&expiry=" + expiryTimestamp;
         // Dodajte token u link
         link += "&token=" + token;
 

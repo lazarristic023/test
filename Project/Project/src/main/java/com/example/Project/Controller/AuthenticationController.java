@@ -6,16 +6,8 @@ import com.example.Project.Dto.LoginDto;
 import com.example.Project.Dto.UserDto;
 import com.example.Project.Enum.PackageType;
 import com.example.Project.Enum.Role;
-import com.example.Project.Model.PasswordlessToken;
-import com.example.Project.Model.EmailToken;
-import com.example.Project.Model.User;
-import com.example.Project.Model.Client;
-import com.example.Project.Model.UserTokenState;
-import com.example.Project.Service.ClientService;
-import com.example.Project.Service.EmailService;
-import com.example.Project.Service.PasswordlessTokenService;
-import com.example.Project.Service.EmailTokenService;
-import com.example.Project.Service.UserService;
+import com.example.Project.Model.*;
+import com.example.Project.Service.*;
 import com.example.Project.Service.impl.UserServiceImpl;
 import com.example.Project.Utilities.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +15,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +31,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -71,6 +65,9 @@ public class AuthenticationController {
     @Autowired
     private EmailTokenService emailTokenService;
 
+    @Autowired
+    private TwoFactorAuthenticationService tfaService;
+
 
     @CrossOrigin(origins = "*")
     @PostMapping("/login")
@@ -91,13 +88,21 @@ public class AuthenticationController {
         rolesString.add(role.toString());
 
 
+        if (role.equals(Role.CLIENT)) {
+            Client client = clientService.getById(user.getId());
+            if (client.isTfaEnabled()) {
+                return ResponseEntity.ok(new UserTokenState("", 0,"",0, true, ""));
+            }
+        }
+
+
         String jwt = tokenUtils.generateTokens(user.getUsername(),rolesString, user.getId())[0];
         String refreshToken = tokenUtils.generateTokens(user.getUsername(),rolesString, user.getId())[1];
         int expiresIn = tokenUtils.getACCESS_TOKEN_EXPIRES_IN();
         int refreshExpiresIn = tokenUtils.getREFRESH_TOKEN_EXPIRES_IN();
 
 
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn,refreshToken,refreshExpiresIn));
+        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn,refreshToken,refreshExpiresIn, false, ""));
     }
 
 
@@ -122,7 +127,7 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value="/verify", method = RequestMethod.GET)
-    public ResponseEntity<Boolean> verifyAccount(@Param("email")String email, @Param("id")Long id,@Param("expiry") Long expiry,@Param("token")String token,HttpServletResponse response) throws IOException {
+    public ResponseEntity<?> verifyAccount(@Param("email")String email, @Param("id")Long id,@Param("expiry") Long expiry,@Param("token")String token,HttpServletResponse response) throws IOException {
 
         EmailToken emailToken=emailTokenService.getByClientId(id);
         //vec bio na linku
@@ -134,15 +139,22 @@ public class AuthenticationController {
                 response.sendRedirect("http://localhost:4200/email-link-invalid");
             }else{
                 //nije bio na linku i token nije istekao
-                User client=userService.getById(id);
+                Client client=clientService.getById(id);
                 client.setEmailChecked(true);
                 userService.save(client);
 
+                String secretImageUrl = "";
+                if(client.isTfaEnabled()) {
+                    secretImageUrl = tfaService.generateQrCodeImageUri(client.getSecret());
+                }
                 //update token
                 emailToken.setIsUsed(true);
                 emailTokenService.saveToken(emailToken);
-                String redirectUrl = String.format("http://localhost:4200/successfully/%s/%d/%d/%s", email, id, expiry, token);
-                response.sendRedirect(redirectUrl);
+//                String redirectUrl = String.format("http://localhost:4200/successfully/%s/%s", client.getEmail(), secretImageUrl);
+//                response.sendRedirect(redirectUrl);
+                UserTokenState tokenState = new UserTokenState("",0,"",0,true, secretImageUrl);
+
+                return ResponseEntity.ok(tokenState);
             }
 
         }
@@ -257,6 +269,28 @@ public class AuthenticationController {
 
 
         return new ResponseEntity<>(userDto,HttpStatus.OK);
+    }
+
+    @PostMapping("/verifyTfaCode")
+    public ResponseEntity<?> verifyTfaCode(
+            @RequestBody TfaCodeVerificationRequest verificationRequest
+    ) {
+        Client client = clientService.getByEmail(verificationRequest.getEmail());
+        if (client == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (tfaService.isOtpNotValid(client.getSecret(), verificationRequest.getCode())) {
+
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        List<String> rolesString = new ArrayList<>();
+        rolesString.add(client.getRole().toString());
+        String[] tokens = tokenUtils.generateTokens(client.getUsername(), rolesString, client.id);
+
+        return ResponseEntity.ok(new UserTokenState(tokens[0], 1,tokens[1],1, client.isTfaEnabled(), ""));
+
     }
 
 }
