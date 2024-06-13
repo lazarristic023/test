@@ -58,7 +58,9 @@ public class WebSecurityConfig {
             "/*/*.html",
             "/*/*.css",
             "/*/*.js",
-            "/"};
+            "/",
+            "/api/commercial/commercial-click"
+    };
 
 
     @Bean

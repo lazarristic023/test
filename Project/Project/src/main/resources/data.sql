@@ -1,14 +1,14 @@
 INSERT INTO users(
 	email_checked, role, id, email, password, username)
-	VALUES (false, 2, 1, 'nikolinaskiljevic@gmail.com', '$2a$12$6JZF6T2A2X0Ai9nolc5aC.ChlP2XOv8HmBg1l.8njr196/6RxiJji', 'admin');
+	VALUES (false, 2, 1, 'niiljevic@gmail.com', '$2a$12$j8EVmecAxJdZl.Oqa0eSme4oOOBw6jyol6IMd1F7WOKILcy.YNfG2', 'admin');
 
 INSERT INTO users(
 	email_checked, role, id, email, password, username)
-	VALUES (false, 0, 2, 'nikolinaskiljevic@gmail.com', '$2a$12$6JZF6T2A2X0Ai9nolc5aC.ChlP2XOv8HmBg1l.8njr196/6RxiJji', 'employee1');
+	VALUES (false, 1, 2, 'nikolinaskiljevic@gmail.com', '$2a$12$j8EVmecAxJdZl.Oqa0eSme4oOOBw6jyol6IMd1F7WOKILcy.YNfG2', 'employee1');
 
 INSERT INTO users(
 	email_checked, role, id, email, password, username)
-	VALUES (false, 0, 3, 'nikolinaskiljevic@gmail.com', '$2a$12$6JZF6T2A2X0Ai9nolc5aC.ChlP2XOv8HmBg1l.8njr196/6RxiJji', 'employee2');
+	VALUES (false, 1, 3, 'nikolievic@gmail.com', '$2a$12$j8EVmecAxJdZl.Oqa0eSme4oOOBw6jyol6IMd1F7WOKILcy.YNfG2', 'employee2');
 
 
 
