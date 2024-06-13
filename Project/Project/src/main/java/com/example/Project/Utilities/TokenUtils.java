@@ -29,13 +29,25 @@ public class TokenUtils {
     public String SECRET;
 
 
-    @Getter
+    /*@Getter
     @Value("900000")
     private int REFRESH_TOKEN_EXPIRES_IN;
 
     @Getter
     @Value("100000")
+    private int ACCESS_TOKEN_EXPIRES_IN;*/
+
+    @Getter
+    @Value("1500000")
+    private int REFRESH_TOKEN_EXPIRES_IN;
+
+    @Getter
+    @Value("900000")
     private int ACCESS_TOKEN_EXPIRES_IN;
+
+    @Getter
+    @Value("600000")
+    private int PASSWORDLESS_TOKEN_EXPIRES_IN;
 
 
     @Value("Authorization")
@@ -134,6 +146,19 @@ public class TokenUtils {
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
     }
+
+    public String generatePasswordlessToken(String email) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + PASSWORDLESS_TOKEN_EXPIRES_IN);
+
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .compact();
+    }
+
     public long getUserIdFromToken(String token) {
         long userId;
 

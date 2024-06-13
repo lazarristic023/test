@@ -29,6 +29,10 @@ public class ClientService {
         return clientRepository.findById(clientId).orElse(null);
     }
 
+    public Client getByEmail(String email) {
+        return clientRepository.findByEmail(email);
+    }
+
     public void updateClientFirmNameById(Long id, String clientFirmName) {
         clientRepository.updateClientFirmNameById(id, clientFirmName);
     }

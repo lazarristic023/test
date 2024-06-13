@@ -5,6 +5,8 @@ import com.example.Project.Repository.CommercialRequestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommercialRequestService {
 
@@ -16,4 +18,8 @@ public class CommercialRequestService {
     }
 
     public CommercialRequest save(CommercialRequest commercialRequest) { return commercialRequestRepository.save(commercialRequest); }
+
+    public List<CommercialRequest> getAll(){return commercialRequestRepository.findAll();}
+
+    public CommercialRequest getByClient(Long id){return  commercialRequestRepository.findByClientIdAndIsAccepted(id,false);}
 }

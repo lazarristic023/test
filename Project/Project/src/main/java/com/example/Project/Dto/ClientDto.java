@@ -32,7 +32,9 @@ public class ClientDto {
 
     private String packageType;
 
-    public ClientDto(String username, String email, String password, String role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, String type, String packageType) {
+    private boolean tfaEnabled;
+
+    public ClientDto(String username, String email, String password, String role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, String type, String packageType, boolean tfaEnabled) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -45,6 +47,7 @@ public class ClientDto {
         this.phone = phone;
         this.type = type;
         this.packageType = packageType;
+        this.tfaEnabled = tfaEnabled;
     }
 
     public ClientDto() {

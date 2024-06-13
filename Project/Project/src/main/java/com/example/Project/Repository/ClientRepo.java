@@ -1,6 +1,7 @@
 package com.example.Project.Repository;
 
 import com.example.Project.Model.Client;
+import com.example.Project.Model.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,4 +41,7 @@ public interface ClientRepo extends JpaRepository<Client,Long> {
     @Modifying
     @Query("UPDATE Client c SET c.phone = :phone WHERE c.id = :id")
     void updatePhoneById(Long id, String phone);
+
+    @Query("SELECT c FROM Client c WHERE c.email = ?1")
+    Client findByEmail(String email);
 }

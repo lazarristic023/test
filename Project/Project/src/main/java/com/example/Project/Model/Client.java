@@ -36,19 +36,25 @@ public class Client extends User {
     @NotEmpty
     private PackageType packageType;
 
+    @NotEmpty
+    private boolean tfaEnabled;
+
+    private String secret;
+
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
-    public Client(String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType) {
+    public Client(String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType, boolean tfaEnabled) {
         super(city,country,phone);
         this.clientFirmName = clientFirmName;
         this.clientSurnameFirmPIB = clientSurnameFirmPIB;
         this.clientFirmResidentialAddress = clientFirmResidentialAddress;
         this.type = type;
         this.packageType = packageType;
+        this.tfaEnabled = tfaEnabled;
     }
 
-    public Client(String username, String email, String password, Role role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType) {
+    public Client(String username, String email, String password, Role role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType, boolean tfaEnabled) {
         super(username, email, password, role,city,country,phone);
 
         this.clientFirmName = clientFirmName;
@@ -57,6 +63,7 @@ public class Client extends User {
 
         this.type = type;
         this.packageType = packageType;
+        this.tfaEnabled = tfaEnabled;
     }
 
 
