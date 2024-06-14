@@ -9,6 +9,8 @@ import com.example.Project.Model.Employee;
 import com.example.Project.Repository.CompanyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +20,10 @@ public class CompanyService {
     @Autowired
     private CompanyRepo companyRepo;
 
-    public List<CompanyDto> getAll(){
+    private static final Logger logger = LoggerFactory.getLogger(CompanyService.class);
 
+    public List<CompanyDto> getAll() {
+        try {
             List<Company> companies = companyRepo.findAll();
             List<CompanyDto> companyDTOs = new ArrayList<>();
 
@@ -48,8 +52,6 @@ public class CompanyService {
                 }
                 companyDTO.setClients(clientDTOs);
 
-                companyDTOs.add(companyDTO);
-
                 // Dodaj zaposlenike za ovu kompaniju
                 List<EmployeeDto> employeeDTOs = new ArrayList<>();
                 for (Employee employee : company.getEmployees()) {
@@ -67,10 +69,18 @@ public class CompanyService {
                     employeeDTOs.add(employeeDTO);
                 }
                 companyDTO.setEmployees(employeeDTOs);
+
+                companyDTOs.add(companyDTO);
             }
 
+            logger.info("EventID: 5000 | Date: {} | Time: {} | Source: CompanyService | Type: INFO | Message: Successfully retrieved all companies",
+                    java.time.LocalDate.now(), java.time.LocalTime.now());
 
             return companyDTOs;
+        } catch (Exception e) {
+            logger.error("EventID: 5000 | Date: {} | Time: {} | Source: CompanyService | Type: ERROR | Message: Error retrieving all companies | Error: {}",
+                    java.time.LocalDate.now(), java.time.LocalTime.now(), e.getMessage());
+            throw e;
         }
-
+    }
 }

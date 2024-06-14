@@ -1,0 +1,654 @@
+2024-06-14 00:15:00.646 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-14 00:15:00.798 DEBUG org.hibernate.SQL - 
+    alter table if exists admins 
+       drop constraint if exists FKanhsicqm3lc8ya77tr7r0je18
+2024-06-14 00:15:00.811 DEBUG org.hibernate.SQL - 
+    alter table if exists clients 
+       drop constraint if exists FKs3vg3lr3eadee5luiq6c78t1i
+2024-06-14 00:15:00.813 DEBUG org.hibernate.SQL - 
+    alter table if exists clients 
+       drop constraint if exists FK1hgwdp9vl25xl9i7s354sifey
+2024-06-14 00:15:00.815 DEBUG org.hibernate.SQL - 
+    alter table if exists employees 
+       drop constraint if exists FK1ekpcbo0lmdx6ou8e3fh9j4lq
+2024-06-14 00:15:00.817 DEBUG org.hibernate.SQL - 
+    alter table if exists employees 
+       drop constraint if exists FKd6th9xowehhf1kmmq1dsseq28
+2024-06-14 00:15:00.819 DEBUG org.hibernate.SQL - 
+    drop table if exists admins cascade
+2024-06-14 00:15:00.831 DEBUG org.hibernate.SQL - 
+    drop table if exists clients cascade
+2024-06-14 00:15:00.839 DEBUG org.hibernate.SQL - 
+    drop table if exists commercial_requests cascade
+2024-06-14 00:15:00.847 DEBUG org.hibernate.SQL - 
+    drop table if exists commercials cascade
+2024-06-14 00:15:00.856 DEBUG org.hibernate.SQL - 
+    drop table if exists companies cascade
+2024-06-14 00:15:00.867 DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade
+2024-06-14 00:15:00.876 DEBUG org.hibernate.SQL - 
+    drop table if exists passwordless_tokens cascade
+2024-06-14 00:15:00.884 DEBUG org.hibernate.SQL - 
+    drop table if exists requests cascade
+2024-06-14 00:15:00.891 DEBUG org.hibernate.SQL - 
+    drop table if exists tokens cascade
+2024-06-14 00:15:00.896 DEBUG org.hibernate.SQL - 
+    drop table if exists users cascade
+2024-06-14 00:15:00.942 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-06-14 00:15:00.964 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-06-14 00:23:30.611 INFO  c.example.Project.ProjectApplication - Starting ProjectApplication using Java 22.0.1 with PID 6572 (C:\Users\User\Desktop\BSEP\bsep-ra-2024-kt2-tim-16\Project\Project\target\classes started by User in C:\Users\User\Desktop\BSEP\bsep-ra-2024-kt2-tim-16\Project\Project)
+2024-06-14 00:23:30.616 DEBUG c.example.Project.ProjectApplication - Running with Spring Boot v3.2.5, Spring v6.1.6
+2024-06-14 00:23:30.618 INFO  c.example.Project.ProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2024-06-14 00:23:30.780 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-06-14 00:23:30.781 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-06-14 00:23:35.721 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-14 00:23:36.174 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 427 ms. Found 10 JPA repository interfaces.
+2024-06-14 00:23:43.866 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8081 (https)
+2024-06-14 00:23:43.903 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2024-06-14 00:23:43.917 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-06-14 00:23:43.918 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-06-14 00:23:44.167 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-06-14 00:23:44.174 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 13385 ms
+2024-06-14 00:23:47.859 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-14 00:23:48.163 INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-06-14 00:23:48.313 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-06-14 00:23:49.356 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-14 00:23:49.474 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-06-14 00:23:50.049 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2e7afbf5
+2024-06-14 00:23:50.054 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-06-14 00:23:50.197 WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-06-14 00:23:55.116 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-06-14 00:23:55.176 DEBUG org.hibernate.SQL - 
+    alter table if exists admins 
+       drop constraint if exists FKanhsicqm3lc8ya77tr7r0je18
+2024-06-14 00:23:55.192 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.192 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - relation "admins" does not exist, skipping
+2024-06-14 00:23:55.193 DEBUG org.hibernate.SQL - 
+    alter table if exists clients 
+       drop constraint if exists FKs3vg3lr3eadee5luiq6c78t1i
+2024-06-14 00:23:55.194 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.195 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - relation "clients" does not exist, skipping
+2024-06-14 00:23:55.195 DEBUG org.hibernate.SQL - 
+    alter table if exists clients 
+       drop constraint if exists FK1hgwdp9vl25xl9i7s354sifey
+2024-06-14 00:23:55.196 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.197 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - relation "clients" does not exist, skipping
+2024-06-14 00:23:55.197 DEBUG org.hibernate.SQL - 
+    alter table if exists employees 
+       drop constraint if exists FK1ekpcbo0lmdx6ou8e3fh9j4lq
+2024-06-14 00:23:55.198 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.199 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - relation "employees" does not exist, skipping
+2024-06-14 00:23:55.199 DEBUG org.hibernate.SQL - 
+    alter table if exists employees 
+       drop constraint if exists FKd6th9xowehhf1kmmq1dsseq28
+2024-06-14 00:23:55.201 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.202 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - relation "employees" does not exist, skipping
+2024-06-14 00:23:55.203 DEBUG org.hibernate.SQL - 
+    drop table if exists admins cascade
+2024-06-14 00:23:55.204 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.205 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - table "admins" does not exist, skipping
+2024-06-14 00:23:55.205 DEBUG org.hibernate.SQL - 
+    drop table if exists clients cascade
+2024-06-14 00:23:55.206 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.206 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - table "clients" does not exist, skipping
+2024-06-14 00:23:55.207 DEBUG org.hibernate.SQL - 
+    drop table if exists commercial_requests cascade
+2024-06-14 00:23:55.208 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.209 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - table "commercial_requests" does not exist, skipping
+2024-06-14 00:23:55.209 DEBUG org.hibernate.SQL - 
+    drop table if exists commercials cascade
+2024-06-14 00:23:55.211 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.212 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - table "commercials" does not exist, skipping
+2024-06-14 00:23:55.212 DEBUG org.hibernate.SQL - 
+    drop table if exists companies cascade
+2024-06-14 00:23:55.213 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.214 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - table "companies" does not exist, skipping
+2024-06-14 00:23:55.214 DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade
+2024-06-14 00:23:55.215 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.215 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - table "employees" does not exist, skipping
+2024-06-14 00:23:55.215 DEBUG org.hibernate.SQL - 
+    drop table if exists passwordless_tokens cascade
+2024-06-14 00:23:55.217 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.217 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - table "passwordless_tokens" does not exist, skipping
+2024-06-14 00:23:55.217 DEBUG org.hibernate.SQL - 
+    drop table if exists requests cascade
+2024-06-14 00:23:55.218 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.219 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - table "requests" does not exist, skipping
+2024-06-14 00:23:55.219 DEBUG org.hibernate.SQL - 
+    drop table if exists tokens cascade
+2024-06-14 00:23:55.220 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.220 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - table "tokens" does not exist, skipping
+2024-06-14 00:23:55.221 DEBUG org.hibernate.SQL - 
+    drop table if exists users cascade
+2024-06-14 00:23:55.223 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2024-06-14 00:23:55.228 WARN  o.h.e.jdbc.spi.SqlExceptionHelper - table "users" does not exist, skipping
+2024-06-14 00:23:55.248 DEBUG org.hibernate.SQL - 
+    create table admins (
+        is_first_logging boolean not null,
+        is_predefined boolean not null,
+        id bigint not null,
+        first_name varchar(255),
+        last_name varchar(255),
+        primary key (id)
+    )
+2024-06-14 00:23:55.277 DEBUG org.hibernate.SQL - 
+    create table clients (
+        package_type smallint check (package_type between 0 and 2),
+        tfa_enabled boolean not null,
+        type smallint check (type between 0 and 1),
+        company_id bigint,
+        id bigint not null,
+        client_firm_name varchar(255),
+        client_firm_residential_address varchar(255),
+        client_surname_firmpib varchar(255),
+        secret varchar(255),
+        primary key (id)
+    )
+2024-06-14 00:23:55.293 DEBUG org.hibernate.SQL - 
+    create table commercial_requests (
+        is_accepted boolean not null,
+        client_id bigint not null,
+        create_deadline_date timestamp(6),
+        end_date timestamp(6),
+        id bigserial not null,
+        start_date timestamp(6),
+        description varchar(255),
+        primary key (id)
+    )
+2024-06-14 00:23:55.314 DEBUG org.hibernate.SQL - 
+    create table commercials (
+        client_id bigint not null,
+        end_date timestamp(6),
+        id bigserial not null,
+        start_date timestamp(6),
+        description varchar(255),
+        primary key (id)
+    )
+2024-06-14 00:23:55.331 DEBUG org.hibernate.SQL - 
+    create table companies (
+        id bigserial not null,
+        address varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2024-06-14 00:23:55.348 DEBUG org.hibernate.SQL - 
+    create table employees (
+        is_first_logging boolean not null,
+        company_id bigint,
+        id bigint not null,
+        first_name varchar(255),
+        last_name varchar(255),
+        primary key (id)
+    )
+2024-06-14 00:23:55.365 DEBUG org.hibernate.SQL - 
+    create table passwordless_tokens (
+        is_used boolean not null,
+        id bigserial not null,
+        token varchar(255),
+        primary key (id)
+    )
+2024-06-14 00:23:55.381 DEBUG org.hibernate.SQL - 
+    create table requests (
+        end_date date,
+        start_date date,
+        status smallint check (status between 0 and 2),
+        id bigserial not null,
+        username varchar(255),
+        primary key (id)
+    )
+2024-06-14 00:23:55.397 DEBUG org.hibernate.SQL - 
+    create table tokens (
+        is_used boolean,
+        client_id bigint not null,
+        expiration_date timestamp(6),
+        id bigserial not null,
+        token varchar(255),
+        primary key (id)
+    )
+2024-06-14 00:23:55.410 DEBUG org.hibernate.SQL - 
+    create table users (
+        email_checked boolean,
+        role smallint check (role between 0 and 2),
+        id bigserial not null,
+        city varchar(255),
+        country varchar(255),
+        email varchar(255),
+        password varchar(255),
+        phone varchar(255),
+        username varchar(255),
+        primary key (id)
+    )
+2024-06-14 00:23:55.435 DEBUG org.hibernate.SQL - 
+    alter table if exists admins 
+       add constraint FKanhsicqm3lc8ya77tr7r0je18 
+       foreign key (id) 
+       references users
+2024-06-14 00:23:55.447 DEBUG org.hibernate.SQL - 
+    alter table if exists clients 
+       add constraint FKs3vg3lr3eadee5luiq6c78t1i 
+       foreign key (company_id) 
+       references companies
+2024-06-14 00:23:55.519 DEBUG org.hibernate.SQL - 
+    alter table if exists clients 
+       add constraint FK1hgwdp9vl25xl9i7s354sifey 
+       foreign key (id) 
+       references users
+2024-06-14 00:23:55.524 DEBUG org.hibernate.SQL - 
+    alter table if exists employees 
+       add constraint FK1ekpcbo0lmdx6ou8e3fh9j4lq 
+       foreign key (company_id) 
+       references companies
+2024-06-14 00:23:55.529 DEBUG org.hibernate.SQL - 
+    alter table if exists employees 
+       add constraint FKd6th9xowehhf1kmmq1dsseq28 
+       foreign key (id) 
+       references users
+2024-06-14 00:23:55.544 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-14 00:23:57.443 INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-06-14 00:24:02.595 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-14 00:24:09.485 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3fa2b971, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@77828ff7, org.springframework.security.web.context.SecurityContextHolderFilter@5fdca8a7, org.springframework.security.web.header.HeaderWriterFilter@2a3be3c5, org.springframework.web.filter.CorsFilter@537b910, org.springframework.security.web.authentication.logout.LogoutFilter@2ccc4b46, com.example.Project.Security.TokenAuthenticationFilter@30eff3a5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7bbe1cb8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7710454a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7b37978f, org.springframework.security.web.session.SessionManagementFilter@280b33d4, org.springframework.security.web.access.ExceptionTranslationFilter@550fd71a, org.springframework.security.web.access.intercept.AuthorizationFilter@5d7aae26]
+2024-06-14 00:24:11.486 WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2024-06-14 00:24:15.854 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-06-14 00:24:15.935 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["https-jsse-nio-8081"]
+2024-06-14 00:24:16.081 INFO  o.a.t.u.net.NioEndpoint.certificate - Connector [https-jsse-nio-8081], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [C:\Users\User\.keystore] using alias [6877445b-e816-42fa-bb10-7cb449c7428e] with trust store [null]
+2024-06-14 00:24:16.151 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8081 (https) with context path ''
+2024-06-14 00:24:16.193 INFO  c.example.Project.ProjectApplication - Started ProjectApplication in 47.322 seconds (process running for 49.87)
+2024-06-14 00:26:00.209 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-14 00:26:00.210 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-06-14 00:26:00.215 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2024-06-14 00:26:01.318 DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        case 
+            when u1_1.id is not null 
+                then 1 
+            when u1_2.id is not null 
+                then 2 
+            when u1_3.id is not null 
+                then 3 
+            when u1_0.id is not null 
+                then 0 
+            end,
+            u1_0.city,
+            u1_0.country,
+            u1_0.email,
+            u1_0.email_checked,
+            u1_0.password,
+            u1_0.phone,
+            u1_0.role,
+            u1_0.username,
+            u1_1.first_name,
+            u1_1.is_first_logging,
+            u1_1.is_predefined,
+            u1_1.last_name,
+            u1_2.client_firm_name,
+            u1_2.client_firm_residential_address,
+            u1_2.client_surname_firmpib,
+            u1_2.company_id,
+            u1_2.package_type,
+            u1_2.secret,
+            u1_2.tfa_enabled,
+            u1_2.type,
+            u1_3.company_id,
+            u1_3.first_name,
+            u1_3.is_first_logging,
+            u1_3.last_name 
+        from
+            users u1_0 
+        left join
+            admins u1_1 
+                on u1_0.id=u1_1.id 
+        left join
+            clients u1_2 
+                on u1_0.id=u1_2.id 
+        left join
+            employees u1_3 
+                on u1_0.id=u1_3.id 
+        where
+            u1_0.username=?
+2024-06-14 00:26:01.377 DEBUG org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.address,
+        c1_0.name 
+    from
+        companies c1_0 
+    where
+        c1_0.id=?
+2024-06-14 00:26:02.790 DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        case 
+            when u1_1.id is not null 
+                then 1 
+            when u1_2.id is not null 
+                then 2 
+            when u1_3.id is not null 
+                then 3 
+            when u1_0.id is not null 
+                then 0 
+            end,
+            u1_0.city,
+            u1_0.country,
+            u1_0.email,
+            u1_0.email_checked,
+            u1_0.password,
+            u1_0.phone,
+            u1_0.role,
+            u1_0.username,
+            u1_1.first_name,
+            u1_1.is_first_logging,
+            u1_1.is_predefined,
+            u1_1.last_name,
+            u1_2.client_firm_name,
+            u1_2.client_firm_residential_address,
+            u1_2.client_surname_firmpib,
+            u1_2.company_id,
+            u1_2.package_type,
+            u1_2.secret,
+            u1_2.tfa_enabled,
+            u1_2.type,
+            u1_3.company_id,
+            u1_3.first_name,
+            u1_3.is_first_logging,
+            u1_3.last_name 
+        from
+            users u1_0 
+        left join
+            admins u1_1 
+                on u1_0.id=u1_1.id 
+        left join
+            clients u1_2 
+                on u1_0.id=u1_2.id 
+        left join
+            employees u1_3 
+                on u1_0.id=u1_3.id 
+        where
+            u1_0.username=?
+2024-06-14 00:26:02.794 DEBUG org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.address,
+        c1_0.name 
+    from
+        companies c1_0 
+    where
+        c1_0.id=?
+2024-06-14 00:26:02.808 INFO  c.e.P.S.CommercialRequestService - EventID: 1001 | Date: 2024-06-14 | Time: 00:26:02.808606600 | Source: UserServiceImpl | Type: INFO | Message: Get user by id | UserId: 2
+2024-06-14 00:26:02.822 DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        case 
+            when u1_1.id is not null 
+                then 1 
+            when u1_2.id is not null 
+                then 2 
+            when u1_3.id is not null 
+                then 3 
+            when u1_0.id is not null 
+                then 0 
+            end,
+            u1_0.city,
+            u1_0.country,
+            u1_0.email,
+            u1_0.email_checked,
+            u1_0.password,
+            u1_0.phone,
+            u1_0.role,
+            u1_0.username,
+            u1_1.first_name,
+            u1_1.is_first_logging,
+            u1_1.is_predefined,
+            u1_1.last_name,
+            u1_2.client_firm_name,
+            u1_2.client_firm_residential_address,
+            u1_2.client_surname_firmpib,
+            c1_0.id,
+            c1_0.address,
+            c1_0.name,
+            u1_2.package_type,
+            u1_2.secret,
+            u1_2.tfa_enabled,
+            u1_2.type,
+            c2_0.id,
+            c2_0.address,
+            c2_0.name,
+            u1_3.first_name,
+            u1_3.is_first_logging,
+            u1_3.last_name 
+        from
+            users u1_0 
+        left join
+            admins u1_1 
+                on u1_0.id=u1_1.id 
+        left join
+            clients u1_2 
+                on u1_0.id=u1_2.id 
+        left join
+            employees u1_3 
+                on u1_0.id=u1_3.id 
+        left join
+            companies c1_0 
+                on c1_0.id=u1_2.company_id 
+        left join
+            companies c2_0 
+                on c2_0.id=u1_3.company_id 
+        where
+            u1_0.id=?
+2024-06-14 00:26:04.837 DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        case 
+            when u1_1.id is not null 
+                then 1 
+            when u1_2.id is not null 
+                then 2 
+            when u1_3.id is not null 
+                then 3 
+            when u1_0.id is not null 
+                then 0 
+            end,
+            u1_0.city,
+            u1_0.country,
+            u1_0.email,
+            u1_0.email_checked,
+            u1_0.password,
+            u1_0.phone,
+            u1_0.role,
+            u1_0.username,
+            u1_1.first_name,
+            u1_1.is_first_logging,
+            u1_1.is_predefined,
+            u1_1.last_name,
+            u1_2.client_firm_name,
+            u1_2.client_firm_residential_address,
+            u1_2.client_surname_firmpib,
+            u1_2.company_id,
+            u1_2.package_type,
+            u1_2.secret,
+            u1_2.tfa_enabled,
+            u1_2.type,
+            u1_3.company_id,
+            u1_3.first_name,
+            u1_3.is_first_logging,
+            u1_3.last_name 
+        from
+            users u1_0 
+        left join
+            admins u1_1 
+                on u1_0.id=u1_1.id 
+        left join
+            clients u1_2 
+                on u1_0.id=u1_2.id 
+        left join
+            employees u1_3 
+                on u1_0.id=u1_3.id 
+        where
+            u1_0.username=?
+2024-06-14 00:26:04.849 DEBUG org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.address,
+        c1_0.name 
+    from
+        companies c1_0 
+    where
+        c1_0.id=?
+2024-06-14 00:26:04.952 INFO  c.e.P.S.CommercialRequestService - EventID: 1013 | Date: 2024-06-14 | Time: 00:26:04.952821400 | Source: UserServiceImpl | Type: INFO | Message: Deleting client | ClientId: 2
+2024-06-14 00:26:04.954 DEBUG org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_1.city,
+        c1_1.country,
+        c1_1.email,
+        c1_1.email_checked,
+        c1_1.password,
+        c1_1.phone,
+        c1_1.role,
+        c1_1.username,
+        c1_0.client_firm_name,
+        c1_0.client_firm_residential_address,
+        c1_0.client_surname_firmpib,
+        c2_0.id,
+        c2_0.address,
+        c2_0.name,
+        c1_0.package_type,
+        c1_0.secret,
+        c1_0.tfa_enabled,
+        c1_0.type 
+    from
+        clients c1_0 
+    join
+        users c1_1 
+            on c1_0.id=c1_1.id 
+    left join
+        companies c2_0 
+            on c2_0.id=c1_0.company_id 
+    where
+        c1_0.id=?
+2024-06-14 00:26:05.027 DEBUG org.hibernate.SQL - 
+    delete 
+    from
+        clients 
+    where
+        id=?
+2024-06-14 00:26:05.032 DEBUG org.hibernate.SQL - 
+    delete 
+    from
+        users 
+    where
+        id=?
+2024-06-14 00:26:05.043 DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        case 
+            when u1_1.id is not null 
+                then 1 
+            when u1_2.id is not null 
+                then 2 
+            when u1_3.id is not null 
+                then 3 
+            when u1_0.id is not null 
+                then 0 
+            end,
+            u1_0.city,
+            u1_0.country,
+            u1_0.email,
+            u1_0.email_checked,
+            u1_0.password,
+            u1_0.phone,
+            u1_0.role,
+            u1_0.username,
+            u1_1.first_name,
+            u1_1.is_first_logging,
+            u1_1.is_predefined,
+            u1_1.last_name,
+            u1_2.client_firm_name,
+            u1_2.client_firm_residential_address,
+            u1_2.client_surname_firmpib,
+            c1_0.id,
+            c1_0.address,
+            c1_0.name,
+            u1_2.package_type,
+            u1_2.secret,
+            u1_2.tfa_enabled,
+            u1_2.type,
+            c2_0.id,
+            c2_0.address,
+            c2_0.name,
+            u1_3.first_name,
+            u1_3.is_first_logging,
+            u1_3.last_name 
+        from
+            users u1_0 
+        left join
+            admins u1_1 
+                on u1_0.id=u1_1.id 
+        left join
+            clients u1_2 
+                on u1_0.id=u1_2.id 
+        left join
+            employees u1_3 
+                on u1_0.id=u1_3.id 
+        left join
+            companies c1_0 
+                on c1_0.id=u1_2.company_id 
+        left join
+            companies c2_0 
+                on c2_0.id=u1_3.company_id 
+        where
+            u1_0.id=?
+2024-06-14 00:26:05.050 INFO  c.e.P.S.CommercialRequestService - EventID: 1015 | Date: 2024-06-14 | Time: 00:26:05.050251600 | Source: UserServiceImpl | Type: INFO | Message: Deleting all commercial requests | ClientId: 2
+2024-06-14 00:26:05.096 DEBUG org.hibernate.SQL - 
+    delete 
+    from
+        commercial_requests 
+    where
+        client_id=?
+2024-06-14 00:26:05.106 INFO  c.e.P.S.CommercialRequestService - EventID: 1016 | Date: 2024-06-14 | Time: 00:26:05.106252800 | Source: UserServiceImpl | Type: INFO | Message: Deleting all commercials | ClientId: 2
+2024-06-14 00:26:05.111 DEBUG org.hibernate.SQL - 
+    delete 
+    from
+        commercials 
+    where
+        client_id=?
+2024-06-14 00:26:05.117 INFO  c.e.P.S.CommercialRequestService - Deleted client with id: 2
+2024-06-14 00:27:48.942 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-14 00:27:48.944 DEBUG org.hibernate.SQL - 
+    alter table if exists admins 
+       drop constraint if exists FKanhsicqm3lc8ya77tr7r0je18
+2024-06-14 00:27:48.948 DEBUG org.hibernate.SQL - 
+    alter table if exists clients 
+       drop constraint if exists FKs3vg3lr3eadee5luiq6c78t1i
+2024-06-14 00:27:48.950 DEBUG org.hibernate.SQL - 
+    alter table if exists clients 
+       drop constraint if exists FK1hgwdp9vl25xl9i7s354sifey
+2024-06-14 00:27:48.953 DEBUG org.hibernate.SQL - 
+    alter table if exists employees 
+       drop constraint if exists FK1ekpcbo0lmdx6ou8e3fh9j4lq
+2024-06-14 00:27:48.955 DEBUG org.hibernate.SQL - 
+    alter table if exists employees 
+       drop constraint if exists FKd6th9xowehhf1kmmq1dsseq28
+2024-06-14 00:27:48.958 DEBUG org.hibernate.SQL - 
+    drop table if exists admins cascade
+2024-06-14 00:27:48.967 DEBUG org.hibernate.SQL - 
+    drop table if exists clients cascade
+2024-06-14 00:27:48.976 DEBUG org.hibernate.SQL - 
+    drop table if exists commercial_requests cascade
+2024-06-14 00:27:48.983 DEBUG org.hibernate.SQL - 
+    drop table if exists commercials cascade
+2024-06-14 00:27:48.990 DEBUG org.hibernate.SQL - 
+    drop table if exists companies cascade
+2024-06-14 00:27:49.007 DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade
+2024-06-14 00:27:49.014 DEBUG org.hibernate.SQL - 
+    drop table if exists passwordless_tokens cascade
+2024-06-14 00:27:49.020 DEBUG org.hibernate.SQL - 
+    drop table if exists requests cascade
+2024-06-14 00:27:49.029 DEBUG org.hibernate.SQL - 
+    drop table if exists tokens cascade
+2024-06-14 00:27:49.034 DEBUG org.hibernate.SQL - 
+    drop table if exists users cascade
+2024-06-14 00:27:49.050 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-06-14 00:27:49.063 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

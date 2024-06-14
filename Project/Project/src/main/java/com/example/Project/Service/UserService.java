@@ -3,7 +3,6 @@ package com.example.Project.Service;
 import com.example.Project.Model.Administrator;
 import com.example.Project.Model.Employee;
 import com.example.Project.Model.User;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,4 +28,6 @@ public interface UserService {
     public Administrator registerAdmin(Administrator administrator);
     public Employee registerEmployee(Employee employee);
     public Employee updateEmployee(Long id, Employee updatedEmployee);
+
+    public int DeleteClient(Long id);
 }

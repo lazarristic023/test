@@ -2,10 +2,8 @@ package com.example.Project.Controller;
 
 import com.example.Project.Dto.CompanyDto;
 import com.example.Project.Model.Administrator;
-import com.example.Project.Model.Company;
 import com.example.Project.Model.Employee;
 import com.example.Project.Model.User;
-import com.example.Project.Repository.EmployeeRepo;
 import com.example.Project.Service.CompanyService;
 import com.example.Project.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,5 +78,18 @@ public class UserController {
     public ResponseEntity<Employee> registerEmployee(@RequestBody Employee employee) {
 
         return ResponseEntity.ok( userService.registerEmployee(employee));
+    }
+
+
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/deleteClient/{id}")
+    @PreAuthorize("hasAuthority('client:delete')")
+    public ResponseEntity<Integer> deleteClient(@PathVariable Long id ) {
+
+        if(userService.DeleteClient(id)==1){
+            return ResponseEntity.ok(1);
+        }
+        return ResponseEntity.ok(0);
     }
 }
