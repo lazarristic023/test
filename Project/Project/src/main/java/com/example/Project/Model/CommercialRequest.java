@@ -45,4 +45,8 @@ public class CommercialRequest {
 
     public CommercialRequest() {
     }
+
+    public boolean isAccepted() {
+        return isAccepted;
+    }
 }

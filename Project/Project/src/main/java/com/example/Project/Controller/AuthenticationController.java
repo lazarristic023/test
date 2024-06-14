@@ -7,6 +7,13 @@ import com.example.Project.Dto.ResetPasswordRequest;
 import com.example.Project.Dto.UserDto;
 import com.example.Project.Enum.PackageType;
 import com.example.Project.Enum.Role;
+import com.example.Project.Model.EmailToken;
+import com.example.Project.Model.Request;
+import com.example.Project.Model.User;
+import com.example.Project.Model.UserTokenState;
+import com.example.Project.Service.EmailTokenService;
+import com.example.Project.Service.RequestService;
+import com.example.Project.Service.UserService;
 import com.example.Project.Model.*;
 import com.example.Project.Service.*;
 import com.example.Project.Service.impl.UserServiceImpl;
@@ -67,6 +74,7 @@ public class AuthenticationController {
     private EmailTokenService emailTokenService;
 
     @Autowired
+    private RequestService requestService;
     private TwoFactorAuthenticationService tfaService;
 
 
@@ -133,11 +141,11 @@ public class AuthenticationController {
         EmailToken emailToken=emailTokenService.getByClientId(id);
         //vec bio na linku
         if(emailToken.getIsUsed() ){
-            response.sendRedirect("http://localhost:4200/email-link-invalid");
+            response.sendRedirect("https://localhost:4200/email-link-invalid");
         }else{
             //nije bio na linku ali je token istekao
             if(emailToken.getExpirationDate().isBefore(LocalDateTime.now())){
-                response.sendRedirect("http://localhost:4200/email-link-invalid");
+                response.sendRedirect("https://localhost:4200/email-link-invalid");
             }else{
                 //nije bio na linku i token nije istekao
                 Client client=clientService.getById(id);
@@ -268,17 +276,17 @@ public class AuthenticationController {
     @PutMapping("/updateEmployee")
     public ResponseEntity<UserDto> updateEmployee(@RequestBody UserDto userr){
 
-        Role role = Role.valueOf(userr.getRole());
-        User user= new User(userr.getUsername(),userr.getEmail(),userr.getPassword(),role);
-        User updated= userService.save(user);
 
-        UserDto userDto= new UserDto(updated.getUsername(),updated.getEmail(),updated.getPassword()
-                ,updated.getRole().toString(),updated.getEmailChecked(), updated.isBlocked());
+        User existing = userService.getById(userr.getId());
+        Request request = requestService.getByClientId(existing.getUsername());
+        existing.setUsername(userr.getUsername());
+        existing.setEmailChecked(true);
+        request.setUsername(userr.getUsername());
+        userService.save(existing);
+        requestService.create(request);
 
-        userDto.setId(updated.getId());
 
-
-        return new ResponseEntity<>(userDto,HttpStatus.OK);
+        return new ResponseEntity<>(userr,HttpStatus.OK);
     }
 
     @PostMapping("/verifyTfaCode")
