@@ -20,12 +20,19 @@
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
         </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
     </appender>
 
     <!-- Logger Configuration -->
     <logger name="com.example" level="DEBUG" additivity="false">
         <appender-ref ref="rollingFile" />
         <appender-ref ref="console" />
+    </logger>
+
+    <logger name="com.example.critical" level="ERROR" additivity="false">
+        <appender-ref ref="criticalEvents" />
     </logger>
 
     <!-- Root Logger -->

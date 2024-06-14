@@ -48,6 +48,13 @@ public class EmailService {
     private EmailTokenService emailTokenService;
 
 
+    public void sendWarningEmail(String to, String subject, String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        javaMailSender.send(message);
+    }
 
     public String sendEmail(User user)  throws NoSuchAlgorithmException, InvalidKeyException, MessagingException, UnsupportedEncodingException{
         String subject = "Complete Registration";
@@ -94,8 +101,6 @@ public class EmailService {
 
 
     }
-
-
 
     private void sendMess(User user, String subject, String text)  throws MessagingException, IOException{
 
