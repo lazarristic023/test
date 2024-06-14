@@ -75,6 +75,8 @@ public class AuthenticationController {
 
     @Autowired
     private RequestService requestService;
+
+    @Autowired
     private TwoFactorAuthenticationService tfaService;
 
 
@@ -148,14 +150,18 @@ public class AuthenticationController {
                 response.sendRedirect("https://localhost:4200/email-link-invalid");
             }else{
                 //nije bio na linku i token nije istekao
-                Client client=clientService.getById(id);
-                client.setEmailChecked(true);
-                userService.save(client);
+                User user=userService.getById(id);
+                user.setEmailChecked(true);
+                userService.save(user);
 
                 String secretImageUrl = "";
-                if(client.isTfaEnabled()) {
-                    secretImageUrl = tfaService.generateQrCodeImageUri(client.getSecret());
+                if(user.getRole().equals(Role.CLIENT)){
+                    Client client = clientService.getById(user.getId());
+                    if(client.isTfaEnabled()) {
+                        secretImageUrl = tfaService.generateQrCodeImageUri(client.getSecret());
+                    }
                 }
+
                 //update token
                 emailToken.setIsUsed(true);
                 emailTokenService.saveToken(emailToken);
