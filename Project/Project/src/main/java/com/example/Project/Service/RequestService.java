@@ -20,7 +20,7 @@ public class RequestService {
     @Autowired
     public RequestRepo requestRepo;
 
-    public List<Request> getAllRequests() {
+    public List<Request> getAllRequests() throws Exception {
         logger.info("Fetching all requests");
 
         try {
@@ -37,7 +37,7 @@ public class RequestService {
         }
     }
 
-    public Request create(Request newRequest) {
+    public Request create(Request newRequest) throws Exception {
         logger.info("Creating new request with ID: {}", newRequest.getId());
 
         try {
@@ -51,7 +51,7 @@ public class RequestService {
         }
     }
 
-    public Request getByClientId(String username) {
+    public Request getByClientId(String username) throws Exception {
         logger.info("Fetching request for username: {}", username);
 
         try {

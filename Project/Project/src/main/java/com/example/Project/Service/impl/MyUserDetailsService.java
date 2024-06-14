@@ -24,6 +24,16 @@ public class MyUserDetailsService implements UserDetailsService {
         }
         System.out.println("User:");
 
+        try {
+            user.setUsername(AESUtil.decrypt(user.getUsername()));
+            user.setEmail(AESUtil.decrypt(user.getEmail()));
+            user.setCity(AESUtil.decrypt(user.getCity()));
+            user.setCountry(AESUtil.decrypt(user.getCountry()));
+            user.setPhone(AESUtil.decrypt(user.getPhone()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println(user);
 
         if (user == null) {

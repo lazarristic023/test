@@ -22,7 +22,7 @@ public class ClientService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Client save(Client client) {
+    public Client save(Client client) throws Exception {
         try {
             String hashedPassword = passwordEncoder.encode(client.getPassword());
             client.setPassword(hashedPassword);
@@ -45,7 +45,7 @@ public class ClientService {
         }
     }
 
-    public Client getById(long clientId) {
+    public Client getById(long clientId) throws Exception {
         try {
             Client client = clientRepository.findById(clientId).orElse(null);
             client.setUsername(AESUtil.decrypt(client.getUsername()));
@@ -66,7 +66,7 @@ public class ClientService {
         }
     }
 
-    public Client getByEmail(String email) {
+    public Client getByEmail(String email) throws Exception {
         try {
             Client client = clientRepository.findByEmail(AESUtil.encrypt(email));
             client.setUsername(AESUtil.decrypt(client.getUsername()));
@@ -87,7 +87,7 @@ public class ClientService {
         }
     }
 
-    public void updateClientFirmNameById(Long id, String clientFirmName) {
+    public void updateClientFirmNameById(Long id, String clientFirmName) throws Exception {
         try {
             clientRepository.updateClientFirmNameById(id, AESUtil.encrypt(clientFirmName));
             logger.info("EventID: 2003 | Date: {} | Time: {} | Source: ClientService | Type: INFO | Message: Update client firm name | ClientId: {} | NewFirmName: {}",
@@ -99,7 +99,7 @@ public class ClientService {
         }
     }
 
-    public void updateClientSurnameFirmPIBById(Long id, String clientSurnameFirmPIB) {
+    public void updateClientSurnameFirmPIBById(Long id, String clientSurnameFirmPIB) throws Exception {
         try {
             clientRepository.updateClientSurnameFirmPIBById(id, AESUtil.encrypt(clientSurnameFirmPIB));
             logger.info("EventID: 2004 | Date: {} | Time: {} | Source: ClientService | Type: INFO | Message: Update client surname firm PIB | ClientId: {} | NewSurnameFirmPIB: {}",
@@ -111,7 +111,7 @@ public class ClientService {
         }
     }
 
-    public void updateClientFirmResidentialAddressById(Long id, String clientFirmResidentialAddress) {
+    public void updateClientFirmResidentialAddressById(Long id, String clientFirmResidentialAddress) throws Exception {
         try {
             clientRepository.updateClientFirmResidentialAddressById(id, AESUtil.encrypt(clientFirmResidentialAddress));
             logger.info("EventID: 2005 | Date: {} | Time: {} | Source: ClientService | Type: INFO | Message: Update client firm residential address | ClientId: {} | NewFirmResidentialAddress: {}",
@@ -123,7 +123,7 @@ public class ClientService {
         }
     }
 
-    public void updateCityById(Long id, String city) {
+    public void updateCityById(Long id, String city) throws Exception {
         try {
             clientRepository.updateCityById(id, AESUtil.encrypt(city));
             logger.info("EventID: 2006 | Date: {} | Time: {} | Source: ClientService | Type: INFO | Message: Update city | ClientId: {} | NewCity: {}",
@@ -135,7 +135,7 @@ public class ClientService {
         }
     }
 
-    public void updateCountryById(Long id, String country) {
+    public void updateCountryById(Long id, String country) throws Exception {
         try {
             clientRepository.updateCountryById(id, AESUtil.encrypt(country));
             logger.info("EventID: 2007 | Date: {} | Time: {} | Source: ClientService | Type: INFO | Message: Update country | ClientId: {} | NewCountry: {}",
@@ -147,7 +147,7 @@ public class ClientService {
         }
     }
 
-    public void updatePhoneById(Long id, String phone) {
+    public void updatePhoneById(Long id, String phone) throws Exception {
         try {
             clientRepository.updatePhoneById(id, AESUtil.encrypt(phone));
             logger.info("EventID: 2008 | Date: {} | Time: {} | Source: ClientService | Type: INFO | Message: Update phone | ClientId: {} | NewPhone: {}",

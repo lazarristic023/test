@@ -7,6 +7,7 @@ import com.example.Project.Model.Client;
 import com.example.Project.Model.Company;
 import com.example.Project.Model.Employee;
 import com.example.Project.Repository.CompanyRepo;
+import com.example.Project.Utilities.AESUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ public class CompanyService {
 
     private static final Logger logger = LoggerFactory.getLogger(CompanyService.class);
 
-    public List<CompanyDto> getAll() {
+    public List<CompanyDto> getAll() throws Exception {
         try {
             List<Company> companies = companyRepo.findAll();
             List<CompanyDto> companyDTOs = new ArrayList<>();
@@ -36,7 +37,7 @@ public class CompanyService {
                 List<ClientDto> clientDTOs = new ArrayList<>();
                 for (Client client : company.getClients()) {
                     ClientDto clientDTO = new ClientDto();
-                    clientDTO.setEmail(client.getEmail());
+                    /*clientDTO.setEmail(client.getEmail());
                     clientDTO.setPassword(client.getPassword());
                     clientDTO.setCity(client.getCity());
                     clientDTO.setRole(String.valueOf(client.getRole()));
@@ -46,7 +47,19 @@ public class CompanyService {
                     clientDTO.setPhone(client.getPhone());
                     clientDTO.setType(String.valueOf(client.getType()));
                     clientDTO.setClientFirmResidentialAddress(client.getClientFirmResidentialAddress());
-                    clientDTO.setClientSurnameFirmPIB(client.getClientSurnameFirmPIB());
+                    clientDTO.setClientSurnameFirmPIB(client.getClientSurnameFirmPIB());*/
+
+                    clientDTO.setEmail(AESUtil.decrypt(client.getEmail()));
+                    clientDTO.setPassword(client.getPassword());
+                    clientDTO.setCity(AESUtil.decrypt(client.getCity()));
+                    clientDTO.setRole(String.valueOf(client.getRole()));
+                    clientDTO.setCountry(AESUtil.decrypt(client.getCountry()));
+                    clientDTO.setClientFirmName(AESUtil.decrypt(client.getClientFirmName()));
+                    clientDTO.setUsername(AESUtil.decrypt(client.getUsername()));
+                    clientDTO.setPhone(AESUtil.decrypt(client.getPhone()));
+                    clientDTO.setType(String.valueOf(client.getType()));
+                    clientDTO.setClientFirmResidentialAddress(AESUtil.decrypt(client.getClientFirmResidentialAddress()));
+                    clientDTO.setClientSurnameFirmPIB(AESUtil.decrypt(client.getClientSurnameFirmPIB()));
 
                     clientDTOs.add(clientDTO);
                 }
@@ -56,7 +69,7 @@ public class CompanyService {
                 List<EmployeeDto> employeeDTOs = new ArrayList<>();
                 for (Employee employee : company.getEmployees()) {
                     EmployeeDto employeeDTO = new EmployeeDto();
-                    employeeDTO.setUsername(employee.getUsername());
+                    /*employeeDTO.setUsername(employee.getUsername());
                     employeeDTO.setEmail(employee.getEmail());
                     employeeDTO.setPassword(employee.getPassword());
                     employeeDTO.setRole(String.valueOf(employee.getRole()));
@@ -64,7 +77,17 @@ public class CompanyService {
                     employeeDTO.setLastName(employee.getLastName());
                     employeeDTO.setCity(employee.getCity());
                     employeeDTO.setCountry(employee.getCountry());
-                    employeeDTO.setPhone(employee.getPhone());
+                    employeeDTO.setPhone(employee.getPhone());*/
+
+                    employeeDTO.setUsername(AESUtil.decrypt(employee.getUsername()));
+                    employeeDTO.setEmail(AESUtil.decrypt(employee.getEmail()));
+                    employeeDTO.setPassword(employee.getPassword());
+                    employeeDTO.setRole(String.valueOf(employee.getRole()));
+                    employeeDTO.setFirstName(AESUtil.decrypt(employee.getFirstName()));
+                    employeeDTO.setLastName(AESUtil.decrypt(employee.getLastName()));
+                    employeeDTO.setCity(AESUtil.decrypt(employee.getCity()));
+                    employeeDTO.setCountry(AESUtil.decrypt(employee.getCountry()));
+                    employeeDTO.setPhone(AESUtil.decrypt(employee.getPhone()));
 
                     employeeDTOs.add(employeeDTO);
                 }

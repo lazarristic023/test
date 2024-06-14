@@ -37,9 +37,10 @@ public class UserController {
     @CrossOrigin(origins = "*")
     @GetMapping("/getAllCompanies")
     //@PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<List<CompanyDto>> getAllCompanies() {
+    public ResponseEntity<List<CompanyDto>> getAllCompanies() throws Exception {
         return ResponseEntity.ok(companyService.getAll());
     }
+
     @CrossOrigin(origins = "*")
     @GetMapping("/getAdminById/{id}")
     //@PreAuthorize("hasAuthority('admin:read')")

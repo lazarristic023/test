@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User findByUsername(String name) {
+    public User findByUsername(String name) throws Exception {
         try {
             User user = userRepo.findByUsername(AESUtil.encrypt(name));
             if (user != null) {
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User findByEmail(String email) {
+    public User findByEmail(String email) throws Exception {
         try {
             User user = userRepo.findByEmail(AESUtil.encrypt(email));
             if (user != null) {
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User save(User user) {
+    public User save(User user) throws Exception {
         try {
             user.setUsername(AESUtil.encrypt(user.getUsername()));
             user.setEmail(AESUtil.encrypt(user.getEmail()));
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User getById(Long id) {
+    public User getById(Long id) throws Exception {
         try {
             User user = userRepo.getById(id);
             if (user != null) {
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateEmail(Long id, String email) {
+    public void updateEmail(Long id, String email) throws Exception {
         try {
             userRepo.updateEmailById(id, AESUtil.encrypt(email));
             logger.info("EventID: 1004 | Date: {} | Time: {} | Source: UserServiceImpl | Type: INFO | Message: Update email | UserId: {} | NewEmail: {}",
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
+    public List<User> findAll() throws Exception {
         try {
             List<User> users = userRepo.findAll();
             for (User user : users) {
@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllClients() {
+    public List<User> getAllClients() throws Exception {
         try {
             List<User> clients = new ArrayList<>();
             List<User> allUsers = findAll();
@@ -178,7 +178,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllEmployees() {
+    public List<User> getAllEmployees() throws Exception {
         try {
             List<User> employees = new ArrayList<>();
             for (User user : findAll()) {
@@ -292,7 +292,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public void updateUsername(Long id, String username) {
+    public void updateUsername(Long id, String username) throws Exception {
         try {
             userRepo.updateUsernameById(id, AESUtil.encrypt(username));
             logger.info("EventID: 1011 | Date: {} | Time: {} | Source: UserServiceImpl | Type: INFO | Message: Update username | UserId: {} | NewUsername: {}",
@@ -305,7 +305,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Administrator registerAdmin(Administrator administrator) {
+    public Administrator registerAdmin(Administrator administrator) throws Exception {
         try {
             String hashedPassword = passwordEncoder.encode(administrator.getPassword());
             administrator.setPassword(hashedPassword);
@@ -328,7 +328,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Employee registerEmployee(Employee employee) {
+    public Employee registerEmployee(Employee employee) throws Exception {
         try {
             String hashedPassword = passwordEncoder.encode(employee.getPassword());
             employee.setPassword(hashedPassword);
@@ -361,8 +361,8 @@ public class UserServiceImpl implements UserService {
                     employee.setCountry(AESUtil.encrypt(updatedEmployee.getCountry()));
                     employee.setFirstName(AESUtil.encrypt(updatedEmployee.getFirstName()));
                     employee.setLastName(AESUtil.encrypt(updatedEmployee.getLastName()));
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
                 }
                 employee.setPassword(updatedEmployee.getPassword());
                 employee.setRole(updatedEmployee.getRole());
