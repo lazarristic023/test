@@ -2,6 +2,7 @@ package com.example.Project.Service.impl;
 
 import com.example.Project.Model.User;
 import com.example.Project.Repository.UserRepo;
+import com.example.Project.Utilities.AESUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +16,12 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username);
+        User user = null;
+        try {
+            user = userRepo.findByUsername(AESUtil.encrypt(username));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("User:");
 
         System.out.println(user);

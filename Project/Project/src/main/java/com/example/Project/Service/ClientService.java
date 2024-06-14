@@ -21,12 +21,16 @@ public class ClientService {
     }
 
     public Client save(Client client) throws Exception {
-        //String hashedPassword = passwordEncoder.encode(client.getPassword());
-        //client.setPassword(hashedPassword);
+        String hashedPassword = passwordEncoder.encode(client.getPassword());
+        client.setPassword(hashedPassword);
         client.setUsername(AESUtil.encrypt(client.getUsername()));
         client.setEmail(AESUtil.encrypt(client.getEmail()));
         client.setPhone(AESUtil.encrypt(client.getPhone()));
-        client.setPassword(AESUtil.encrypt(client.getPassword()));
+        client.setCity(AESUtil.encrypt(client.getCity()));
+        client.setCountry(AESUtil.encrypt(client.getCountry()));
+        client.setClientFirmName(AESUtil.encrypt(client.getClientFirmName()));
+        client.setClientSurnameFirmPIB(AESUtil.encrypt(client.getClientSurnameFirmPIB()));
+        client.setClientFirmResidentialAddress(AESUtil.encrypt(client.getClientFirmResidentialAddress()));
         return clientRepository.save(client);
     }
 
@@ -35,6 +39,11 @@ public class ClientService {
         client.setUsername(AESUtil.decrypt(client.getUsername()));
         client.setEmail(AESUtil.decrypt(client.getEmail()));
         client.setPhone(AESUtil.decrypt(client.getPhone()));
+        client.setCity(AESUtil.decrypt(client.getCity()));
+        client.setCountry(AESUtil.decrypt(client.getCountry()));
+        client.setClientFirmName(AESUtil.decrypt(client.getClientFirmName()));
+        client.setClientSurnameFirmPIB(AESUtil.decrypt(client.getClientSurnameFirmPIB()));
+        client.setClientFirmResidentialAddress(AESUtil.decrypt(client.getClientFirmResidentialAddress()));
         return client;
     }
 
@@ -43,27 +52,32 @@ public class ClientService {
         client.setUsername(AESUtil.decrypt(client.getUsername()));
         client.setEmail(AESUtil.decrypt(client.getEmail()));
         client.setPhone(AESUtil.decrypt(client.getPhone()));
+        client.setCity(AESUtil.decrypt(client.getCity()));
+        client.setCountry(AESUtil.decrypt(client.getCountry()));
+        client.setClientFirmName(AESUtil.decrypt(client.getClientFirmName()));
+        client.setClientSurnameFirmPIB(AESUtil.decrypt(client.getClientSurnameFirmPIB()));
+        client.setClientFirmResidentialAddress(AESUtil.decrypt(client.getClientFirmResidentialAddress()));
         return client;
     }
 
-    public void updateClientFirmNameById(Long id, String clientFirmName) {
-        clientRepository.updateClientFirmNameById(id, clientFirmName);
+    public void updateClientFirmNameById(Long id, String clientFirmName) throws Exception {
+        clientRepository.updateClientFirmNameById(id, AESUtil.encrypt(clientFirmName));
     }
 
-    public void updateClientSurnameFirmPIBById(Long id, String clientSurnameFirmPIB) {
-        clientRepository.updateClientSurnameFirmPIBById(id, clientSurnameFirmPIB);
+    public void updateClientSurnameFirmPIBById(Long id, String clientSurnameFirmPIB) throws Exception {
+        clientRepository.updateClientSurnameFirmPIBById(id, AESUtil.encrypt(clientSurnameFirmPIB));
     }
 
-    public void updateClientFirmResidentialAddressById(Long id, String clientFirmResidentialAddress) {
-        clientRepository.updateClientFirmResidentialAddressById(id, clientFirmResidentialAddress);
+    public void updateClientFirmResidentialAddressById(Long id, String clientFirmResidentialAddress) throws Exception {
+        clientRepository.updateClientFirmResidentialAddressById(id, AESUtil.encrypt(clientFirmResidentialAddress));
     }
 
-    public void updateCityById(Long id, String city) {
-        clientRepository.updateCityById(id, city);
+    public void updateCityById(Long id, String city) throws Exception {
+        clientRepository.updateCityById(id, AESUtil.encrypt(city));
     }
 
-    public void updateCountryById(Long id, String country) {
-        clientRepository.updateCountryById(id, country);
+    public void updateCountryById(Long id, String country) throws Exception {
+        clientRepository.updateCountryById(id, AESUtil.encrypt(country));
     }
 
     public void updatePhoneById(Long id, String phone) throws Exception {

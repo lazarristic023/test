@@ -39,7 +39,7 @@ public class RequestController {
     @CrossOrigin(origins = "*")
     @GetMapping("/getAll")
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<List<RequestDto>> createAuthenticationToken(){
+    public ResponseEntity<List<RequestDto>> createAuthenticationToken() throws Exception {
         List<Request> requests= requestService.getAllRequests();
         List<RequestDto> dtos= new ArrayList<>();
         for(Request req: requests){
@@ -53,7 +53,7 @@ public class RequestController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/create/{username}")
-    public ResponseEntity<RequestDto> createRequest(@PathVariable String username){
+    public ResponseEntity<RequestDto> createRequest(@PathVariable String username) throws Exception {
         Request request= requestService.create(new Request(RequestStatus.WAITING, username));
         RequestDto dto= new RequestDto(request.getStatus().toString(),request.getUsername());
         return new ResponseEntity<>(dto, HttpStatus.OK);
@@ -103,7 +103,7 @@ public class RequestController {
     @CrossOrigin(origins = "*")
     @GetMapping("/getByUsername/{username}")
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<RequestDto> getByClientId(@PathVariable String username){
+    public ResponseEntity<RequestDto> getByClientId(@PathVariable String username) throws Exception {
         Request request=requestService.getByClientId(username);
         RequestDto dto = new RequestDto();
         if(request!=null  ) {

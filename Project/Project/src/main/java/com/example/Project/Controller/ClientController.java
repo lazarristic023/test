@@ -56,47 +56,47 @@ public class ClientController {
 
     @CrossOrigin(origins = "*")
     @PutMapping ("/clientFirmName/{id}/{cfn}")
-    @PreAuthorize("hasAuthority('client:update')")
-    public ResponseEntity<Void> updateClientFirmNameById(@PathVariable Long id, @PathVariable String cfn) {
+    //@PreAuthorize("hasAuthority('client:update')")
+    public ResponseEntity<Void> updateClientFirmNameById(@PathVariable Long id, @PathVariable String cfn) throws Exception {
         clientService.updateClientFirmNameById(id, cfn);
         return ResponseEntity.ok().build();
     }
 
     @CrossOrigin(origins = "*")
     @PutMapping("/surnameFirmPIB/{id}/{sfp}")
-    @PreAuthorize("hasAuthority('client:update')")
-    public ResponseEntity<Void> updateClientSurnameFirmPIBById(@PathVariable Long id, @PathVariable String sfp) {
+    //@PreAuthorize("hasAuthority('client:update')")
+    public ResponseEntity<Void> updateClientSurnameFirmPIBById(@PathVariable Long id, @PathVariable String sfp) throws Exception {
         clientService.updateClientSurnameFirmPIBById(id, sfp);
         return ResponseEntity.ok().build();
     }
 
     @CrossOrigin(origins = "*")
     @PutMapping("/firmResidentialAddress/{id}/{fra}")
-    @PreAuthorize("hasAuthority('client:update')")
-    public ResponseEntity<Void> updateClientFirmResidentialAddressById(@PathVariable Long id, @PathVariable String fra) {
+    //@PreAuthorize("hasAuthority('client:update')")
+    public ResponseEntity<Void> updateClientFirmResidentialAddressById(@PathVariable Long id, @PathVariable String fra) throws Exception {
         clientService.updateClientFirmResidentialAddressById(id, fra);
         return ResponseEntity.ok().build();
     }
 
     @CrossOrigin(origins = "*")
     @PutMapping("/city/{id}/{c}")
-    @PreAuthorize("hasAuthority('client:update')")
-    public ResponseEntity<Void> updateCityById(@PathVariable Long id, @PathVariable String c) {
+    //@PreAuthorize("hasAuthority('client:update')")
+    public ResponseEntity<Void> updateCityById(@PathVariable Long id, @PathVariable String c) throws Exception {
         clientService.updateCityById(id, c);
         return ResponseEntity.ok().build();
     }
 
     @CrossOrigin(origins = "*")
     @PutMapping("/country/{id}/{c}")
-    @PreAuthorize("hasAuthority('client:update')")
-    public ResponseEntity<Void> updateCountryById(@PathVariable Long id, @PathVariable String c) {
+    //@PreAuthorize("hasAuthority('client:update')")
+    public ResponseEntity<Void> updateCountryById(@PathVariable Long id, @PathVariable String c) throws Exception {
         clientService.updateCountryById(id, c);
         return ResponseEntity.ok().build();
     }
 
     @CrossOrigin(origins = "*")
     @PutMapping("/phone/{id}/{p}")
-    @PreAuthorize("hasAuthority('client:update')")
+    //@PreAuthorize("hasAuthority('client:update')")
     public ResponseEntity<Void> updatePhoneById(@PathVariable Long id, @PathVariable String p) throws Exception {
         clientService.updatePhoneById(id, p);
         return ResponseEntity.ok().build();
@@ -104,7 +104,7 @@ public class ClientController {
 
     @CrossOrigin(origins = "*")
     @PutMapping("/email/{id}/{e}")
-    @PreAuthorize("hasAuthority('client:update')")
+    //@PreAuthorize("hasAuthority('client:update')")
     public ResponseEntity<Void> updateEmailById(@PathVariable Long id, @PathVariable String e) throws Exception {
         userService.updateEmail(id, e);
         return ResponseEntity.ok().build();

@@ -39,6 +39,8 @@ public class UserServiceImpl implements UserService {
             user.setUsername(AESUtil.decrypt(user.getUsername()));
             user.setEmail(AESUtil.decrypt(user.getEmail()));
             user.setPhone(AESUtil.decrypt(user.getPhone()));
+            user.setCity(AESUtil.decrypt(user.getCity()));
+            user.setCountry(AESUtil.decrypt(user.getCountry()));
         }
         return user;
     }
@@ -49,6 +51,8 @@ public class UserServiceImpl implements UserService {
             user.setUsername(AESUtil.decrypt(user.getUsername()));
             user.setEmail(AESUtil.decrypt(user.getEmail()));
             user.setPhone(AESUtil.decrypt(user.getPhone()));
+            user.setCity(AESUtil.decrypt(user.getCity()));
+            user.setCountry(AESUtil.decrypt(user.getCountry()));
         }
         return user;
     }
@@ -58,6 +62,8 @@ public class UserServiceImpl implements UserService {
         user.setEmail(AESUtil.encrypt(user.getEmail()));
         user.setPhone(AESUtil.encrypt(user.getPhone()));
         user.setPassword(AESUtil.encrypt(user.getPassword()));
+        user.setCity(AESUtil.encrypt(user.getCity()));
+        user.setCountry(AESUtil.encrypt(user.getCountry()));
         return userRepo.save(user);
     }
 
@@ -67,6 +73,8 @@ public class UserServiceImpl implements UserService {
             user.setUsername(AESUtil.decrypt(user.getUsername()));
             user.setEmail(AESUtil.decrypt(user.getEmail()));
             user.setPhone(AESUtil.decrypt(user.getPhone()));
+            user.setCity(AESUtil.decrypt(user.getCity()));
+            user.setCountry(AESUtil.decrypt(user.getCountry()));
         }
         return user;
     }
@@ -83,6 +91,8 @@ public class UserServiceImpl implements UserService {
             user.setUsername(AESUtil.decrypt(user.getUsername()));
             user.setEmail(AESUtil.decrypt(user.getEmail()));
             user.setPhone(AESUtil.decrypt(user.getPhone()));
+            user.setCity(AESUtil.decrypt(user.getCity()));
+            user.setCountry(AESUtil.decrypt(user.getCountry()));
         }
         return users;
     }
@@ -96,6 +106,8 @@ public class UserServiceImpl implements UserService {
                 user.setUsername(AESUtil.decrypt(user.getUsername()));
                 user.setEmail(AESUtil.decrypt(user.getEmail()));
                 user.setPhone(AESUtil.decrypt(user.getPhone()));
+                user.setCity(AESUtil.decrypt(user.getCity()));
+                user.setCountry(AESUtil.decrypt(user.getCountry()));
                 clients.add(user);
             }
         }
@@ -110,6 +122,8 @@ public class UserServiceImpl implements UserService {
                 user.setUsername(AESUtil.decrypt(user.getUsername()));
                 user.setEmail(AESUtil.decrypt(user.getEmail()));
                 user.setPhone(AESUtil.decrypt(user.getPhone()));
+                user.setCity(AESUtil.decrypt(user.getCity()));
+                user.setCountry(AESUtil.decrypt(user.getCountry()));
                 clients.add(user);
             }
         }
@@ -124,6 +138,10 @@ public class UserServiceImpl implements UserService {
                 admin.setUsername(AESUtil.decrypt(admin.getUsername()));
                 admin.setEmail(AESUtil.decrypt(admin.getEmail()));
                 admin.setPhone(AESUtil.decrypt(admin.getPhone()));
+                admin.setCity(AESUtil.decrypt(admin.getCity()));
+                admin.setCountry(AESUtil.decrypt(admin.getCountry()));
+                admin.setLastName(AESUtil.decrypt(admin.getLastName()));
+                admin.setFirstName(AESUtil.decrypt(admin.getFirstName()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -139,6 +157,10 @@ public class UserServiceImpl implements UserService {
                 employee.setUsername(AESUtil.decrypt(employee.getUsername()));
                 employee.setEmail(AESUtil.decrypt(employee.getEmail()));
                 employee.setPhone(AESUtil.decrypt(employee.getPhone()));
+                employee.setCity(AESUtil.decrypt(employee.getCity()));
+                employee.setCountry(AESUtil.decrypt(employee.getCountry()));
+                employee.setLastName(AESUtil.decrypt(employee.getLastName()));
+                employee.setFirstName(AESUtil.decrypt(employee.getFirstName()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -148,17 +170,9 @@ public class UserServiceImpl implements UserService {
 
     public Administrator updateAdmin(Long id, Administrator updatedAdmin) {
         return adminRepo.findById(id).map(admin -> {
-            admin.setFirstName(updatedAdmin.getFirstName());
-            admin.setLastName(updatedAdmin.getLastName());
             admin.setFirstLogging(updatedAdmin.isFirstLogging());
             if (updatedAdmin.getPassword() != null && !updatedAdmin.getPassword().isEmpty()) {
-                String encryptedPassword = null;
-                try {
-                    encryptedPassword = AESUtil.encrypt(updatedAdmin.getPassword());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                admin.setPassword(encryptedPassword); // Šifrujemo lozinku pre čuvanja
+                admin.setPassword(updatedAdmin.getPassword());
             }
             admin.setPredefined(updatedAdmin.isPredefined());
             admin.setRole(updatedAdmin.getRole());
@@ -167,6 +181,10 @@ public class UserServiceImpl implements UserService {
                 admin.setEmail(AESUtil.encrypt(updatedAdmin.getEmail()));
                 admin.setPhone(AESUtil.encrypt(updatedAdmin.getPhone()));
                 admin.setUsername(AESUtil.encrypt(updatedAdmin.getUsername()));
+                admin.setCity(AESUtil.encrypt(updatedAdmin.getCity()));
+                admin.setCountry(AESUtil.encrypt(updatedAdmin.getCountry()));
+                admin.setFirstName(AESUtil.encrypt(updatedAdmin.getFirstName()));
+                admin.setLastName(AESUtil.encrypt(updatedAdmin.getLastName()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -183,23 +201,29 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public Administrator registerAdmin(Administrator administrator) throws Exception {
-        //String hashedPassword = passwordEncoder.encode(administrator.getPassword());
-        //administrator.setPassword(hashedPassword);
+        String hashedPassword = passwordEncoder.encode(administrator.getPassword());
+        administrator.setPassword(hashedPassword);
         administrator.setUsername(AESUtil.encrypt(administrator.getUsername()));
         administrator.setEmail(AESUtil.encrypt(administrator.getEmail()));
         administrator.setPhone(AESUtil.encrypt(administrator.getPhone()));
-        administrator.setPassword(AESUtil.encrypt(administrator.getPassword()));
+        administrator.setCity(AESUtil.encrypt(administrator.getCity()));
+        administrator.setCountry(AESUtil.encrypt(administrator.getCountry()));
+        administrator.setFirstName(AESUtil.encrypt(administrator.getFirstName()));
+        administrator.setLastName(AESUtil.encrypt(administrator.getLastName()));
         return adminRepo.save(administrator);
     }
 
     @Override
     public Employee registerEmployee(Employee employee) throws Exception {
-        //String hashedPassword = passwordEncoder.encode(employee.getPassword());
-        //employee.setPassword(hashedPassword);
+        String hashedPassword = passwordEncoder.encode(employee.getPassword());
+        employee.setPassword(hashedPassword);
         employee.setUsername(AESUtil.encrypt(employee.getUsername()));
         employee.setEmail(AESUtil.encrypt(employee.getEmail()));
         employee.setPhone(AESUtil.encrypt(employee.getPhone()));
-        employee.setPassword(AESUtil.encrypt(employee.getPassword()));
+        employee.setCity(AESUtil.encrypt(employee.getCity()));
+        employee.setCountry(AESUtil.encrypt(employee.getCountry()));
+        employee.setFirstName(AESUtil.encrypt(employee.getFirstName()));
+        employee.setLastName(AESUtil.encrypt(employee.getLastName()));
         return employeeRepo.save(employee);
     }
 
@@ -208,16 +232,16 @@ public class UserServiceImpl implements UserService {
             try {
                 employee.setEmail(AESUtil.encrypt(updatedEmployee.getEmail()));
                 employee.setUsername(AESUtil.encrypt(updatedEmployee.getUsername()));
-                employee.setPassword(AESUtil.encrypt(updatedEmployee.getPassword()));
                 employee.setPhone(AESUtil.encrypt(updatedEmployee.getPhone()));
+                employee.setCity(AESUtil.encrypt(updatedEmployee.getCity()));
+                employee.setCountry(AESUtil.encrypt(updatedEmployee.getCountry()));
+                employee.setFirstName(AESUtil.encrypt(updatedEmployee.getFirstName()));
+                employee.setLastName(AESUtil.encrypt(updatedEmployee.getLastName()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+            employee.setPassword(updatedEmployee.getPassword());
             employee.setRole(updatedEmployee.getRole());
-            employee.setCity(updatedEmployee.getCity());
-            employee.setCountry(updatedEmployee.getCountry());
-            employee.setFirstName(updatedEmployee.getFirstName());
-            employee.setLastName(updatedEmployee.getLastName());
             employee.setFirstLogging(updatedEmployee.isFirstLogging());
             return employeeRepo.save(employee);
         }).orElseGet(() -> {
