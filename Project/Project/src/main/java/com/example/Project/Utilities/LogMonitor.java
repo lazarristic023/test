@@ -1,6 +1,8 @@
 package com.example.Project.Utilities;
 
+import com.example.Project.Model.Alert;
 import com.example.Project.Model.User;
+import com.example.Project.Service.AlertService;
 import com.example.Project.Service.EmailService;
 import com.example.Project.Service.SMSService;
 import com.example.Project.Service.UserService;
@@ -30,6 +32,9 @@ public class LogMonitor {
     private SMSService smsService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private AlertService alertService;
+
     private static final Logger logger = LoggerFactory.getLogger(LogMonitor.class);
 
     @PostConstruct
@@ -89,6 +94,8 @@ public class LogMonitor {
             emailService.sendWarningEmail(email, "System warning: critical event", message);
             String phone = AESUtil.decrypt(u.getPhone());
             smsService.sendSMS(phone, message);
+            Alert alert = new Alert("System warning: critical event", message, false);
+            alertService.saveAlert(alert);
         }
     }
 

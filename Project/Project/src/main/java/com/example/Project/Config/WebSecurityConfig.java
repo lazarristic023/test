@@ -42,6 +42,7 @@ public class WebSecurityConfig {
     private static final String[] WHITE_LIST_URL = {"api/authentication/**",
             "/api/authentication/**",
             "api/client/**",
+            "api/alerts/**",
             "api/users/**",
             "api/requests/**",
             "api/commercial/**",
