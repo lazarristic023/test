@@ -80,7 +80,7 @@ public class AuthenticationController {
     @CrossOrigin(origins = "*")
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
-            @RequestBody LoginDto authenticationRequest) {
+            @RequestBody LoginDto authenticationRequest) throws Exception {
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getEmail(), authenticationRequest.getPassword()));
@@ -135,7 +135,7 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value="/verify", method = RequestMethod.GET)
-    public ResponseEntity<?> verifyAccount(@Param("email")String email, @Param("id")Long id,@Param("expiry") Long expiry,@Param("token")String token,HttpServletResponse response) throws IOException {
+    public ResponseEntity<?> verifyAccount(@Param("email")String email, @Param("id")Long id,@Param("expiry") Long expiry,@Param("token")String token,HttpServletResponse response) throws Exception {
 
         EmailToken emailToken=emailTokenService.getByClientId(id);
         //vec bio na linku
@@ -175,7 +175,7 @@ public class AuthenticationController {
     }
 
     @GetMapping ("/sendPasswordlessLoginLink")
-    public ResponseEntity<Boolean> sendPasswordlessLoginLink(@Param("email")String email, HttpServletResponse response) throws IOException {
+    public ResponseEntity<Boolean> sendPasswordlessLoginLink(@Param("email")String email, HttpServletResponse response) throws Exception {
 
         User user = userService.findByEmail(email);
         if (user == null) {
@@ -194,7 +194,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/passwordlessLogin")
-    public ResponseEntity<Boolean> passwordlessLogin(@Param("token")String token, HttpServletResponse response) throws IOException {
+    public ResponseEntity<Boolean> passwordlessLogin(@Param("token")String token, HttpServletResponse response) throws Exception {
 
         PasswordlessToken passwordlessToken = passwordlessTokenService.findByToken(token);
         if (passwordlessToken == null) {
@@ -239,7 +239,7 @@ public class AuthenticationController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/isEmailChecked/{id}")
-    public Boolean isEmailChecked(@PathVariable("id") Long id){
+    public Boolean isEmailChecked(@PathVariable("id") Long id) throws Exception {
 
         User user= userService.getById(id);
         if(user.getEmailChecked()){
@@ -251,7 +251,7 @@ public class AuthenticationController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/getUserById/{id}")
-    public ResponseEntity<UserDto> getUserByUserId(@PathVariable("id") Long id){
+    public ResponseEntity<UserDto> getUserByUserId(@PathVariable("id") Long id) throws Exception {
         User user= userService.getById(id);
 
         UserDto userDto= new UserDto(user.getUsername(),user.getEmail(),user.getPassword()
@@ -264,7 +264,7 @@ public class AuthenticationController {
 
     @CrossOrigin(origins = "*")
     @PutMapping("/updateEmployee")
-    public ResponseEntity<UserDto> updateEmployee(@RequestBody UserDto userr){
+    public ResponseEntity<UserDto> updateEmployee(@RequestBody UserDto userr) throws Exception {
 
 
         User existing = userService.getById(userr.getId());
@@ -282,7 +282,7 @@ public class AuthenticationController {
     @PostMapping("/verifyTfaCode")
     public ResponseEntity<?> verifyTfaCode(
             @RequestBody TfaCodeVerificationRequest verificationRequest
-    ) {
+    ) throws Exception {
         Client client = clientService.getByEmail(verificationRequest.getEmail());
         if (client == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

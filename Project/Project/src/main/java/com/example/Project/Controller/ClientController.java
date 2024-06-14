@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "= 'https://localhost:8081")
 @RestController
 @RequestMapping("/api/client")
 public class ClientController {
@@ -35,7 +36,7 @@ public class ClientController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<ClientDto> registerClient(@RequestBody ClientDto clientDto) {
+    public ResponseEntity<ClientDto> registerClient(@RequestBody ClientDto clientDto) throws Exception {
         Client client = clientMapper.mapToModel(clientDto);
         if (clientDto.isTfaEnabled()) {
             client.setSecret(tfaService.generateNewSecret());
@@ -47,7 +48,7 @@ public class ClientController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/get-by/{clientId}")
-    public ResponseEntity<ClientDto> getClient(@PathVariable long clientId){
+    public ResponseEntity<ClientDto> getClient(@PathVariable long clientId) throws Exception {
         Client client = clientService.getById(clientId);
         ClientDto dto = clientMapper.mapToDto(client);
         return ResponseEntity.ok(dto);
@@ -96,7 +97,7 @@ public class ClientController {
     @CrossOrigin(origins = "*")
     @PutMapping("/phone/{id}/{p}")
     @PreAuthorize("hasAuthority('client:update')")
-    public ResponseEntity<Void> updatePhoneById(@PathVariable Long id, @PathVariable String p) {
+    public ResponseEntity<Void> updatePhoneById(@PathVariable Long id, @PathVariable String p) throws Exception {
         clientService.updatePhoneById(id, p);
         return ResponseEntity.ok().build();
     }
@@ -104,19 +105,19 @@ public class ClientController {
     @CrossOrigin(origins = "*")
     @PutMapping("/email/{id}/{e}")
     @PreAuthorize("hasAuthority('client:update')")
-    public ResponseEntity<Void> updateEmailById(@PathVariable Long id, @PathVariable String e) {
+    public ResponseEntity<Void> updateEmailById(@PathVariable Long id, @PathVariable String e) throws Exception {
         userService.updateEmail(id, e);
         return ResponseEntity.ok().build();
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/getAllClients")
-    public ResponseEntity<List<User>> getAllClients() {
+    public ResponseEntity<List<User>> getAllClients() throws Exception {
         return ResponseEntity.ok(userService.getAllClients());
     }
     
     @PutMapping("/username/{id}/{u}")
-    public ResponseEntity<Void> updateUsernameById(@PathVariable Long id, @PathVariable String u) {
+    public ResponseEntity<Void> updateUsernameById(@PathVariable Long id, @PathVariable String u) throws Exception {
         userService.updateUsername(id, u);
         return ResponseEntity.ok().build();
     }

@@ -62,7 +62,7 @@ public class RequestController {
     @CrossOrigin(origins = "*")
     @PutMapping("/accept")
     @PreAuthorize("hasAuthority('admin:update')")
-    public ResponseEntity<RequestDto> accept(@RequestBody Request request){
+    public ResponseEntity<RequestDto> accept(@RequestBody Request request) throws Exception {
         request.setStatus(RequestStatus.ACCEPTED);
         Request req=requestService.create(request);
         User client= userService.findByUsername(request.getUsername());
@@ -84,7 +84,7 @@ public class RequestController {
     @CrossOrigin(origins = "*")
     @PutMapping("/reject/{reason}")
     @PreAuthorize("hasAuthority('admin:update')")
-    public ResponseEntity<RequestDto> reject(@RequestBody Request request, @PathVariable String reason){
+    public ResponseEntity<RequestDto> reject(@RequestBody Request request, @PathVariable String reason) throws Exception {
         request.setStatus(RequestStatus.REJECTED);
         LocalDate currentDate= LocalDate.now();
         LocalDate futureDate = currentDate.plusDays(2);

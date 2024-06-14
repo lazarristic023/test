@@ -2,6 +2,7 @@ package com.example.Project.Service;
 
 import com.example.Project.Model.Client;
 import com.example.Project.Repository.ClientRepo;
+import com.example.Project.Utilities.AESUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,18 +20,30 @@ public class ClientService {
 
     }
 
-    public Client save(Client client) {
-        String hashedPassword = passwordEncoder.encode(client.getPassword());
-        client.setPassword(hashedPassword);
+    public Client save(Client client) throws Exception {
+        //String hashedPassword = passwordEncoder.encode(client.getPassword());
+        //client.setPassword(hashedPassword);
+        client.setUsername(AESUtil.encrypt(client.getUsername()));
+        client.setEmail(AESUtil.encrypt(client.getEmail()));
+        client.setPhone(AESUtil.encrypt(client.getPhone()));
+        client.setPassword(AESUtil.encrypt(client.getPassword()));
         return clientRepository.save(client);
     }
 
-    public Client getById(long clientId) {
-        return clientRepository.findById(clientId).orElse(null);
+    public Client getById(long clientId) throws Exception {
+        Client client = clientRepository.findById(clientId).orElse(null);
+        client.setUsername(AESUtil.decrypt(client.getUsername()));
+        client.setEmail(AESUtil.decrypt(client.getEmail()));
+        client.setPhone(AESUtil.decrypt(client.getPhone()));
+        return client;
     }
 
-    public Client getByEmail(String email) {
-        return clientRepository.findByEmail(email);
+    public Client getByEmail(String email) throws Exception {
+        Client client = clientRepository.findByEmail(AESUtil.encrypt(email));
+        client.setUsername(AESUtil.decrypt(client.getUsername()));
+        client.setEmail(AESUtil.decrypt(client.getEmail()));
+        client.setPhone(AESUtil.decrypt(client.getPhone()));
+        return client;
     }
 
     public void updateClientFirmNameById(Long id, String clientFirmName) {
@@ -53,8 +66,7 @@ public class ClientService {
         clientRepository.updateCountryById(id, country);
     }
 
-    public void updatePhoneById(Long id, String phone) {
-        clientRepository.updatePhoneById(id, phone);
-
+    public void updatePhoneById(Long id, String phone) throws Exception {
+        clientRepository.updatePhoneById(id, AESUtil.encrypt(phone));
     }
 }

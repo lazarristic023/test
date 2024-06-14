@@ -32,7 +32,7 @@ public class UserController {
     @CrossOrigin(origins = "*")
     @GetMapping("/getAllEmployees")
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<List<User>> getAllEmployees() {
+    public ResponseEntity<List<User>> getAllEmployees() throws Exception {
         return ResponseEntity.ok(userService.getAllEmployees());
     }
 
@@ -70,14 +70,14 @@ public class UserController {
     @CrossOrigin(origins = "*")
     @PostMapping("/registerAdmin")
     @PreAuthorize("hasAuthority('admin:create')")
-    public ResponseEntity<Administrator> registerAdmin(@RequestBody Administrator admin) {
+    public ResponseEntity<Administrator> registerAdmin(@RequestBody Administrator admin) throws Exception {
 
         return ResponseEntity.ok( userService.registerAdmin(admin));
     }
     @CrossOrigin(origins = "*")
     @PostMapping("/registerEmployee")
     @PreAuthorize("hasAuthority('admin:create')")
-    public ResponseEntity<Employee> registerEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> registerEmployee(@RequestBody Employee employee) throws Exception {
 
         return ResponseEntity.ok( userService.registerEmployee(employee));
     }

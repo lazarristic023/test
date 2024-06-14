@@ -18,7 +18,6 @@ public class AESUtil {
     }
 
     private static final String ALGORITHM = "AES";
-    //rezim za siforvanje
     private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
     private static final int IV_SIZE = 16;
 
@@ -27,14 +26,17 @@ public class AESUtil {
 
     static {
         try {
-            // Učitajte keystore iz resources foldera
-            String keystorePath = "/mykeystore.jceks";
+            // Učitavanje keystore-a iz resources foldera
+            String keystorePath = "mykeystore.jceks";
             char[] keystorePassword = "password".toCharArray();
             String keyAlias = "mykey";
             char[] keyPassword = "password".toCharArray();
 
             KeyStore keyStore = KeyStore.getInstance("JCEKS");
-            try (InputStream is = AESUtil.class.getResourceAsStream(keystorePath)) {
+
+            // Koristimo ClassLoader da bismo učitali resurs
+            ClassLoader classLoader = AESUtil.class.getClassLoader();
+            try (InputStream is = classLoader.getResourceAsStream(keystorePath)) {
                 keyStore.load(is, keystorePassword);
             }
 
@@ -66,7 +68,6 @@ public class AESUtil {
 
     private static IvParameterSpec generateIv() {
         byte[] ivBytes = new byte[IV_SIZE];
-        // Generisanje slučajnog IV-a
         SecureRandom random = new SecureRandom();
         random.nextBytes(ivBytes);
         return new IvParameterSpec(ivBytes);
