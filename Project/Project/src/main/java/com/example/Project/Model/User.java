@@ -55,9 +55,12 @@ public class User implements UserDetails {
     @NotEmpty
     private String phone;
 
+    @NotNull
+    private boolean blocked;
+
     public User(){}
 
-    public User(String username, String email, String password, Role role,String city,String country,String phone) {
+    public User(String username, String email, String password, Role role,String city,String country,String phone, boolean blocked) {
         this.city = city;
         this.country = country;
         this.phone = phone;
@@ -65,6 +68,7 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.blocked = blocked;
     }
 
 
@@ -95,7 +99,7 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !blocked;
     }
     @JsonIgnore
     @Override

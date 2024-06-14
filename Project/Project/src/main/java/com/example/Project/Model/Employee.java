@@ -24,7 +24,7 @@ public class Employee extends User{
     }
 
     public Employee(String username, String email, String password, Role role,Company company,String firstName,String lastName,String city,String country, String phone) {
-        super(username, email, password, role,city,country,phone);
+        super(username, email, password, role,city,country,phone, false);
         this.company = company;
         this.firstName = firstName;
         this.lastName = lastName;

@@ -17,7 +17,7 @@ public class Administrator extends User{
     private boolean isFirstLogging=true;
 
     public Administrator(String username, String email, String password, Role role, boolean isPredefined,String firstName,String lastName,String city,String country, String phone) {
-        super(username, email, password, role,city,country,phone);
+        super(username, email, password, role,city,country,phone, false);
         this.isPredefined = isPredefined;
         this.firstName = firstName;
         this.lastName = lastName;

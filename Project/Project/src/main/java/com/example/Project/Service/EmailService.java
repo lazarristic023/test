@@ -119,12 +119,24 @@ public class EmailService {
             String token = tokenUtils.generatePasswordlessToken(user.getEmail());
             PasswordlessToken passwordlessToken = new PasswordlessToken(token, false);
             passwordlessTokenService.saveToken(passwordlessToken);
-            String text ="Log in by clicking on the link: " + "http://localhost:4200/redirectPasswordlessLogin?token=" + token;
+            String text ="Log in by clicking on the link: " + "http://localhost:4200/redirectPasswordlessLogin?email="+user.getEmail()+"&token=" + token;
 
             sendMess(user, subject,text);
-        } catch (MessagingException e) {
+        } catch (MessagingException | IOException e) {
             throw new RuntimeException(e);
-        } catch (IOException e) {
+        }
+    }
+
+    public void sendResetPasswordLink(User user) {
+        String subject = "Reset password";
+
+        try {
+            String token = tokenUtils.generatePasswordlessToken(user.getEmail());
+            PasswordlessToken passwordlessToken = new PasswordlessToken(token, false);
+            passwordlessTokenService.saveToken(passwordlessToken);
+            String text ="Click here to reset password: " + "http://localhost:4200/resetPasswordPage?email="+user.getEmail()+"&token=" + token;
+            sendMess(user, subject,text);
+        } catch (MessagingException | IOException e) {
             throw new RuntimeException(e);
         }
     }

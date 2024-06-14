@@ -1,6 +1,8 @@
 package com.example.Project.Service.impl;
 
 
+import com.example.Project.Dto.ChangePasswordRequest;
+import com.example.Project.Dto.ResetPasswordRequest;
 import com.example.Project.Model.Administrator;
 import com.example.Project.Model.Employee;
 import com.example.Project.Model.User;
@@ -9,8 +11,10 @@ import com.example.Project.Repository.EmployeeRepo;
 import com.example.Project.Repository.UserRepo;
 import com.example.Project.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,5 +148,38 @@ public class UserServiceImpl implements UserService {
             updatedEmployee.setId(id);
             return employeeRepo.save(updatedEmployee);
         });
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest request) {
+
+        User user = userRepo.findById(request.getUserId()).orElseThrow();
+        if(!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())){
+            throw new IllegalArgumentException("Wrong password");
+        }
+
+        if(!request.getNewPassword().equals(request.getConfirmNewPassword())){
+            throw new IllegalArgumentException("Passwords are not the same");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+
+        userRepo.save(user);
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordRequest request){
+
+        if(!request.getNewPassword().equals(request.getConfirmNewPassword())){
+            throw new IllegalArgumentException("Passwords are not the same");
+        }
+
+        User user = userRepo.findByEmail(request.getEmail());
+        if (user == null) {
+            throw new NotFoundException("User not found");
+        }
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepo.save(user);
+
     }
 }
