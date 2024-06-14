@@ -1,6 +1,6 @@
 /*INSERT INTO users(
 	email_checked, role, id, email, password, username)
-	VALUES (false, 2, 1, 'nikolinaskiljevic@gmail.com', '$2a$12$6JZF6T2A2X0Ai9nolc5aC.ChlP2XOv8HmBg1l.8njr196/6RxiJji', 'admin');
+	VALUES (false, 2, 1, '2001sk2001@gmail.com', '$2a$12$6JZF6T2A2X0Ai9nolc5aC.ChlP2XOv8HmBg1l.8njr196/6RxiJji', 'admin');
 
 INSERT INTO users(
 	email_checked, role, id, email, password, username)
