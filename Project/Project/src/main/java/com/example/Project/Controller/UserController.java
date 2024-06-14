@@ -1,6 +1,8 @@
 package com.example.Project.Controller;
 
+import com.example.Project.Dto.ChangePasswordRequest;
 import com.example.Project.Dto.CompanyDto;
+import com.example.Project.Dto.UserDto;
 import com.example.Project.Model.Administrator;
 import com.example.Project.Model.Company;
 import com.example.Project.Model.Employee;
@@ -9,17 +11,18 @@ import com.example.Project.Repository.EmployeeRepo;
 import com.example.Project.Service.CompanyService;
 import com.example.Project.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
-@PreAuthorize("hasAnyRole('ADMINISTRATOR', 'EMPLOYEE')")
 public class UserController {
 
 
@@ -80,5 +83,50 @@ public class UserController {
     public ResponseEntity<Employee> registerEmployee(@RequestBody Employee employee) {
 
         return ResponseEntity.ok( userService.registerEmployee(employee));
+    }
+
+
+    @PatchMapping("/changePassword")
+    public ResponseEntity<?> changePassword(
+            @RequestBody ChangePasswordRequest request
+    ) {
+        userService.changePassword(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/blockOrUnblock")
+    @PreAuthorize("hasAuthority('admin:update')")
+    public ResponseEntity<UserDto> blockOrUnblock(
+            @RequestBody UserDto userDto
+    ) {
+        User user = userService.findByEmail(userDto.getEmail());
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        user.setBlocked(userDto.getBlocked());
+        userService.save(user);
+
+        return ResponseEntity.ok(userDto);
+    }
+
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<User> users = userService.findAll();
+        List<UserDto> userDtos = new ArrayList<>();
+
+        for (User user : users) {
+            UserDto dto = new UserDto(
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getPassword(),
+                    user.getRole().toString(),
+                    user.getEmailChecked(),
+                    user.isBlocked()
+            );
+            userDtos.add(dto);
+        }
+
+        return ResponseEntity.ok(userDtos);
     }
 }

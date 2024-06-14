@@ -131,12 +131,8 @@ public class WebSecurityConfig {
 
         //http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(restAuthenticationEntryPoint));
         http.authorizeHttpRequests(auth -> auth
-                                //.requestMatchers("api/authentication/**").permitAll()
                                 .requestMatchers(WHITE_LIST_URL).permitAll()
-                                /*.requestMatchers("api/requests/**").permitAll()
-                                .requestMatchers("api/commercial/**").permitAll()
-                                .requestMatchers("api/commercial-request/**").permitAll()
-                                .requestMatchers("api/users/**").permitAll()*/
+
 
 
 
