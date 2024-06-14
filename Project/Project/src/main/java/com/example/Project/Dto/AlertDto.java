@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class AlertDto {
 
+    private long id;
+
     private String title;
 
     private String message;

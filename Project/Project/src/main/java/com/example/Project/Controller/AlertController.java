@@ -32,6 +32,7 @@ public class AlertController {
         List<AlertDto> dtos = new ArrayList<>();
         for(Alert a: unreadAlerts) {
             AlertDto dto = new AlertDto(a.getTitle(), a.getMessage(), a.isRead());
+            dto.setId(a.getId());
             dtos.add(dto);
         }
         return ResponseEntity.ok(dtos);
