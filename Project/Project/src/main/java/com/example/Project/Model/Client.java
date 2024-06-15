@@ -55,7 +55,7 @@ public class Client extends User {
     }
 
     public Client(String username, String email, String password, Role role, String clientFirmName, String clientSurnameFirmPIB, String clientFirmResidentialAddress, String city, String country, String phone, Face type, PackageType packageType, boolean tfaEnabled) {
-        super(username, email, password, role,city,country,phone);
+        super(username, email, password, role,city,country,phone, false);
 
         this.clientFirmName = clientFirmName;
         this.clientSurnameFirmPIB = clientSurnameFirmPIB;

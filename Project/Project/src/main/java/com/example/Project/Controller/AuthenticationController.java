@@ -3,6 +3,7 @@ package com.example.Project.Controller;
 
 import com.example.Project.Dto.RefreshTokenRequest;
 import com.example.Project.Dto.LoginDto;
+import com.example.Project.Dto.ResetPasswordRequest;
 import com.example.Project.Dto.UserDto;
 import com.example.Project.Enum.PackageType;
 import com.example.Project.Enum.Role;
@@ -79,6 +80,8 @@ public class AuthenticationController {
 
     @Autowired
     private RequestService requestService;
+
+    @Autowired
     private TwoFactorAuthenticationService tfaService;
 
 
@@ -169,14 +172,18 @@ public class AuthenticationController {
                 response.sendRedirect("https://localhost:4200/email-link-invalid");
             }else{
                 //nije bio na linku i token nije istekao
-                Client client=clientService.getById(id);
-                client.setEmailChecked(true);
-                userService.save(client);
+                User user=userService.getById(id);
+                user.setEmailChecked(true);
+                userService.save(user);
 
                 String secretImageUrl = "";
-                if(client.isTfaEnabled()) {
-                    secretImageUrl = tfaService.generateQrCodeImageUri(client.getSecret());
+                if(user.getRole().equals(Role.CLIENT)){
+                    Client client = clientService.getById(user.getId());
+                    if(client.isTfaEnabled()) {
+                        secretImageUrl = tfaService.generateQrCodeImageUri(client.getSecret());
+                    }
                 }
+
                 //update token
                 emailToken.setIsUsed(true);
                 emailTokenService.saveToken(emailToken);
@@ -216,7 +223,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/passwordlessLogin")
-    public ResponseEntity<Boolean> passwordlessLogin(@Param("token")String token, HttpServletResponse response) throws Exception {
+    public ResponseEntity<?> passwordlessLogin(@Param("token")String token, HttpServletResponse response) throws Exception{
 
         PasswordlessToken passwordlessToken = passwordlessTokenService.findByToken(token);
         if (passwordlessToken == null) {
@@ -238,6 +245,15 @@ public class AuthenticationController {
         String email = tokenUtils.getUsernameFromToken(token);
         //UserDetails userDetails = userService.findByEmail(email);
         User user = userService.findByEmail(email);
+        if (!user.isAccountNonLocked()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        if (user.getRole().equals(Role.CLIENT)) {
+            Client client = clientService.getByEmail(user.getEmail());
+            if(client.isTfaEnabled()) {
+                return ResponseEntity.ok(new UserTokenState("",0,"",0, true, ""));
+            }
+        }
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 user,
                 null,
@@ -251,11 +267,11 @@ public class AuthenticationController {
 
         String[] tokens = tokenUtils.generateTokens(user.getUsername(), rolesString, user.id);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Token", tokens[0]);
-        headers.add("Refresh-Token", tokens[1]);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("Access-Token", tokens[0]);
+//        headers.add("Refresh-Token", tokens[1]);
 
-        return ResponseEntity.ok().headers(headers).build();
+        return ResponseEntity.ok(new UserTokenState(tokens[0], 1, tokens[1], 1, false, ""));
 
     }
 
@@ -277,7 +293,7 @@ public class AuthenticationController {
         User user= userService.getById(id);
 
         UserDto userDto= new UserDto(user.getUsername(),user.getEmail(),user.getPassword()
-                ,user.getRole().toString(),user.getEmailChecked());
+                ,user.getRole().toString(),user.getEmailChecked(), user.isBlocked());
 
         userDto.setId(user.getId());
 
@@ -321,6 +337,62 @@ public class AuthenticationController {
 
         return ResponseEntity.ok(new UserTokenState(tokens[0], 1,tokens[1],1, client.isTfaEnabled(), ""));
 
+    }
+
+    @GetMapping ("/sendResetPasswordLink")
+    public ResponseEntity<?> sendResetPasswordLink(@Param("email")String email, HttpServletResponse response) throws Exception {
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        emailService.sendResetPasswordLink(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @GetMapping("/resetPasswordRedirect")
+    public ResponseEntity<UserTokenState> resetPasswordRedirect(@Param("token")String token) throws Exception {
+
+        PasswordlessToken passwordlessToken = passwordlessTokenService.findByToken(token);
+        if (passwordlessToken == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (passwordlessToken.isUsed()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Date now = new Date();
+        Date tokenExpiration = tokenUtils.getExpirationDateFromToken(token);
+        if (tokenExpiration.compareTo(now) < 0) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        passwordlessToken.setUsed(true);
+        passwordlessTokenService.saveToken(passwordlessToken);
+        String email = tokenUtils.getUsernameFromToken(token);
+        //UserDetails userDetails = userService.findByEmail(email);
+
+        User user = userService.findByEmail(email);
+        UserTokenState tokenState = new UserTokenState("",0, "", 0, false, "");
+        if(user.getRole().equals(Role.CLIENT)) {
+            Client client = clientService.getById(user.getId());
+            tokenState.setTfaEnabled(client.isTfaEnabled());
+        }
+
+
+        return ResponseEntity.ok(tokenState);
+
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<?> resetPassword(
+            @RequestBody ResetPasswordRequest request
+    ) {
+        userService.resetPassword(request);
+        return ResponseEntity.ok().build();
     }
 
 

@@ -23,13 +23,16 @@ public class UserDto {
 
     private Boolean emailChecked;
 
+    private Boolean blocked;
+
 
     public UserDto(){}
-    public UserDto( String username, String email, String password, String role, Boolean emailChecked) {
+    public UserDto( String username, String email, String password, String role, Boolean emailChecked, Boolean blocked) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
         this.emailChecked = emailChecked;
+        this.blocked = blocked;
     }
 }

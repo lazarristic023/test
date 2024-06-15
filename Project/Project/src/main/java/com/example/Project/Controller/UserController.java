@@ -1,16 +1,20 @@
 package com.example.Project.Controller;
 
+import com.example.Project.Dto.ChangePasswordRequest;
 import com.example.Project.Dto.CompanyDto;
+import com.example.Project.Dto.UserDto;
 import com.example.Project.Model.Administrator;
 import com.example.Project.Model.Employee;
 import com.example.Project.Model.User;
 import com.example.Project.Service.CompanyService;
 import com.example.Project.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,5 +96,50 @@ public class UserController {
             return ResponseEntity.ok(1);
         }
         return ResponseEntity.ok(0);
+    }
+
+
+    @PatchMapping("/changePassword")
+    public ResponseEntity<?> changePassword(
+            @RequestBody ChangePasswordRequest request
+    ) {
+        userService.changePassword(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/blockOrUnblock")
+    @PreAuthorize("hasAuthority('admin:update')")
+    public ResponseEntity<UserDto> blockOrUnblock(
+            @RequestBody UserDto userDto
+    ) throws Exception {
+        User user = userService.findByEmail(userDto.getEmail());
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        user.setBlocked(userDto.getBlocked());
+        userService.save(user);
+
+        return ResponseEntity.ok(userDto);
+    }
+
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<UserDto>> getAllUsers() throws Exception {
+        List<User> users = userService.findAll();
+        List<UserDto> userDtos = new ArrayList<>();
+
+        for (User user : users) {
+            UserDto dto = new UserDto(
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getPassword(),
+                    user.getRole().toString(),
+                    user.getEmailChecked(),
+                    user.isBlocked()
+            );
+            userDtos.add(dto);
+        }
+
+        return ResponseEntity.ok(userDtos);
     }
 }

@@ -4,13 +4,24 @@ import com.example.Project.Enum.PackageType;
 import com.example.Project.Model.*;
 import com.example.Project.Repository.*;
 import com.example.Project.Service.CommercialRequestService;
+
+import com.example.Project.Dto.ChangePasswordRequest;
+import com.example.Project.Dto.ResetPasswordRequest;
+import com.example.Project.Model.Administrator;
+import com.example.Project.Model.Employee;
+import com.example.Project.Model.User;
+import com.example.Project.Repository.AdminRepo;
+import com.example.Project.Repository.EmployeeRepo;
+import com.example.Project.Repository.UserRepo;
 import com.example.Project.Service.UserService;
 import com.example.Project.Utilities.AESUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -228,9 +239,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    
+
     @Override
-    public Optional<Employee> getEmployeeById(Long id) {    
+    public Optional<Employee> getEmployeeById(Long id) {
         try {
             Optional<Employee> optionalEmployee = employeeRepo.findById(id);
             optionalEmployee.ifPresent(employee -> {
@@ -427,5 +438,38 @@ public class UserServiceImpl implements UserService {
                     java.time.LocalDate.now(), java.time.LocalTime.now(), id, e.getMessage());
             throw e;
         }
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest request) {
+
+        User user = userRepo.findById(request.getUserId()).orElseThrow();
+        if(!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())){
+            throw new IllegalArgumentException("Wrong password");
+        }
+
+        if(!request.getNewPassword().equals(request.getConfirmNewPassword())){
+            throw new IllegalArgumentException("Passwords are not the same");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+
+        userRepo.save(user);
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordRequest request){
+
+        if(!request.getNewPassword().equals(request.getConfirmNewPassword())){
+            throw new IllegalArgumentException("Passwords are not the same");
+        }
+
+        User user = userRepo.findByEmail(request.getEmail());
+        if (user == null) {
+            throw new NotFoundException("User not found");
+        }
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepo.save(user);
+
     }
 }

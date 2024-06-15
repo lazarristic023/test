@@ -66,7 +66,7 @@ public class EmailService {
         // Dodajte vremensko ograničenje u link
         //String link = "http://localhost:8081/api/authentication/verify?email=" + user.getEmail() + "&id=" + user.getId() + "&expiry=" + expiryTimestamp;
 
-        String link = "http://localhost:4200/confirmAccount?email=" + user.getEmail() + "&id=" + user.getId() + "&expiry=" + expiryTimestamp;
+        String link = "https://localhost:4200/confirmAccount?email=" + user.getEmail() + "&id=" + user.getId() + "&expiry=" + expiryTimestamp;
         // Dodajte token u link
         link += "&token=" + token;
 
@@ -124,12 +124,24 @@ public class EmailService {
             String token = tokenUtils.generatePasswordlessToken(user.getEmail());
             PasswordlessToken passwordlessToken = new PasswordlessToken(token, false);
             passwordlessTokenService.saveToken(passwordlessToken);
-            String text ="Log in by clicking on the link: " + "http://localhost:4200/redirectPasswordlessLogin?token=" + token;
+            String text ="Log in by clicking on the link: " + "https://localhost:4200/redirectPasswordlessLogin?email="+user.getEmail()+"&token=" + token;
 
             sendMess(user, subject,text);
-        } catch (MessagingException e) {
+        } catch (MessagingException | IOException e) {
             throw new RuntimeException(e);
-        } catch (IOException e) {
+        }
+    }
+
+    public void sendResetPasswordLink(User user) {
+        String subject = "Reset password";
+
+        try {
+            String token = tokenUtils.generatePasswordlessToken(user.getEmail());
+            PasswordlessToken passwordlessToken = new PasswordlessToken(token, false);
+            passwordlessTokenService.saveToken(passwordlessToken);
+            String text ="Click here to reset password: " + "https://localhost:4200/resetPasswordPage?email="+user.getEmail()+"&token=" + token;
+            sendMess(user, subject,text);
+        } catch (MessagingException | IOException e) {
             throw new RuntimeException(e);
         }
     }
