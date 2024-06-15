@@ -73,7 +73,7 @@ public class LogMonitor {
                 if (line.contains("ERROR") || line.contains("WARN")) {
                     // Slanje upozorenja ili druge akcije
                     try {
-                        sendAlert("Critical event recorded: \n" + line);
+                        sendAlert("Critical event recorded: " + line);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
