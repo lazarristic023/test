@@ -103,7 +103,7 @@ public class LogMonitor {
         allAdministrators.clear();
         List<User> allUsers = userService.findAll();
         for(User u: allUsers) {
-            if(u.getRole().equals("ADMINISTRATOR")) {
+            if(u.getRole().name().equals("ADMINISTRATOR")) {
                 allAdministrators.add(u);
             }
         }
