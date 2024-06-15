@@ -73,7 +73,7 @@ public class LogMonitor {
                 if (line.contains("ERROR") || line.contains("WARN")) {
                     // Slanje upozorenja ili druge akcije
                     try {
-                        sendAlert("Critical event recorded: " + line);
+                        sendAlert("Critical event recorded: \n" + line);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -89,13 +89,15 @@ public class LogMonitor {
         getAllAdministrators();
         logger.warn("Warn: {}", message);
         // Ovde bi bila logika za slanje upozorenja administratoru
+        Alert alert = new Alert("System warning: critical event", message, false);
+        alertService.saveAlert(alert);
         for(User u: allAdministrators) {
-            String email = AESUtil.decrypt(u.getEmail());
-            emailService.sendWarningEmail(email, "System warning: critical event", message);
-            String phone = AESUtil.decrypt(u.getPhone());
-            smsService.sendSMS(phone, message);
-            Alert alert = new Alert("System warning: critical event", message, false);
-            alertService.saveAlert(alert);
+            //String email = AESUtil.decrypt(u.getEmail());
+            emailService.sendWarningEmail(u.getEmail(), "System warning: critical event", message);
+            //String phone = AESUtil.decrypt(u.getPhone());
+            //smsService.sendSMS(u.getPhone(), message);
+            //Alert alert = new Alert("System warning: critical event", message, false);
+            //alertService.saveAlert(alert);
         }
     }
 
