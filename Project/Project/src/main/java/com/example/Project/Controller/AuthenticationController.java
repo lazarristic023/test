@@ -39,10 +39,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.webjars.NotFoundException;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.Socket;
+import java.net.URL;
+import java.net.http.HttpClient;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,6 +82,8 @@ public class AuthenticationController {
 
     @Autowired
     private TwoFactorAuthenticationService tfaService;
+
+
 
 
     @CrossOrigin(origins = "*")
@@ -372,5 +378,21 @@ public class AuthenticationController {
         userService.resetPassword(request);
         return ResponseEntity.ok().build();
     }
+
+
+
+    @GetMapping("/fetch-message")
+    public ResponseEntity<String> fetchMessage(){
+        String url= "http://10.13.13.1:3000/";
+        RestTemplate rest= new RestTemplate();
+
+
+        String response= rest.getForObject(url,String.class);
+        return ResponseEntity.ok(response);
+
+
+    }
+
+
 
 }

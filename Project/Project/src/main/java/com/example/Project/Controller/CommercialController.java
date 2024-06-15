@@ -64,4 +64,19 @@ public class CommercialController {
         return new ResponseEntity<>(commercialDto, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/commercial-click")
+    public String adClick(@RequestParam String packageType) {
+
+        switch (packageType) {
+            case "gold":
+                return commercialService.clickGoldAd();
+            case "standard":
+                return commercialService.clickStandardAd();
+            case "basic":
+                return commercialService.clickBasicAd();
+            default:
+                return "Invalid package type";
+        }
+    }
 }
