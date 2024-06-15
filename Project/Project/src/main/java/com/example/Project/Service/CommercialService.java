@@ -2,6 +2,7 @@ package com.example.Project.Service;
 
 import com.example.Project.Model.Commercial;
 import com.example.Project.Repository.CommercialRepo;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -58,5 +59,23 @@ public class CommercialService {
                     java.time.LocalDate.now(), java.time.LocalTime.now(), e.getMessage());
             throw e;
         }
+    }
+
+    @RateLimiter(name = "basic")
+    public String clickBasicAd() {
+        System.out.println("Basic Ad clicked!");
+        return "Basic Ad clicked!";
+    }
+
+    @RateLimiter(name = "standard")
+    public String clickStandardAd() {
+        System.out.println("Standard Ad clicked!");
+        return "Standard Ad clicked!";
+    }
+
+    @RateLimiter(name = "gold")
+    public String clickGoldAd() {
+        System.out.println("Gold Ad clicked!");
+        return "Gold Ad clicked!";
     }
 }

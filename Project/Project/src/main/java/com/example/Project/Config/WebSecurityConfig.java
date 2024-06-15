@@ -24,6 +24,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -63,7 +64,9 @@ public class WebSecurityConfig {
             "/*/*.html",
             "/*/*.css",
             "/*/*.js",
-            "/"};
+            "/",
+            "/api/commercial/commercial-click"
+    };
 
 
     @Bean
@@ -130,6 +133,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+
+
         http.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable);
 
@@ -156,11 +161,20 @@ public class WebSecurityConfig {
 
         http.authenticationProvider(authenticationProvider());
 
+        http.headers(headers ->
+                headers.xssProtection(
+                        xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK)
+                ).contentSecurityPolicy(
+                        cps -> cps.policyDirectives("script-src 'self'")
+                ));
+
+
         return http.build();
     }
 
 
-    //u kojim metodama se ignorise autentifikacija
+
+
 
 
 
