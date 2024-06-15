@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
             User savedUser = userRepo.save(user);
             logger.info("EventID: 1002 | Date: {} | Time: {} | Source: UserServiceImpl | Type: INFO | Message: User saved | UserId: {}",
                     java.time.LocalDate.now(), java.time.LocalTime.now(), savedUser.getId());
-            return savedUser;
+            return user;
         } catch (Exception e) {
             logger.error("EventID: 1002 | Date: {} | Time: {} | Source: UserServiceImpl | Type: ERROR | Message: Error saving user | UserId: {} | Error: {}",
                     java.time.LocalDate.now(), java.time.LocalTime.now(), user.getId(), e.getMessage());

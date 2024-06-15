@@ -37,7 +37,7 @@ public class ClientService {
             Client savedClient = clientRepository.save(client);
             logger.info("EventID: 2000 | Date: {} | Time: {} | Source: ClientService | Type: INFO | Message: Client saved | ClientId: {}",
                     java.time.LocalDate.now(), java.time.LocalTime.now(), savedClient.getId());
-            return savedClient;
+            return client;
         } catch (Exception e) {
             logger.error("EventID: 2000 | Date: {} | Time: {} | Source: ClientService | Type: ERROR | Message: Error saving client | Error: {}",
                     java.time.LocalDate.now(), java.time.LocalTime.now(), e.getMessage());

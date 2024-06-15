@@ -16,6 +16,7 @@ import com.example.Project.Service.UserService;
 import com.example.Project.Model.*;
 import com.example.Project.Service.*;
 import com.example.Project.Service.impl.UserServiceImpl;
+import com.example.Project.Utilities.AESUtil;
 import com.example.Project.Utilities.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -96,13 +97,28 @@ public class AuthenticationController {
         rolesString.add(role.toString());
 
 
+        //boolean flag = false;
         if (role.equals(Role.CLIENT)) {
+            //flag = true;
+            user.setUsername(AESUtil.encrypt(user.getUsername()));
+            user.setEmail(AESUtil.encrypt(user.getEmail()));
+            user.setPhone(AESUtil.encrypt(user.getPhone()));
+            user.setCity(AESUtil.encrypt(user.getCity()));
+            user.setCountry(AESUtil.encrypt(user.getCountry()));
             Client client = clientService.getById(user.getId());
             if (client.isTfaEnabled()) {
                 return ResponseEntity.ok(new UserTokenState("", 0,"",0, true, ""));
             }
         }
-
+        /*
+        if(flag) {
+            user.setUsername(AESUtil.decrypt(user.getUsername()));
+            user.setEmail(AESUtil.decrypt(user.getEmail()));
+            user.setPhone(AESUtil.decrypt(user.getPhone()));
+            user.setCity(AESUtil.decrypt(user.getCity()));
+            user.setCountry(AESUtil.decrypt(user.getCountry()));
+            flag = false;
+        }*/
 
         String jwt = tokenUtils.generateTokens(user.getUsername(),rolesString, user.getId())[0];
         String refreshToken = tokenUtils.generateTokens(user.getUsername(),rolesString, user.getId())[1];
