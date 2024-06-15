@@ -68,3 +68,13 @@ INSERT INTO commercial_requests(
 -- INSERT INTO commercial_requests(
 -- 	is_accepted, client_id, create_deadline_date, end_date, id, start_date, description)
 -- 	VALUES (false, 3, '05.05.2024', '02.02.2024', 2, '02.03.2024', 'Some description');
+
+-- Lazar admin insert -------------------------
+INSERT INTO users(
+    blocked, email_checked, role, id, email, password, username)
+VALUES (false, true, 2, 1, 'vV0+ALvbf6wTMeFcgBSmRhrzzPLuSqGas9gwKtSaldo=', '$2a$12$6JZF6T2A2X0Ai9nolc5aC.ChlP2XOv8HmBg1l.8njr196/6RxiJji', 'vV0+ALvbf6wTMeFcgBSmRhrzzPLuSqGas9gwKtSaldo=');
+
+INSERT INTO public.admins(
+    is_first_logging, is_predefined, id, first_name, last_name)
+VALUES (false, true, 1, 'lazar', 'ristic');
+-- Lazar admin insert ^^^^^^^^^^^^^^^^^^^^^^^^^

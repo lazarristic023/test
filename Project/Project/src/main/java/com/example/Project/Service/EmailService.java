@@ -4,6 +4,7 @@ package com.example.Project.Service;
 import com.example.Project.Model.PasswordlessToken;
 import com.example.Project.Model.EmailToken;
 import com.example.Project.Model.User;
+import com.example.Project.Utilities.AESUtil;
 import com.example.Project.Utilities.TokenUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -128,6 +129,8 @@ public class EmailService {
 
             sendMess(user, subject,text);
         } catch (MessagingException | IOException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
