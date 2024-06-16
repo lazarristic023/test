@@ -139,12 +139,15 @@ public class EmailService {
         String subject = "Reset password";
 
         try {
+            //user.setEmail(AESUtil.encrypt(user.getEmail()));
             String token = tokenUtils.generatePasswordlessToken(user.getEmail());
             PasswordlessToken passwordlessToken = new PasswordlessToken(token, false);
             passwordlessTokenService.saveToken(passwordlessToken);
             String text ="Click here to reset password: " + "https://localhost:4200/resetPasswordPage?email="+user.getEmail()+"&token=" + token;
             sendMess(user, subject,text);
         } catch (MessagingException | IOException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

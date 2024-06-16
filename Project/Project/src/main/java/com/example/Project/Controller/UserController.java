@@ -21,7 +21,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
-@PreAuthorize("hasAnyRole('ADMINISTRATOR', 'EMPLOYEE')")
+//@PreAuthorize("hasAnyRole('ADMINISTRATOR', 'EMPLOYEE')")
 public class UserController {
 
 

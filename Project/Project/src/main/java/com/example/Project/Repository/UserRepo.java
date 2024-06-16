@@ -31,5 +31,10 @@ import java.util.List;
         @Query("UPDATE User u SET u.username = ?2 WHERE u.id = ?1")
         void updateUsernameById(Long id, String username);
 
+        @Transactional
+        @Modifying
+        @Query("UPDATE User u SET u.password = ?2 WHERE u.id = ?1")
+        void updatePasswordById(Long id, String password);
+
 }
 

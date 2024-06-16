@@ -35,5 +35,5 @@ public interface UserService {
     public int DeleteClient(Long id);
 
     public void changePassword(ChangePasswordRequest request);
-    public void resetPassword(ResetPasswordRequest request);
+    public void resetPassword(ResetPasswordRequest request) throws Exception;
 }

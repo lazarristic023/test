@@ -47,7 +47,7 @@ public class ClientService {
 
     public Client getById(long clientId) throws Exception {
         try {
-            Client client = clientRepository.findById(clientId).orElse(null);
+            Client client = new Client(clientRepository.findById(clientId).orElse(null));
             client.setUsername(AESUtil.decrypt(client.getUsername()));
             client.setEmail(AESUtil.decrypt(client.getEmail()));
             client.setPhone(AESUtil.decrypt(client.getPhone()));
@@ -68,7 +68,7 @@ public class ClientService {
 
     public Client getByEmail(String email) throws Exception {
         try {
-            Client client = clientRepository.findByEmail(AESUtil.encrypt(email));
+            Client client = new Client(clientRepository.findByEmail(AESUtil.encrypt(email)));
             client.setUsername(AESUtil.decrypt(client.getUsername()));
             client.setEmail(AESUtil.decrypt(client.getEmail()));
             client.setPhone(AESUtil.decrypt(client.getPhone()));

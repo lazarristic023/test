@@ -66,6 +66,20 @@ public class Client extends User {
         this.tfaEnabled = tfaEnabled;
     }
 
+    public Client(Client client) {
+        super(client.getUsername(), client.getEmail(), client.getPassword(), client.getRole(),client.getCity(),client.getCountry(),client.getPhone(), false);
+
+        this.clientFirmName = getClientFirmName();
+        this.clientSurnameFirmPIB = client.getClientSurnameFirmPIB();
+        this.clientFirmResidentialAddress = client.getClientFirmResidentialAddress();
+
+        this.type = client.getType();
+        this.packageType = client.getPackageType();
+        this.tfaEnabled = client.isTfaEnabled();
+        this.secret = client.getSecret();
+        this.company = client.getCompany();
+    }
+
 
     public Client() {
     }

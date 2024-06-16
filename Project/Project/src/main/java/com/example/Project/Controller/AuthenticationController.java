@@ -390,7 +390,7 @@ public class AuthenticationController {
     @PostMapping("/resetPassword")
     public ResponseEntity<?> resetPassword(
             @RequestBody ResetPasswordRequest request
-    ) {
+    ) throws Exception {
         userService.resetPassword(request);
         return ResponseEntity.ok().build();
     }

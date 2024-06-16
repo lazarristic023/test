@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
@@ -70,9 +71,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
     public User findByEmail(String email) throws Exception {
         try {
-            User user = userRepo.findByEmail(AESUtil.encrypt(email));
+            User user = new User(userRepo.findByEmail(AESUtil.encrypt(email)));
             if (user != null) {
                 user.setUsername(AESUtil.decrypt(user.getUsername()));
                 user.setEmail(AESUtil.decrypt(user.getEmail()));
@@ -90,6 +92,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Transactional
     public User save(User user) throws Exception {
         try {
             user.setUsername(AESUtil.encrypt(user.getUsername()));
@@ -452,24 +455,24 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Passwords are not the same");
         }
 
-        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        String password = passwordEncoder.encode(request.getNewPassword());
 
-        userRepo.save(user);
+        userRepo.updatePasswordById(user.getId(), password);
     }
 
     @Override
-    public void resetPassword(ResetPasswordRequest request){
+    public void resetPassword(ResetPasswordRequest request) throws Exception {
 
         if(!request.getNewPassword().equals(request.getConfirmNewPassword())){
             throw new IllegalArgumentException("Passwords are not the same");
         }
 
-        User user = userRepo.findByEmail(request.getEmail());
+        User user = findByEmail(request.getEmail());
         if (user == null) {
             throw new NotFoundException("User not found");
         }
-        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        userRepo.save(user);
+        String password = passwordEncoder.encode(request.getNewPassword());
+        userRepo.updatePasswordById(user.getId(), password);
 
     }
 }

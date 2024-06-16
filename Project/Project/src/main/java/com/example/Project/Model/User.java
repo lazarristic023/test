@@ -85,6 +85,19 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    public User(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.role = user.getRole();
+        this.emailChecked = user.getEmailChecked();
+        this.city = user.getCity();
+        this.country = user.getCountry();
+        this.phone = user.getPhone();
+        this.blocked = user.isBlocked();
+    }
+
     @Override
     public String getUsername() {
         return username;
